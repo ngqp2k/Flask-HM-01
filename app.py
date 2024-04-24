@@ -205,7 +205,7 @@ class RefundRequest(db.Model):
 
 @app.route('/')
 def index():
-    return render_template('index.html')
+    return render_template('index_home_page.html')
 
 @app.template_filter()
 def to_string(obj):
@@ -297,6 +297,11 @@ def delete_user(user_id):
     return redirect(url_for('user_page'))
     
     
+
+@app.route('/signin', methods=['GET', 'POST'])
+def sign_in_page():
+    return render_template('signin.html')
+
 # @app.route('/test', methods=['GET', 'POST'])
 # def test():
 #     first_name = request.form['first_name']  # pass the form field name as key
