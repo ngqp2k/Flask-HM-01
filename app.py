@@ -1,11 +1,11 @@
 from flask import Flask, render_template, request, flash, redirect, url_for
 from flask_sqlalchemy import SQLAlchemy
-from werkzeug.security import generate_password_hash
 from datetime import datetime
 from flask_wtf import FlaskForm
 import enum
 from wtforms import StringField
-from flask_login import LoginManager
+from flask_login import LoginManager, login_user, logout_user, login_required
+from werkzeug.security import generate_password_hash, check_password_hash
 
 app = Flask(__name__)
 
@@ -25,8 +25,40 @@ login_manager.init_app(app)
 
 @login_manager.user_loader
 def load_user(user_id):
-    return User.get(user_id)
+    return User.query.get(user_id)
 
+
+@app.route('/login', methods=['GET', 'POST'])
+def login():
+    
+    if request.method == 'POST':
+        user = User.query.filter_by(username=request.form['username']).first()
+        
+        print(user is None)
+        
+        if not user is None:
+            print(user.hash_password)
+            print(request.form['password'])
+            print(user is None)
+            print(check_password_hash(user.hash_password, request.form['password']))
+    
+        if (user is None) or (not check_password_hash(user.hash_password, request.form['password'])):
+            flash('Invalid username or password')
+            return redirect(url_for('login'))
+        else:
+            login_user(user)
+            return redirect(url_for('admin_page'))
+        
+    return render_template('signin.html')
+
+@app.route('/signin', methods=['GET', 'POST'])
+def sign_in_page():
+    return render_template('signin.html')
+
+@app.route('/logout', methods=['GET', 'POST'])
+def logout():
+    logout_user()
+    return redirect(url_for('sign_in_page'))
 
 class Sex(enum.Enum):
     Men = 1,
@@ -215,6 +247,12 @@ class RefundRequest(db.Model):
 def index():
     return render_template('index_home_page.html')
 
+
+@app.route('/admin')
+@login_required
+def admin_page():
+    return render_template('index.html')
+
 @app.template_filter()
 def to_string(obj):
     if isinstance(obj, enum.Enum):
@@ -278,7 +316,7 @@ def edit_user(user_id):
         user.email = request.form['email']
         user.phone = request.form['phone']
         user.username = request.form['username']
-        user.password = request.form['password']
+        # user.password = request.form['password']
         
         role = Role.query.get(request.form['role'])
         user.role = role
@@ -306,9 +344,7 @@ def delete_user(user_id):
     
     
 
-@app.route('/signin', methods=['GET', 'POST'])
-def sign_in_page():
-    return render_template('signin.html')
+
 
 # @app.route('/test', methods=['GET', 'POST'])
 # def test():
