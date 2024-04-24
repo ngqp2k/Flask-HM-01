@@ -5,7 +5,7 @@ from datetime import datetime
 from flask_wtf import FlaskForm
 import enum
 from wtforms import StringField
-
+from flask_login import LoginManager
 
 app = Flask(__name__)
 
@@ -18,6 +18,14 @@ app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:///' + app.config['DATABASE_FILE
 app.config['SQLALCHEMY_ECHO'] = True
 
 db = SQLAlchemy(app)
+
+login_manager = LoginManager()
+login_manager.init_app(app)
+
+
+@login_manager.user_loader
+def load_user(user_id):
+    return User.get(user_id)
 
 
 class Sex(enum.Enum):
