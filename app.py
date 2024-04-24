@@ -239,7 +239,9 @@ def add_user():
         user = User()
         user.first_name = request.form['first_name']
         user.last_name = request.form['last_name']
-        user.sex = Sex.Men
+        sex = request.form['sex']
+        print(sex)
+        user.sex = Sex[sex]
         user.birthdate = datetime(2012, 3, 3)
         user.email = request.form['email']
         user.phone = request.form['phone']
@@ -263,19 +265,26 @@ def edit_user(user_id):
     if request.method == 'POST':
         user.first_name = request.form['first_name']
         user.last_name = request.form['last_name']
-        user.sex = Sex.Men
+        user.sex = Sex[request.form['sex']]
         user.birthdate = datetime(2012, 3, 3)
         user.email = request.form['email']
         user.phone = request.form['phone']
         user.username = request.form['username']
         user.password = request.form['password']
-        # user.rold_id = request.form['role']
+        
+        role = Role.query.get(request.form['role'])
+        user.role = role
         
         db.session.commit()
         
         return redirect(url_for('user_page'))
     
-    return render_template('edit-user.html', user=user)
+    sexs = [sex.name for sex in Sex]
+    roles = Role.query.all()
+    
+    return render_template('edit-user.html'
+                           , user=user, sexs=sexs
+                           , roles=roles)
 
 
 @app.route('/delete-user/<int:user_id>', methods=['GET', 'POST'])
