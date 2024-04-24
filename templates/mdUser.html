@@ -5,8 +5,11 @@
 {% block content %}
 
 <!-- Button trigger modal -->
-<button type="button" class="btn btn-primary" data-toggle="modal" data-target="#exampleModal">
+<!-- <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#exampleModal">
   Add User
+</button> -->
+<button type="button" class="btn btn-primary">
+  <a href="{{ url_for('add_user') }}" style="color: white;">Add User</a>
 </button>
 <br/>
 <br/>
@@ -134,6 +137,7 @@
         <th>Phone</th>
         <th>Username</th>
         <th>Role</th>
+        <th>Actions</th>
       </tr>
     </thead>
     <tbody>
@@ -148,6 +152,9 @@
         <td>{{ user.phone }}</td>
         <td>{{ user.username }}</td>
         <td>{{ user.role }}</td>
+        <td>
+          <a href="{{ url_for('edit_user', user_id=user.id) }}" class="btn btn-primary btn-sm">Edit</a>
+          <a href="{{ url_for('delete_user', user_id=user.id) }}" class="btn btn-danger btn-sm">Delete</a>
       <tr>
         {% endfor %}
     </tbody>

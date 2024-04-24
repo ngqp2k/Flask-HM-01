@@ -1,8 +1,10 @@
-from flask import Flask, render_template
+from flask import Flask, render_template, request, flash, redirect, url_for
 from flask_sqlalchemy import SQLAlchemy
 from werkzeug.security import generate_password_hash
 from datetime import datetime
+from flask_wtf import FlaskForm
 import enum
+from wtforms import StringField
 
 
 app = Flask(__name__)
@@ -224,6 +226,74 @@ def role_page():
     roles = Role.query.all()
     return render_template('mdRole.html', roles=roles)
 
+
+class AddUserForm(FlaskForm):
+    first_name = StringField('First Name')
+    last_name = StringField('Last Name')
+
+
+@app.route('/add-user', methods=['GET', 'POST'])
+def add_user():
+    
+    if request.method == 'POST':
+        user = User()
+        user.first_name = request.form['first_name']
+        user.last_name = request.form['last_name']
+        user.sex = Sex.Men
+        user.birthdate = datetime(2012, 3, 3)
+        user.email = request.form['email']
+        user.phone = request.form['phone']
+        user.username = request.form['username']
+        user.password = request.form['password']
+        user.rold_id = request.form['role']
+        
+        with app.app_context():
+            db.session.add(user)
+            db.session.commit()
+        
+        return redirect(url_for('user_page'))
+    
+    return render_template('add-user.html')
+    
+    
+@app.route('/edit-user/<int:user_id>', methods=['GET', 'POST'])
+def edit_user(user_id):
+    user = User.query.get(user_id)
+    
+    if request.method == 'POST':
+        user.first_name = request.form['first_name']
+        user.last_name = request.form['last_name']
+        user.sex = Sex.Men
+        user.birthdate = datetime(2012, 3, 3)
+        user.email = request.form['email']
+        user.phone = request.form['phone']
+        # user.username = request.form['username']
+        # user.password = request.form['password']
+        # user.rold_id = request.form['role']
+        
+        db.session.commit()
+        
+        return redirect(url_for('user_page'))
+    
+    return render_template('edit-user.html', user=user)
+
+
+@app.route('/delete-user/<int:user_id>', methods=['GET', 'POST'])
+def delete_user(user_id):
+    user = User.query.get(user_id)
+    print(user)
+    db.session.delete(user)
+    db.session.commit()
+    
+    return redirect(url_for('user_page'))
+    
+    
+# @app.route('/test', methods=['GET', 'POST'])
+# def test():
+#     first_name = request.form['first_name']  # pass the form field name as key
+#     last_name = request.form['last_name']  # pass the form field name as key
+#     return (f'User.first_name: {first_name} User.last_name: {last_name}')
+    
 def build_sample_db():
     
     db.drop_all()
