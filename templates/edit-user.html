@@ -5,7 +5,8 @@
 {% block content %}
 
 <div class="container">
-  <form class="" method="post" action="#" role="form">
+  <form class="" method="post" action="#" role="form"
+  oninput='confirm_password.setCustomValidity(confirm_password.value != password.value ? "Passwords do not match." : "")'>
     <!-- <div class="text-center mb-4">
     <img class="mb-4" src="{{ url_for('static', filename='assets/brand/bootstrap-solid.svg') }}" alt=""
       width="72" height="72">

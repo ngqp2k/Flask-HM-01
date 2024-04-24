@@ -267,8 +267,8 @@ def edit_user(user_id):
         user.birthdate = datetime(2012, 3, 3)
         user.email = request.form['email']
         user.phone = request.form['phone']
-        # user.username = request.form['username']
-        # user.password = request.form['password']
+        user.username = request.form['username']
+        user.password = request.form['password']
         # user.rold_id = request.form['role']
         
         db.session.commit()
