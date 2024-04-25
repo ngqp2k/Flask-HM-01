@@ -83,7 +83,7 @@ def add_user():
         sex = request.form['sex']
         print(sex)
         user.sex = models.Sex[sex]
-        user.birthdate = datetime(2012, 3, 3)
+        user.birthdate = datetime.strptime(request.form['birthdate'], '%Y-%m-%d')
         user.email = request.form['email']
         user.phone = request.form['phone']
         user.username = request.form['username']
@@ -107,7 +107,7 @@ def edit_user(user_id):
         user.first_name = request.form['first_name']
         user.last_name = request.form['last_name']
         user.sex = models.Sex[request.form['sex']]
-        user.birthdate = datetime(2012, 3, 3)
+        user.birthdate = datetime.strptime(request.form['birthdate'], '%Y-%m-%d')
         user.email = request.form['email']
         user.phone = request.form['phone']
         user.username = request.form['username']
@@ -339,7 +339,7 @@ def add_invoice():
     if request.method == 'POST':
         invoice = models.Invoice()
         invoice.booking = models.Booking.query.get(request.form['booking'])
-        invoice.created_date = datetime(2012, 3, 3)
+        invoice.created_date = datetime.strptime(request.form['created_date'], '%Y-%m-%d')
         invoice.total_price = request.form['total_price']
         
         db.session.add(invoice)
@@ -358,7 +358,7 @@ def edit_invoice(invoice_id):
     
     if request.method == 'POST':
         invoice.booking = models.Booking.query.get(request.form['booking'])
-        invoice.created_date = datetime(2012, 3, 3)
+        invoice.created_date = datetime.strptime(request.form['created_date'], '%Y-%m-%d')
         invoice.total_price = request.form['total_price']
         
         db.session.commit()
@@ -389,9 +389,11 @@ def payment_page():
 def add_payment():
     if request.method == 'POST':
         payment = models.Payment()
-        payment.invoice = models.Invoice.query.get(request.form['invoice'])
-        payment.payment_date = datetime(2022, 1, 1)
+        payment.booking = models.Booking.query.get(request.form['booking'])
+        payment.created_date = datetime.strptime(request.form['created_date'], '%Y-%m-%d')
         payment.amount = request.form['amount']
+        payment.transaction_id = request.form['transaction_id']
+        payment.payment_method = models.PaymentMethod.query.get(request.form['payment_method'])
         
         db.session.add(payment)
         db.session.commit()
@@ -408,9 +410,14 @@ def edit_payment(payment_id):
     payment = models.Payment.query.get(payment_id)
     
     if request.method == 'POST':
-        payment.invoice = models.Invoice.query.get(request.form['invoice'])
-        payment.payment_date = datetime(2022, 1, 1)
+        payment.booking = models.Booking.query.get(request.form['booking'])
+        payment.created_date = datetime.strptime(request.form['created_date'], '%Y-%m-%d')
         payment.amount = request.form['amount']
+        payment.transaction_id = request.form['transaction_id']
+        payment.payment_method = models.PaymentMethod.query.get(request.form['payment_method'])
+        
+        db.session.add(payment)
+        db.session.commit()
         
         db.session.commit()
         
@@ -440,7 +447,7 @@ def add_additional_charge():
     if request.method == 'POST':
         additional_charge = models.AdditionalCharge()
         additional_charge.booking = models.Booking.query.get(request.form['booking'])
-        additional_charge.created_date = datetime(2022, 1, 1)
+        additional_charge.created_date = datetime.strptime(request.form['created_date'], '%Y-%m-%d')
         additional_charge.description = request.form['description']
         additional_charge.amount = request.form['amount']
         
@@ -459,7 +466,7 @@ def edit_additional_charge(additional_charge_id):
     
     if request.method == 'POST':
         additional_charge.booking = models.Booking.query.get(request.form['booking'])
-        additional_charge.created_date = datetime(2022, 1, 1)
+        additional_charge.created_date = datetime.strptime(request.form['created_date'], '%Y-%m-%d')
         additional_charge.description = request.form['description']
         additional_charge.amount = request.form['amount']
         
