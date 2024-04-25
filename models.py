@@ -1,13 +1,13 @@
-from werkzeug.security import generate_password_hash
 import enum
 from app import db
-
+from werkzeug.security import generate_password_hash
 
 class Sex(enum.Enum):
     Men = 1,
     Women = 2,
     Other = 3
     
+
 class Role(db.Model):
     id = db.Column(db.Integer, primary_key=True)
     name = db.Column(db.String(50))
@@ -183,4 +183,3 @@ class RefundRequest(db.Model):
     
     def __str__(self) -> str:
         return self.booking.user.username
-    
