@@ -210,3 +210,6 @@ class Customer(db.Model):
     age = db.Column(db.Integer)
     email = db.Column(db.String(50))
     phone = db.Column(db.String(50))
+    
+    def __str__(self) -> str:
+        return self.first_name

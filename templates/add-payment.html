@@ -10,7 +10,11 @@
       <div class="col-md-12">
         <div class="form-group">
           <label for="" class="col-form-label">Booking</label>
-          <input type="text" id="first-name" class="form-control" placeholder="Booking" name="booking" autofocus>
+          <select class="custom-select" name="booking">
+            {% for booking in bookings %}
+                <option>{{ booking }}</option>
+            {% endfor %}
+        </select>
         </div>
       </div>
       <div class="col-md-12">

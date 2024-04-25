@@ -1,0 +1,51 @@
+{% extends 'index.html' %}
+
+{% block title %}Booking{% endblock %}
+
+{% block content %}
+
+<button type="button" class="btn btn-primary">
+  <a href="{{ url_for('add_booking') }}" style="color: white;">Add Booking</a>
+</button>
+<br/>
+<br/>
+
+<div class="table-responsive">
+  <table class="table table-striped table-sm">
+    <thead>
+      <tr>
+        <th>Booking ID</th>
+        <th>Customer first name</th>
+        <th>Customer last name</th>
+        <th>Phone</th>
+        <th>Is regioner</th>
+        <th>Check-in date</th>
+        <th>Check-out date</th>
+        <th>Room</th>
+        <th>Customer</th>
+        <th>Actions</th>
+      </tr>
+    </thead>
+    <tbody>
+      {% for booking in bookings %}
+      <tr>
+        <td>{{ booking.id }}</td>
+        <td>{{ booking.customer_first_name }}</td>
+        <td>{{ booking.customer_last_name }}</td>
+        <td>{{ booking.phone }}</td>
+        <td>{{ booking.is_regioner }}</td>
+        <td>{{ booking.checkin_date }}</td>
+        <td>{{ booking.checkout_date }}</td>
+        <td>{{ booking.room }}</td>
+        <td>{{ booking.customer }}</td>
+        <td>
+          <a href="{{ url_for('edit_booking', booking_id=booking.id) }}" class="btn btn-primary btn-sm">Edit</a>
+          <a href="{{ url_for('delete_booking', booking_id=booking.id) }}" class="btn btn-danger btn-sm">Delete</a>
+        </td>
+      <tr>
+        {% endfor %}
+    </tbody>
+  </table>
+</div>
+
+{% endblock %}

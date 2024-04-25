@@ -1,0 +1,130 @@
+{% extends 'index.html' %}
+
+{% block title %}Add Booking{% endblock %}
+
+{% block content %}
+
+<div class="container">
+    <form class="" method="post" action="#" role="form">
+        <div class="form-row">
+            <div class="col-md-4">
+                <div class="form-group">
+                    <label for="" class="col-form-label">Customer first name</label>
+                    <input type="text" id="first-name" class="form-control" placeholder="Customer first name"
+                        name="booking" autofocus>
+                </div>
+            </div>
+            <div class="col-md-4">
+                <div class="form-group">
+                    <label for="" class="col-form-label">Customer last name</label>
+                    <input type="text" id="first-name" class="form-control" placeholder="Customer last name"
+                        name="created_date" autofocus>
+                </div>
+            </div>
+            <div class="col-md-2">
+                <div class="form-group">
+                    <label for="" class="col-form-label">Age</label>
+                    <input type="text" id="first-name" class="form-control" placeholder="Age" name="amount" autofocus>
+                </div>
+            </div>
+            <div class="col-md-2">
+                <div class="form-group">
+                    <label for="" class="col-form-label">Sex</label>
+                    <select class="custom-select" name="sex">
+                        {% for sex in sexs %}
+                            <option>{{ sex }}</option>
+                        {% endfor %}
+                    </select>
+                </div>
+            </div>
+            <div class="col-md-4">
+                <div class="form-group">
+                    <label for="" class="col-form-label">Email</label>
+                    <input type="email" id="first-name" class="form-control" placeholder="Email" name="transaction_id"
+                        autofocus>
+                </div>
+            </div>
+            <div class="col-md-4">
+                <div class="form-group">
+                    <label for="" class="col-form-label">Is regioner</label>
+                    <input type="email" id="first-name" class="form-control" placeholder="Email" name="transaction_id"
+                        autofocus>
+                </div>
+            </div>
+            <div class="col-md-4"></div>
+            <div class="col-md-4">
+                <div class="form-group">
+                    <label for="" class="col-form-label">Created date</label>
+                    <input type="date" id="first-name" class="form-control" placeholder="Email" name="transaction_id"
+                        autofocus>
+                </div>
+            </div>
+            <div class="col-md-4">
+                <div class="form-group">
+                    <label for="" class="col-form-label">Check-in date</label>
+                    <input type="date" id="first-name" class="form-control" placeholder="Email" name="transaction_id"
+                        autofocus>
+                </div>
+            </div>
+            <div class="col-md-4">
+                <div class="form-group">
+                    <label for="" class="col-form-label">Check-out date</label>
+                    <input type="date" id="first-name" class="form-control" placeholder="Email" name="transaction_id"
+                        autofocus>
+                </div>
+            </div>
+            <div class="col-md-3">
+                <div class="form-group">
+                    <label for="" class="col-form-label">User</label>
+                    <select class="custom-select" name="sex">
+                        {% for user in users %}
+                            <option>{{ user }}</option>
+                        {% endfor %}
+                    </select>
+                </div>
+            </div>
+            <div class="col-md-3">
+                <div class="form-group">
+                    <label for="" class="col-form-label">Room</label>
+                    <select class="custom-select" name="sex">
+                        {% for room in rooms %}
+                            <option>{{ room }}</option>
+                        {% endfor %}
+                    </select>
+                </div>
+            </div>
+            <div class="col-md-3">
+                <div class="form-group">
+                    <label for="" class="col-form-label">Customer</label>
+                    <select class="custom-select" name="sex">
+                        {% for customer in customers %}
+                            <option>{{ customer }}</option>
+                        {% endfor %}
+                    </select>
+                </div>
+            </div>
+            <div class="col-md-3">
+                <div class="form-group">
+                    <label for="" class="col-form-label">Status</label>
+                    <select class="custom-select" name="status">
+                        {% for status in statuses %}
+                            <option>{{ status }}</option>
+                        {% endfor %}
+                    </select>
+                </div>
+            </div>
+            <div class="col-1">
+                <div class="form-group">
+                    <button class="btn btn-lg btn-secondary btn-block" type="">Close</button>
+                </div>
+            </div>
+            <div class="col-2">
+                <div class="form-group">
+                    <input class="btn btn-lg btn-primary btn-block" type="submit" value="Save">
+                </div>
+            </div>
+        </div>
+    </form>
+</div>
+
+{% endblock %}
