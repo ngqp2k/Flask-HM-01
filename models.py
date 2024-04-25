@@ -121,17 +121,20 @@ class Booking(db.Model):
     email = db.Column(db.String(50))
     phone = db.Column(db.String(50))
     is_regioner = db.Column(db.Boolean)
-    check_in = db.Column(db.Date)
-    check_out = db.Column(db.Date)
+    created_date = db.Column(db.Date)
+    checkin_date = db.Column(db.Date)
+    checkout_date = db.Column(db.Date)
     total_price = db.Column(db.Float)
     user_id = db.Column(db.Integer, db.ForeignKey('user.id'))
     user = db.relationship('User', backref=db.backref('booking', lazy=True))
     room_id = db.Column(db.Integer, db.ForeignKey('room.id'))
     room = db.relationship('Room', backref=db.backref('booking', lazy=True))
+    customer_id = db.Column(db.Integer, db.ForeignKey('customer.id'))
+    customer = db.relationship('Customer', backref=db.backref('booking', lazy=True))
     status = db.Column(db.Enum(BookingStatus))
     
     def __str__(self) -> str:
-        return self.id
+        return str(self.id)
 
 
 class Service(db.Model):
@@ -173,6 +176,9 @@ class Payment(db.Model):
     payment_method = db.relationship('PaymentMethod', backref=db.backref('payment', lazy=True))
     transaction_id = db.Column(db.String(50))
     
+    def __str__(self) -> str:
+        return self.booking_id
+    
 class RefundRequest(db.Model):
     id = db.Column(db.Integer, primary_key=True)
     booking_id = db.Column(db.Integer, db.ForeignKey('booking.id'))
@@ -182,4 +188,25 @@ class RefundRequest(db.Model):
     reason = db.Column(db.Text)
     
     def __str__(self) -> str:
-        return self.booking.user.username
+        return self.booking_id
+
+
+class AdditionalCharge(db.Model):
+    id = db.Column(db.Integer, primary_key=True)
+    booking_id = db.Column(db.Integer, db.ForeignKey('booking.id'))
+    booking = db.relationship('Booking', backref=db.backref('additional_charge', lazy=True))
+    created_date = db.Column(db.Date)
+    description = db.Column(db.Text)
+    amount = db.Column(db.DECIMAL)
+    
+    def __str__(self) -> str:
+        return self.booking_id
+    
+class Customer(db.Model):
+    id = db.Column(db.Integer, primary_key=True)
+    first_name = db.Column(db.String(50))
+    last_name = db.Column(db.String(50))
+    sex = db.Column(db.Enum(Sex))
+    age = db.Column(db.Integer)
+    email = db.Column(db.String(50))
+    phone = db.Column(db.String(50))

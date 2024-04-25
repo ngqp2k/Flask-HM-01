@@ -428,3 +428,53 @@ def delete_payment(payment_id):
     db.session.commit()
     
     return redirect(url_for('payment_page'))
+
+#additional charges
+@app.route('/additional-charge')
+def additional_charge_page():
+    additional_charges = models.AdditionalCharge.query.all()
+    return render_template('mdAdditionalCharge.html', additional_charges=additional_charges)
+
+@app.route('/add-additional-charge', methods=['GET', 'POST'])
+def add_additional_charge():
+    if request.method == 'POST':
+        additional_charge = models.AdditionalCharge()
+        additional_charge.booking = models.Booking.query.get(request.form['booking'])
+        additional_charge.created_date = datetime(2022, 1, 1)
+        additional_charge.description = request.form['description']
+        additional_charge.amount = request.form['amount']
+        
+        db.session.add(additional_charge)
+        db.session.commit()
+        
+        return redirect(url_for('additional_charges_page'))
+    
+    bookings = models.Booking.query.all()
+    
+    return render_template('add-additional-charge.html', bookings=bookings)
+
+@app.route('/edit-additional-charge/<int:additional_charge_id>', methods=['GET', 'POST'])
+def edit_additional_charge(additional_charge_id):
+    additional_charge = models.AdditionalCharge.query.get(additional_charge_id)
+    
+    if request.method == 'POST':
+        additional_charge.booking = models.Booking.query.get(request.form['booking'])
+        additional_charge.created_date = datetime(2022, 1, 1)
+        additional_charge.description = request.form['description']
+        additional_charge.amount = request.form['amount']
+        
+        db.session.commit()
+        
+        return redirect(url_for('additional_charges_page'))
+    
+    bookings = models.Booking.query.all()
+    
+    return render_template('edit-additional-charge.html', additional_charge=additional_charge, bookings=bookings)
+
+@app.route('/delete-additional-charge/<int:additional_charge_id>', methods=['GET', 'POST'])
+def delete_additional_charge(additional_charge_id):
+    additional_charge = models.AdditionalCharge.query.get(additional_charge_id)
+    db.session.delete(additional_charge)
+    db.session.commit()
+    
+    return redirect(url_for('additional_charges_page'))
