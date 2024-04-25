@@ -377,3 +377,54 @@ def delete_invoice(invoice_id):
     db.session.commit()
     
     return redirect(url_for('invoice_page'))
+
+
+@app.route('/payment')
+def payment_page():
+    payments = models.Payment.query.all()
+    return render_template('mdPayment.html', payments=payments)
+
+
+@app.route('/add-payment', methods=['GET', 'POST'])
+def add_payment():
+    if request.method == 'POST':
+        payment = models.Payment()
+        payment.invoice = models.Invoice.query.get(request.form['invoice'])
+        payment.payment_date = datetime(2022, 1, 1)
+        payment.amount = request.form['amount']
+        
+        db.session.add(payment)
+        db.session.commit()
+        
+        return redirect(url_for('payment_page'))
+    
+    invoices = models.Invoice.query.all()
+    
+    return render_template('add-payment.html', invoices=invoices)
+
+
+@app.route('/edit-payment/<int:payment_id>', methods=['GET', 'POST'])
+def edit_payment(payment_id):
+    payment = models.Payment.query.get(payment_id)
+    
+    if request.method == 'POST':
+        payment.invoice = models.Invoice.query.get(request.form['invoice'])
+        payment.payment_date = datetime(2022, 1, 1)
+        payment.amount = request.form['amount']
+        
+        db.session.commit()
+        
+        return redirect(url_for('payment_page'))
+    
+    invoices = models.Invoice.query.all()
+    
+    return render_template('edit-payment.html', payment=payment, invoices=invoices)
+
+
+@app.route('/delete-payment/<int:payment_id>', methods=['GET', 'POST'])
+def delete_payment(payment_id):
+    payment = models.Payment.query.get(payment_id)
+    db.session.delete(payment)
+    db.session.commit()
+    
+    return redirect(url_for('payment_page'))

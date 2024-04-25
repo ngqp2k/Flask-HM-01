@@ -1,6 +1,6 @@
 {% extends 'index.html' %}
 
-{% block title %}Add invoice{% endblock %}
+{% block title %}Add payment{% endblock %}
 
 {% block content %}
 
@@ -21,8 +21,20 @@
       </div>
       <div class="col-md-12">
         <div class="form-group">
-          <label for="" class="col-form-label">Total price</label>
-          <input type="text" id="first-name" class="form-control" placeholder="Total price" name="total_price" autofocus>
+          <label for="" class="col-form-label">Amount</label>
+          <input type="text" id="first-name" class="form-control" placeholder="Amount" name="amount" autofocus>
+        </div>
+      </div>
+      <div class="col-md-12">
+        <div class="form-group">
+          <label for="" class="col-form-label">Payment method</label>
+          <input type="text" id="first-name" class="form-control" placeholder="Payment method" name="payment_method" autofocus>
+        </div>
+      </div>
+      <div class="col-md-12">
+        <div class="form-group">
+          <label for="" class="col-form-label">Transaction ID</label>
+          <input type="text" id="first-name" class="form-control" placeholder="Transaction ID" name="transaction_id" autofocus>
         </div>
       </div>
       <div class="col-1">
