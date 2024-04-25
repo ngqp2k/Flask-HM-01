@@ -1,0 +1,47 @@
+{% extends 'index.html' %}
+
+{% block title %}Add role{% endblock %}
+
+{% block content %}
+
+
+
+<div class="container">
+  <form class="" method="post" action="#" role="form"
+    oninput='confirm_password.setCustomValidity(confirm_password.value != password.value ? "Passwords do not match." : "")'>
+    <!-- <div class="text-center mb-4">
+    <img class="mb-4" src="{{ url_for('static', filename='assets/brand/bootstrap-solid.svg') }}" alt=""
+      width="72" height="72">
+    <h1 class="h3 mb-3 font-weight-normal">Floating labels</h1>
+    </div> -->
+
+    <div class="form-row">
+      <div class="col-md-12">
+        <div class="form-group">
+          <label for="" class="col-form-label">Role name</label>
+          <input type="text" id="first-name" class="form-control" placeholder="Role name" name="name" required autofocus>
+        </div>
+      </div>
+      <div class="col-1">
+        <div class="form-group">
+          <button class="btn btn-lg btn-secondary btn-block" type="">Close</button>
+        </div>
+      </div>
+      <div class="col-2">
+        <div class="form-group">
+          <input class="btn btn-lg btn-primary btn-block" type="submit" value="Save">
+          <!-- <button class="btn btn-lg btn-primary btn-block" type="submit">Save</button> -->
+        </div>
+      </div>
+    </div>
+    <!-- <div class="checkbox mb-3">
+    <label>
+      <input type="checkbox" value="remember-me"> Remember me
+    </label>
+    </div> -->
+    <!-- <p class="mt-5 mb-3 text-muted text-center">&copy; 2017-2022</p> -->
+  </form>
+</div>
+
+
+{% endblock %}
