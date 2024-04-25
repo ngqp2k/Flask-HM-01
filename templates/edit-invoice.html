@@ -1,0 +1,42 @@
+{% extends 'index.html' %}
+
+{% block title %}Edit invoice{% endblock %}
+
+{% block content %}
+
+<div class="container">
+  <form class="" method="post" action="#" role="form">
+    <div class="form-row">
+      <div class="col-md-12">
+        <div class="form-group">
+          <label for="" class="col-form-label">Booking</label>
+          <input type="text" id="first-name" class="form-control" placeholder="Service name" name="booking" value="{{ invoice.booking }}" autofocus>
+        </div>
+      </div>
+      <div class="col-md-12">
+        <div class="form-group">
+          <label for="" class="col-form-label">Created date</label>
+          <input type="date" id="first-name" class="form-control" placeholder="Service description" name="created_date" value="{{ invoice.created_date }}" autofocus>
+        </div>
+      </div>
+      <div class="col-md-12">
+        <div class="form-group">
+          <label for="" class="col-form-label">Total price</label>
+          <input type="text" id="first-name" class="form-control" placeholder="Role name" name="total_price" value="{{ invoice.total_price }}" autofocus>
+        </div>
+      </div>
+      <div class="col-1">
+        <div class="form-group">
+          <button class="btn btn-lg btn-secondary btn-block" type="">Close</button>
+        </div>
+      </div>
+      <div class="col-2">
+        <div class="form-group">
+          <input class="btn btn-lg btn-primary btn-block" type="submit" value="Save">
+        </div>
+      </div>
+    </div>
+  </form>
+</div>
+
+{% endblock %}

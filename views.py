@@ -327,3 +327,53 @@ def delete_service(service_id):
     db.session.commit()
     
     return redirect(url_for('service_page'))
+
+# invoice
+@app.route('/invoice')
+def invoice_page():
+    invoices = models.Invoice.query.all()
+    return render_template('mdInvoice.html', invoices=invoices)
+
+@app.route('/add-invoice', methods=['GET', 'POST'])
+def add_invoice():
+    if request.method == 'POST':
+        invoice = models.Invoice()
+        invoice.booking = models.Booking.query.get(request.form['booking'])
+        invoice.created_date = datetime(2012, 3, 3)
+        invoice.total_price = request.form['total_price']
+        
+        db.session.add(invoice)
+        db.session.commit()
+        
+        return redirect(url_for('invoice_page'))
+    
+    bookings = models.Booking.query.all()
+    
+    return render_template('add-invoice.html', bookings=bookings)
+
+
+@app.route('/edit-invoice/<int:invoice_id>', methods=['GET', 'POST'])
+def edit_invoice(invoice_id):
+    invoice = models.Invoice.query.get(invoice_id)
+    
+    if request.method == 'POST':
+        invoice.booking = models.Booking.query.get(request.form['booking'])
+        invoice.created_date = datetime(2012, 3, 3)
+        invoice.total_price = request.form['total_price']
+        
+        db.session.commit()
+        
+        return redirect(url_for('invoice_page'))
+    
+    bookings = models.Booking.query.all()
+    
+    return render_template('edit-invoice.html', invoice=invoice, bookings=bookings)
+
+
+@app.route('/delete-invoice/<int:invoice_id>', methods=['GET', 'POST'])
+def delete_invoice(invoice_id):
+    invoice = models.Invoice.query.get(invoice_id)
+    db.session.delete(invoice)
+    db.session.commit()
+    
+    return redirect(url_for('invoice_page'))
