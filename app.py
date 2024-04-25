@@ -316,7 +316,7 @@ def edit_user(user_id):
         user.email = request.form['email']
         user.phone = request.form['phone']
         user.username = request.form['username']
-        # user.password = request.form['password']
+        user.password = request.form['password']
         
         role = Role.query.get(request.form['role'])
         user.role = role
