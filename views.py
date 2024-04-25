@@ -454,7 +454,7 @@ def add_additional_charge():
         db.session.add(additional_charge)
         db.session.commit()
         
-        return redirect(url_for('additional_charges_page'))
+        return redirect(url_for('additional_charge_page'))
     
     bookings = models.Booking.query.all()
     
@@ -472,7 +472,7 @@ def edit_additional_charge(additional_charge_id):
         
         db.session.commit()
         
-        return redirect(url_for('additional_charges_page'))
+        return redirect(url_for('additional_charge_page'))
     
     bookings = models.Booking.query.all()
     
@@ -484,4 +484,4 @@ def delete_additional_charge(additional_charge_id):
     db.session.delete(additional_charge)
     db.session.commit()
     
-    return redirect(url_for('additional_charges_page'))
+    return redirect(url_for('additional_charge_page'))
