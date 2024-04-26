@@ -35,7 +35,7 @@ def login():
             return redirect(url_for('login'))
         else:
             login_user(user)
-            return redirect(url_for('admin_page'))
+            return redirect(url_for('index'))
         
     return render_template('signin.html')
 
@@ -46,7 +46,7 @@ def sign_in_page():
 @app.route('/logout', methods=['GET', 'POST'])
 def logout():
     logout_user()
-    return redirect(url_for('sign_in_page'))
+    return redirect(url_for('index'))
 
 
 @app.route('/')
