@@ -5,38 +5,39 @@
 {% block content %}
 
 <div class="container">
-  <form class="" method="post" action="#" role="form">
-    <div class="form-row">
-      <div class="col-md-12">
-        <div class="form-group">
-          <label for="" class="col-form-label">Name</label>
-          <input type="text" id="first-name" class="form-control" placeholder="Service name" name="name" autofocus>
+    <form class="row g-2" method="post" action="#" role="form">
+        <div class="form-row">
+            <div class="col-md-12">
+                <div class="form-group">
+                    <label for="" class="col-form-label">Name</label>
+                    <input type="text" id="first-name" class="form-control" placeholder="Service name" name="name"
+                        autofocus>
+                </div>
+            </div>
+            <div class="col-md-12">
+                <div class="form-group">
+                    <label for="" class="col-form-label">Description</label>
+                    <input type="text" id="first-name" class="form-control" placeholder="Service description"
+                        name="description" autofocus>
+                </div>
+            </div>
+            <div class="col-md-12">
+                <div class="form-group">
+                    <label for="" class="col-form-label">Price</label>
+                    <input type="text" id="first-name" class="form-control" placeholder="Role name" name="price"
+                        autofocus>
+                </div>
+            </div>
+            <div class="row pt-2">
+                <div class="col-auto">
+                    <input class="btn btn-secondary btn-block" type="submit" value="close">
+                </div>
+                <div class="col-auto">
+                    <input class="btn btn-primary btn-block" type="submit" value="Save" style="width: 200%;">
+                </div>
+            </div>
         </div>
-      </div>
-      <div class="col-md-12">
-        <div class="form-group">
-          <label for="" class="col-form-label">Description</label>
-          <input type="text" id="first-name" class="form-control" placeholder="Service description" name="description" autofocus>
-        </div>
-      </div>
-      <div class="col-md-12">
-        <div class="form-group">
-          <label for="" class="col-form-label">Price</label>
-          <input type="text" id="first-name" class="form-control" placeholder="Role name" name="price" autofocus>
-        </div>
-      </div>
-      <div class="col-1">
-        <div class="form-group">
-          <button class="btn btn-lg btn-secondary btn-block" type="">Close</button>
-        </div>
-      </div>
-      <div class="col-2">
-        <div class="form-group">
-          <input class="btn btn-lg btn-primary btn-block" type="submit" value="Save">
-        </div>
-      </div>
-    </div>
-  </form>
+    </form>
 </div>
 
 {% endblock %}

@@ -5,38 +5,45 @@
 {% block content %}
 
 <div class="container">
-  <form class="" method="post" action="#" role="form">
-    <div class="form-row">
-      <div class="col-md-12">
-        <div class="form-group">
-          <label for="" class="col-form-label">Booking</label>
-          <input type="text" id="first-name" class="form-control" placeholder="Booking" name="booking" value="{{ invoice.booking }}" autofocus>
-        </div>
-      </div>
-      <div class="col-md-12">
-        <div class="form-group">
-          <label for="" class="col-form-label">Created date</label>
-          <input type="date" id="first-name" class="form-control" placeholder="Created date" name="created_date" value="{{ invoice.created_date }}" autofocus>
-        </div>
-      </div>
-      <div class="col-md-12">
-        <div class="form-group">
-          <label for="" class="col-form-label">Total price</label>
-          <input type="text" id="first-name" class="form-control" placeholder="Total price" name="total_price" value="{{ invoice.total_price }}" autofocus>
-        </div>
-      </div>
-      <div class="col-1">
-        <div class="form-group">
-          <button class="btn btn-lg btn-secondary btn-block" type="">Close</button>
-        </div>
-      </div>
-      <div class="col-2">
-        <div class="form-group">
-          <input class="btn btn-lg btn-primary btn-block" type="submit" value="Save">
-        </div>
-      </div>
-    </div>
-  </form>
+    <form class="" method="post" action="#" role="form">
+        <div class="form-row">
+            <div class="col-md-12">
+                <div class="form-group">
+                    <label for="" class="col-form-label">Booking</label>
+                    <select class="form-select" name="booking">
+                        {% for booking in bookings %}
+                            {% if booking == invoice.booking %}
+                                <option selected value="{{ booking.id }}">{{ booking }}</option>
+                            {% else %}
+                                <option value="{{ booking.id }}">{{ booking }}</option>
+                            {% endif %}
+                        {% endfor %}
+                    </select>
+                </div>
+            </div>
+            <div class="col-md-12">
+                <div class="form-group">
+                    <label for="" class="col-form-label">Created date</label>
+                    <input type="date" id="first-name" class="form-control" placeholder="Created date"
+                        name="created_date" value="{{ invoice.created_date }}" autofocus>
+                </div>
+            </div>
+            <div class="col-md-12">
+                <div class="form-group">
+                    <label for="" class="col-form-label">Total price</label>
+                    <input type="text" id="first-name" class="form-control" placeholder="Total price" name="total_price"
+                        value="{{ invoice.total_price }}" autofocus>
+                </div>
+            </div>
+            <div class="row pt-2">
+                <div class="col-auto">
+                    <input class="btn btn-secondary btn-block" type="submit" value="close">
+                </div>
+                <div class="col-auto">
+                    <input class="btn btn-primary btn-block" type="submit" value="Save" style="width: 200%;">
+                </div>
+            </div>
+    </form>
 </div>
 
 {% endblock %}

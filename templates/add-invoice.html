@@ -10,7 +10,7 @@
             <div class="col-md-12">
                 <div class="form-group">
                     <label for="" class="col-form-label">Booking</label>
-                    <select class="custom-select" name="booking">
+                    <select class="form-select" name="booking">
                         {% for booking in bookings %}
                             <option>{{ booking }}</option>
                         {% endfor %}
@@ -21,24 +21,21 @@
                 <div class="form-group">
                     <label for="" class="col-form-label">Created date</label>
                     <input type="date" id="first-name" class="form-control" placeholder="Created date"
-                        name="created_date" autofocus>
+                        name="created_date">
                 </div>
             </div>
             <div class="col-md-12">
                 <div class="form-group">
                     <label for="" class="col-form-label">Total price</label>
-                    <input type="text" id="first-name" class="form-control" placeholder="Total price" name="total_price"
-                        autofocus>
+                    <input type="text" id="first-name" class="form-control" placeholder="Total price" name="total_price">
                 </div>
             </div>
-            <div class="col-1">
-                <div class="form-group">
-                    <button class="btn btn-lg btn-secondary btn-block" type="">Close</button>
+            <div class="row pt-2">
+                <div class="col-auto">
+                    <input class="btn btn-secondary btn-block" type="submit" value="close">
                 </div>
-            </div>
-            <div class="col-2">
-                <div class="form-group">
-                    <input class="btn btn-lg btn-primary btn-block" type="submit" value="Save">
+                <div class="col-auto">
+                    <input class="btn btn-primary btn-block" type="submit" value="Save" style="width: 200%;">
                 </div>
             </div>
         </div>

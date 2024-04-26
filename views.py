@@ -423,9 +423,9 @@ def edit_payment(payment_id):
         
         return redirect(url_for('payment_page'))
     
-    invoices = models.Invoice.query.all()
+    bookings = models.Booking.query.all()
     
-    return render_template('edit-payment.html', payment=payment, invoices=invoices)
+    return render_template('edit-payment.html', payment=payment, bookings=bookings)
 
 
 @app.route('/delete-payment/<int:payment_id>', methods=['GET', 'POST'])

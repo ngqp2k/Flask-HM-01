@@ -4,13 +4,7 @@
 
 {% block content %}
 
-<!-- Button trigger modal -->
-<!-- <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#exampleModal">
-  Add User
-</button> -->
-<button type="button" class="btn btn-primary">
-  <a href="{{ url_for('add_user') }}" style="color: white;">Add User</a>
-</button>
+<a href="{{ url_for('add_user') }}" class="btn btn-primary" tabindex="-1" role="button">Add User</a>
 <br/>
 <br/>
 

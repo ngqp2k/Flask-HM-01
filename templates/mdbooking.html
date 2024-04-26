@@ -4,9 +4,7 @@
 
 {% block content %}
 
-<button type="button" class="btn btn-primary">
-  <a href="{{ url_for('add_booking') }}" style="color: white;">Add Booking</a>
-</button>
+<a href="{{ url_for('add_booking') }}" class="btn btn-primary" tabindex="-1" role="button">Add Booking</a>
 <br/>
 <br/>
 

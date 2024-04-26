@@ -5,62 +5,50 @@
 {% block content %}
 
 <div class="container">
-  <form class="" method="post" action="#" role="form"
-    oninput='confirm_password.setCustomValidity(confirm_password.value != password.value ? "Passwords do not match." : "")'>
-    <!-- <div class="text-center mb-4">
-    <img class="mb-4" src="{{ url_for('static', filename='assets/brand/bootstrap-solid.svg') }}" alt=""
-      width="72" height="72">
-    <h1 class="h3 mb-3 font-weight-normal">Floating labels</h1>
-    </div> -->
-
-    <div class="form-row">
-      <div class="col-md-12">
-        <div class="form-group">
-          <label for="" class="col-form-label">Room no</label>
-          <input type="text" id="first-name" class="form-control" placeholder="Room no" name="room_no" required autofocus>
-        </div>
-      </div>
-      <div class="col-md-12">
-        <div class="form-group">
-          <label for="" class="col-form-label">Link image</label>
-          <input type="text" id="first-name" class="form-control" placeholder="Link image" name="image" required autofocus>
-        </div>
-      </div>
-      <div class="col-md-12">
-        <div class="form-group">
-          <label for="" class="col-form-label">Description</label>
-          <input type="text" id="first-name" class="form-control" placeholder="Description" name="description" required autofocus>
-        </div>
-      </div>
-      <div class="col-md-12">
-        <div class="form-group">
-          <label for="" class="col-form-label">Room type</label>
-          <select class="custom-select" name="room_type">
-            {% for room_type in room_types %}
-              <option value="{{ room_type.id }}">{{ room_type }}</option>
-            {% endfor %}
-          </select>
-        </div>
-      </div>
-      <div class="col-1">
-        <div class="form-group">
-          <button class="btn btn-lg btn-secondary btn-block" type="">Close</button>
-        </div>
-      </div>
-      <div class="col-2">
-        <div class="form-group">
-          <input class="btn btn-lg btn-primary btn-block" type="submit" value="Save">
-          <!-- <button class="btn btn-lg btn-primary btn-block" type="submit">Save</button> -->
-        </div>
-      </div>
-    </div>
-    <!-- <div class="checkbox mb-3">
-    <label>
-      <input type="checkbox" value="remember-me"> Remember me
-    </label>
-    </div> -->
-    <!-- <p class="mt-5 mb-3 text-muted text-center">&copy; 2017-2022</p> -->
-  </form>
+	<form class="row g-2" method="post" action="#" role="form">
+		<div class="row">
+			<div class="col-md-2">
+				<div class="form-group">
+					<label for="" class="col-form-label">Room no</label>
+					<input type="text" id="first-name" class="form-control" placeholder="Room no" name="room_no">
+				</div>
+			</div>
+			<div class="col-md-10">
+				<div class="form-group">
+					<label for="" class="col-form-label">Link image</label>
+					<input type="text" id="first-name" class="form-control" placeholder="Link image" name="image">
+				</div>
+			</div>
+		</div>
+		<div class="row">
+			<div class="col-md-2">
+				<div class="form-group">
+					<label for="" class="col-form-label">Room type</label>
+					<select class="form-select" name="room_type">
+						{% for room_type in room_types %}
+						<option value="{{ room_type.id }}">{{ room_type }}</option>
+						{% endfor %}
+					</select>
+				</div>
+			</div>
+		</div>
+		<div class="row">
+			<div class="col-md-12">
+				<div class="form-group">
+					<label for="" class="col-form-label">Description</label>
+					<textarea class="form-control" placeholder="Description" name="description"></textarea>
+				</div>
+			</div>
+		</div>
+		<div class="row pt-2">
+			<div class="col-auto">
+				<input class="btn btn-secondary btn-block" type="submit" value="close">
+			</div>
+			<div class="col-auto">
+				<input class="btn btn-primary btn-block" type="submit" value="Save" style="width: 200%;">
+			</div>
+		</div>
+	</form>
 </div>
 
 {% endblock %}

@@ -4,9 +4,7 @@
 
 {% block content %}
 
-<button type="button" class="btn btn-primary">
-  <a href="{{ url_for('add_role') }}" style="color: white;">Add Role</a>
-</button>
+<a href="{{ url_for('add_role') }}" class="btn btn-primary" tabindex="-1" role="button">Add Role</a>
 <br/>
 <br/>
 

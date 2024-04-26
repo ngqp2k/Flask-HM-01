@@ -4,9 +4,7 @@
 
 {% block content %}
 
-<button type="button" class="btn btn-primary">
-  <a href="{{ url_for('add_invoice') }}" style="color: white;">Add Invoice</a>
-</button>
+<a href="{{ url_for('add_invoice') }}" class="btn btn-primary" tabindex="-1" role="button">Add Invoice</a>
 <br/>
 <br/>
 
