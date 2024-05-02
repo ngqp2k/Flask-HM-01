@@ -495,20 +495,24 @@ def booking_page():
 @app.route('/add-booking', methods=['GET', 'POST'])
 def add_booking():
     if request.method == 'POST':
-        # Retrieve form data
-        # Example: 
-        # room_id = request.form['room_id']
-        # start_date = request.form['start_date']
-        # end_date = request.form['end_date']
+        booking = models.Booking()
+        booking.customer_first_name = request.form['customer_first_name']
+        booking.customer_last_name = request.form['customer_last_name']
+        booking.age = request.form['age']
+        booking.sex = models.Sex[request.form['sex']]
+        booking.email = request.form['email']
+        booking.phone = request.form['phone']
+        booking.is_regioner = request.form['is_regioner']
+        booking.created_date = datetime.strptime(request.form['created_date'], '%Y-%m-%d')
+        booking.checkin_date = datetime.strptime(request.form['checkin_date'], '%Y-%m-%d')
+        booking.checkout_date = datetime.strptime(request.form['checkout_date'], '%Y-%m-%d')
+        booking.user = models.User.query.get(request.form['user'])
+        booking.room = models.Room.query.get(request.form['room'])
+        booking.customer = models.Customer.query.get(request.form['customer'])
+        booking.status = models.BookingStatus[request.form['status']]
         
-        # Create a new booking object
-        # Example:
-        # booking = models.Booking(room_id=room_id, start_date=start_date, end_date=end_date)
-        
-        # Add the booking to the database
-        # Example:
-        # db.session.add(booking)
-        # db.session.commit()
+        db.session.add(booking)
+        db.session.commit()
         
         # Redirect to the booking page
         return redirect(url_for('booking_page'))
@@ -532,22 +536,40 @@ def edit_booking(booking_id):
     booking = models.Booking.query.get(booking_id)
     
     if request.method == 'POST':
-        # Retrieve form data and update the booking object
-        # Example:
-        # booking.room_id = request.form['room_id']
-        # booking.start_date = request.form['start_date']
-        # booking.end_date = request.form['end_date']
+        booking.customer_first_name = request.form['customer_first_name']
+        booking.customer_last_name = request.form['customer_last_name']
+        booking.age = request.form['age']
+        booking.sex = models.Sex[request.form['sex']]
+        booking.email = request.form['email']
+        booking.phone = request.form['phone']
+        booking.is_regioner = request.form.get('is_regioner', False)
+        booking.created_date = datetime.strptime(request.form['created_date'], '%Y-%m-%d')
+        booking.checkin_date = datetime.strptime(request.form['checkin_date'], '%Y-%m-%d')
+        booking.checkout_date = datetime.strptime(request.form['checkout_date'], '%Y-%m-%d')
+        booking.user = models.User.query.get(request.form['user'])
+        booking.room = models.Room.query.get(request.form['room'])
+        booking.customer = models.Customer.query.get(request.form['customer'])
+        status = request.form['status']
+        booking.status = models.BookingStatus[status]
         
-        # Commit the changes to the database
-        # Example:
-        # db.session.commit()
+        db.session.add(booking)
+        db.session.commit()
         
-        # Redirect to the booking page
         return redirect(url_for('booking_page'))
     
     rooms = models.Room.query.all()
+    sexs = [sex.name for sex in models.Sex]
+    users = models.User.query.all()
+    customers = models.Customer.query.all()
+    statuses = [status.name for status in models.BookingStatus]
     
-    return render_template('edit-booking.html', booking=booking, rooms=rooms)
+    return render_template('edit-booking.html'
+                           , booking=booking
+                           , rooms=rooms
+                           , sexs=sexs
+                           , users=users
+                           , customers=customers
+                           , statuses=statuses)
 
 
 @app.route('/delete-booking/<int:booking_id>', methods=['GET', 'POST'])

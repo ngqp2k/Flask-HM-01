@@ -6,79 +6,101 @@
 
 <div class="container">
     <form class="" method="post" action="#" role="form">
-        <div class="form-row">
-            <div class="col-md-4">
+        <div class="row">
+            <div class="col-md-2">
                 <div class="form-group">
                     <label for="" class="col-form-label">Customer first name</label>
                     <input type="text" id="first-name" class="form-control" placeholder="Customer first name"
-                        name="booking" autofocus>
+                        name="customer_first_name" value="{{ booking.customer_first_name}}">
                 </div>
             </div>
-            <div class="col-md-4">
+            <div class="col-md-2">
                 <div class="form-group">
                     <label for="" class="col-form-label">Customer last name</label>
                     <input type="text" id="first-name" class="form-control" placeholder="Customer last name"
-                        name="created_date" autofocus>
+                        name="customer_last_name" value="{{ booking.customer_last_name}}">
                 </div>
             </div>
             <div class="col-md-2">
                 <div class="form-group">
                     <label for="" class="col-form-label">Age</label>
-                    <input type="text" id="first-name" class="form-control" placeholder="Age" name="amount" autofocus>
+                    <input type="text" id="first-name" class="form-control" placeholder="Age" name="age"
+                        value="{{ booking.age}}">
                 </div>
             </div>
             <div class="col-md-2">
                 <div class="form-group">
                     <label for="" class="col-form-label">Sex</label>
-                    <select class="custom-select" name="sex">
+                    <select class="form-select" name="sex">
                         {% for sex in sexs %}
-                            <option>{{ sex }}</option>
+                        {% if sex == booking.sex.name %}
+                        <option selected>{{ sex }}</option>
+                        {% else %}
+                        <option>{{ sex }}</option>
+                        {% endif %}
                         {% endfor %}
                     </select>
                 </div>
             </div>
+        </div>
+        <div class="row">
             <div class="col-md-4">
                 <div class="form-group">
                     <label for="" class="col-form-label">Email</label>
-                    <input type="email" id="first-name" class="form-control" placeholder="Email" name="transaction_id"
-                        autofocus>
+                    <input type="email" id="first-name" class="form-control" placeholder="Email" name="email"
+                        value="{{ booking.email}}">
                 </div>
             </div>
             <div class="col-md-4">
                 <div class="form-group">
-                    <label for="" class="col-form-label">Is regioner</label>
-                    <input type="email" id="first-name" class="form-control" placeholder="Email" name="transaction_id"
-                        autofocus>
-                </div>
-            </div>
-            <div class="col-md-4"></div>
-            <div class="col-md-4">
-                <div class="form-group">
-                    <label for="" class="col-form-label">Created date</label>
-                    <input type="date" id="first-name" class="form-control" placeholder="Email" name="transaction_id"
-                        autofocus>
-                </div>
-            </div>
-            <div class="col-md-4">
-                <div class="form-group">
-                    <label for="" class="col-form-label">Check-in date</label>
-                    <input type="date" id="first-name" class="form-control" placeholder="Email" name="transaction_id"
-                        autofocus>
-                </div>
-            </div>
-            <div class="col-md-4">
-                <div class="form-group">
-                    <label for="" class="col-form-label">Check-out date</label>
-                    <input type="date" id="first-name" class="form-control" placeholder="Email" name="transaction_id"
-                        autofocus>
+                    <label for="" class="col-form-label">Phone</label>
+                    <input type="text" id="first-name" class="form-control" placeholder="Email" name="phone"
+                        value="{{ booking.phone}}">
                 </div>
             </div>
             <div class="col-md-3">
+                <div class="form-check">
+                    <br><br>
+                    <input class="form-check-input" type="checkbox" id="flexCheckDefault" name="is_regioner"
+                        value="{{ booking.is_regioner}}">
+                    <label class="form-check-label" for="flexCheckDefault">Is regioner</label>
+                </div>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-md-2">
+                <div class="form-group">
+                    <label for="" class="col-form-label">Created date</label>
+                    <input type="date" id="first-name" class="form-control" placeholder="" name="created_date"
+                        value="{{ booking.created_date}}">
+                </div>
+            </div>
+            <div class="col-md-2">
+                <div class="form-group">
+                    <label for="" class="col-form-label">Check-in date</label>
+                    <input type="date" id="first-name" class="form-control" placeholder="" name="checkin_date"
+                        value="{{ booking.checkin_date}}">
+                </div>
+            </div>
+            <div class="col-md-2">
+                <div class="form-group">
+                    <label for="" class="col-form-label">Check-out date</label>
+                    <input type="date" id="first-name" class="form-control" placeholder="" name="checkout_date"
+                        value="{{ booking.checkout_date}}">
+                </div>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-md-3">
                 <div class="form-group">
                     <label for="" class="col-form-label">User</label>
-                    <select class="custom-select" name="sex">
+                    <select class="form-select" name="user">
                         {% for user in users %}
-                            <option>{{ user }}</option>
+                        {% if user == booking.user %}
+                        <option selected value="{{ user.id }}">{{ user }}</option>
+                        {% else %}
+                        <option value="{{ user.id }}">{{ user }}</option>
+                        {% endif %}
                         {% endfor %}
                     </select>
                 </div>
@@ -86,9 +108,13 @@
             <div class="col-md-3">
                 <div class="form-group">
                     <label for="" class="col-form-label">Room</label>
-                    <select class="custom-select" name="sex">
+                    <select class="form-select" name="room">
                         {% for room in rooms %}
-                            <option>{{ room }}</option>
+                        {% if room == booking.room %}
+                        <option selected value="{{ room.id }}">{{ room }}</option>
+                        {% else %}
+                        <option value="{{ room.id }}">{{ room }}</option>
+                        {% endif %}
                         {% endfor %}
                     </select>
                 </div>
@@ -96,9 +122,13 @@
             <div class="col-md-3">
                 <div class="form-group">
                     <label for="" class="col-form-label">Customer</label>
-                    <select class="custom-select" name="sex">
+                    <select class="form-select" name="customer">
                         {% for customer in customers %}
-                            <option>{{ customer }}</option>
+                        {% if customer == booking.customer %}
+                        <option selected value="{{ customer.id }}">{{ customer }}</option>
+                        {% else %}
+                        <option value="{{ customer.id }}">{{ customer }}</option>
+                        {% endif %}
                         {% endfor %}
                     </select>
                 </div>
@@ -106,22 +136,24 @@
             <div class="col-md-3">
                 <div class="form-group">
                     <label for="" class="col-form-label">Status</label>
-                    <select class="custom-select" name="status">
+                    <select class="form-select" name="status">
                         {% for status in statuses %}
-                            <option>{{ status }}</option>
+                        {% if status == booking.status %}
+                        <option selected>{{ status }}</option>
+                        {% else %}
+                        <option>{{ status }}</option>
+                        {% endif %}
                         {% endfor %}
                     </select>
                 </div>
             </div>
-            <div class="col-1">
-                <div class="form-group">
-                    <button class="btn btn-lg btn-secondary btn-block" type="">Close</button>
-                </div>
+        </div>
+        <div class="row pt-2">
+            <div class="col-auto">
+                <input class="btn btn-secondary btn-block" type="submit" value="close">
             </div>
-            <div class="col-2">
-                <div class="form-group">
-                    <input class="btn btn-lg btn-primary btn-block" type="submit" value="Save">
-                </div>
+            <div class="col-auto">
+                <input class="btn btn-primary btn-block" type="submit" value="Save" style="width: 200%;">
             </div>
         </div>
     </form>

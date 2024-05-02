@@ -5,18 +5,6 @@
 {% block content %}
 
 <div class="container">
-
-    <div class="dropdown">
-        <button class="btn btn-secondary dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false">
-          Dropdown
-        </button>
-        <ul class="dropdown-menu">
-          <li><button class="dropdown-item" type="button">Action</button></li>
-          <li><button class="dropdown-item" type="button">Another action</button></li>
-          <li><button class="dropdown-item" type="button">Something else here</button></li>
-        </ul>
-      </div>
-
     <form class="row g-2" method="post" action="#" role="form">
         <!-- <div class="form-row"> -->
         <div class="row">
@@ -24,20 +12,20 @@
                 <div class="form-group">
                     <label for="" class="col-form-label">Customer first name</label>
                     <input type="text" id="first-name" class="form-control" placeholder="Customer first name"
-                        name="booking" autofocus>
+                        name="customer_first_name" autofocus>
                 </div>
             </div>
             <div class="col-md-2">
                 <div class="form-group">
                     <label for="" class="col-form-label">Customer last name</label>
                     <input type="text" id="first-name" class="form-control" placeholder="Customer last name"
-                        name="created_date" autofocus>
+                        name="customer_last_name">
                 </div>
             </div>
             <div class="col-md-2">
                 <div class="form-group">
                     <label for="" class="col-form-label">Age</label>
-                    <input type="text" id="first-name" class="form-control" placeholder="Age" name="amount" autofocus>
+                    <input type="text" id="first-name" class="form-control" placeholder="Age" name="age">
                 </div>
             </div>
             <div class="col-md-2">
@@ -55,16 +43,18 @@
             <div class="col-md-4">
                 <div class="form-group">
                     <label for="" class="col-form-label">Email</label>
-                    <input type="email" id="first-name" class="form-control" placeholder="Email" name="email" autofocus>
+                    <input type="email" id="first-name" class="form-control" placeholder="Email" name="email">
                 </div>
             </div>
             <div class="col-md-4">
                 <div class="form-group">
                     <label for="" class="col-form-label">Phone</label>
-                    <input type="text" id="first-name" class="form-control" placeholder="Phone" name="phone" autofocus>
+                    <input type="text" id="first-name" class="form-control" placeholder="Phone" name="phone">
                 </div>
             </div>
             <div class="col-md-3">
+                <div class="form-group">
+                <br><br>
                 <div class="form-check">
                     <input class="form-check-input" type="checkbox" value="" id="flexCheckDefault" name="is_regioner">
                     <label class="form-check-label" for="flexCheckDefault">Is regioner</label>
@@ -95,31 +85,6 @@
                 </div>
             </div>
             <div class="col-md-2">
-
-
-                <!-- <div class="dropdown-menu d-block position-static pt-0 mx-0 rounded-3 shadow overflow-hidden w-280px">
-                    <form class="p-2 mb-2 bg-light border-bottom">
-                        <input type="search" class="form-control" autocomplete="false" placeholder="Type to filter...">
-                    </form>
-                    <ul class="list-unstyled mb-0">
-                        <li><a class="dropdown-item d-flex align-items-center gap-2 py-2" href="#">
-                                <span class="d-inline-block bg-success rounded-circle p-1"></span>
-                                Action
-                            </a></li>
-                        <li><a class="dropdown-item d-flex align-items-center gap-2 py-2" href="#">
-                                <span class="d-inline-block bg-primary rounded-circle p-1"></span>
-                                Another action
-                            </a></li>
-                        <li><a class="dropdown-item d-flex align-items-center gap-2 py-2" href="#">
-                                <span class="d-inline-block bg-danger rounded-circle p-1"></span>
-                                Something else here
-                            </a></li>
-                        <li><a class="dropdown-item d-flex align-items-center gap-2 py-2" href="#">
-                                <span class="d-inline-block bg-info rounded-circle p-1"></span>
-                                Separated link
-                            </a></li>
-                    </ul>
-                </div> -->
             </div>
         </div>
         <div class="row">
@@ -165,17 +130,14 @@
             </div>
         </div>
 
-        <div class="col-md-1">
-            <div class="form-group">
-                <button class="btn btn-lg btn-secondary btn-block" type="">Close</button>
+        <div class="row pt-2">
+            <div class="col-auto">
+                <input class="btn btn-secondary btn-block" type="submit" value="close">
+            </div>
+            <div class="col-auto">
+                <input class="btn btn-primary btn-block" type="submit" value="Save" style="width: 200%;">
             </div>
         </div>
-        <div class="col-md-2">
-            <div class="form-group">
-                <input class="btn btn-lg btn-primary btn-block" type="submit" value="Save">
-            </div>
-        </div>
-        <!-- </div> -->
     </form>
 </div>
 
