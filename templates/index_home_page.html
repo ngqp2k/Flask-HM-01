@@ -11,7 +11,9 @@
 
     <link rel="canonical" href="https://getbootstrap.com/docs/5.2/examples/headers/">
 
-
+    <link rel="stylesheet" href="{{ url_for('static', filename='assets/css/fontawesome.css') }}" />
+    <link rel="stylesheet" href="{{ url_for('static', filename='assets/css/brands.css') }}" />
+    <link rel="stylesheet" href="{{ url_for('static', filename='assets/css/solid.css') }}" />
 
     <link rel="stylesheet" href="{{ url_for('static', filename='assets/dist/css/bootstrap.min.css') }}" />
 
@@ -146,38 +148,27 @@
                             <div class="col-md-10">
                                 <div class="row g-2">
                                     <div class="col-md-3">
-                                        <div class="date" id="date1" data-target-input="nearest">
-                                            <input type="text" class="form-control datetimepicker-input"
-                                                placeholder="Check in" data-target="#date1"
-                                                data-toggle="datetimepicker" />
-                                        </div>
+                                        <label for="date1">Check in</label>
+                                        <input type="date" class="form-control" placeholder="Check in"
+                                            name="checkin_date" value="{{ current_time }}" />
                                     </div>
                                     <div class="col-md-3">
-                                        <div class="date" id="date2" data-target-input="nearest">
-                                            <input type="text" class="form-control datetimepicker-input"
-                                                placeholder="Check out" data-target="#date2"
-                                                data-toggle="datetimepicker" />
-                                        </div>
+                                        <label for="date2">Check out</label>
+                                        <input type="date" class="form-control" placeholder="Check out"
+                                            name="checkout_date" value="{{ current_time }}" />
                                     </div>
                                     <div class="col-md-3">
+                                        <label for="room">Adult</label>
                                         <select class="form-select">
-                                            <option selected>Adult</option>
-                                            <option value="1">Adult 1</option>
-                                            <option value="2">Adult 2</option>
-                                            <option value="3">Adult 3</option>
+                                            <option value="1">1</option>
+                                            <option value="2" selected>2</option>
+                                            <option value="3">3</option>
                                         </select>
                                     </div>
-                                    <!-- <div class="col-md-3">
-                                        <select class="form-select">
-                                            <option selected>Child</option>
-                                            <option value="1">Child 1</option>
-                                            <option value="2">Child 2</option>
-                                            <option value="3">Child 3</option>
-                                        </select>
-                                    </div> -->
                                 </div>
                             </div>
                             <div class="col-md-2">
+                                <label for=""></label>
                                 <button class="btn btn-primary w-100">Search</button>
                             </div>
                         </div>
@@ -185,6 +176,101 @@
                 </div>
             </div>
             <!-- Booking End -->
+            <!--ROOM SECTION-->
+            <div class="room">
+                <div class="ribbon ribbon-top-left"><span>Featured</span>
+                </div>
+                <!--ROOM IMAGE-->
+                <!-- {{ url_for('static', filename='images/h-trip.png') }} -->
+                <div class="r1 r-com"><img src="{{ url_for('static', filename='images/room/1.jpg') }}" alt="" />
+                </div>
+                <!--ROOM RATING-->
+                <div class="r2 r-com">
+                    <h4>Master Suite</h4>
+                    <div class="r2-ratt">
+                        <i class="fa fa-star"></i>
+                        <i class="fa fa-star"></i>
+                        <i class="fa fa-star"></i>
+                        <i class="fa fa-star"></i>
+                        <i class="fa fa-star"></i>
+                        <!-- <img src="{{ url_for('static', filename='images/h-trip.png') }}" alt="" /> -->
+                        <!-- <span>Excellent 4.5 / 5</span>  -->
+                    </div>
+                    <ul>
+                        <li>Max Adult : 3</li>
+                        <li>Max Child : 1</li>
+                        <li></li>
+                        <li></li>
+                    </ul>
+                </div>
+                <!--ROOM AMINITIES-->
+                <div class="r3 r-com">
+                    <ul>
+                        <li>Ironing facilities</li>
+                        <li>Tea/Coffee maker</li>
+                        <li>Air conditioning</li>
+                        <li>Flat-screen TV</li>
+                        <li>Wake-up service</li>
+                    </ul>
+                </div>
+                <!--ROOM PRICE-->
+                <div class="r4 r-com">
+                    <p>Price for 1 night</p>
+                    <p><span class="room-price-1">5000</span> <span class="room-price">$: 7000</span>
+                    </p>
+                    <p>Non Refundable</p>
+                </div>
+                <!--ROOM BOOKING BUTTON-->
+                <div class="r5 r-com">
+                    <div class="r2-available">Available</div>
+                    <p>Price for 1 night</p> <a href="room-details-block.html" class="inn-room-book">Book</a>
+                </div>
+            </div>
+            <!--END ROOM SECTION-->
+            <!--ROOM SECTION-->
+            <div class="room">
+                <div class="ribbon ribbon-top-left"><span>Featured</span>
+                </div>
+                <!--ROOM IMAGE-->
+                <div class="r1 r-com"><img src="images/room/1.jpg" alt="" />
+                </div>
+                <!--ROOM RATING-->
+                <div class="r2 r-com">
+                    <h4>Master Suite</h4>
+                    <div class="r2-ratt"> <i class="fa fa-star"></i> <i class="fa fa-star"></i> <i
+                            class="fa fa-star"></i> <i class="fa fa-star"></i> <i class="fa fa-star"></i> <img
+                            src="images/h-trip.png" alt="" /> <span>Excellent 4.5 / 5</span> </div>
+                    <ul>
+                        <li>Max Adult : 3</li>
+                        <li>Max Child : 1</li>
+                        <li></li>
+                        <li></li>
+                    </ul>
+                </div>
+                <!--ROOM AMINITIES-->
+                <div class="r3 r-com">
+                    <ul>
+                        <li>Ironing facilities</li>
+                        <li>Tea/Coffee maker</li>
+                        <li>Air conditioning</li>
+                        <li>Flat-screen TV</li>
+                        <li>Wake-up service</li>
+                    </ul>
+                </div>
+                <!--ROOM PRICE-->
+                <div class="r4 r-com">
+                    <p>Price for 1 night</p>
+                    <p><span class="room-price-1">5000</span> <span class="room-price">$: 7000</span>
+                    </p>
+                    <p>Non Refundable</p>
+                </div>
+                <!--ROOM BOOKING BUTTON-->
+                <div class="r5 r-com">
+                    <div class="r2-available">Available</div>
+                    <p>Price for 1 night</p> <a href="room-details-block.html" class="inn-room-book">Book</a>
+                </div>
+            </div>
+            <!--END ROOM SECTION-->
         </div>
 
     </main>

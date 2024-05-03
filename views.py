@@ -51,7 +51,8 @@ def logout():
 
 @app.route('/')
 def index():
-    return render_template('index_home_page.html')
+    current_time = datetime.now().strftime('%Y-%m-%d')
+    return render_template('index_home_page.html', current_time=current_time)
 
 
 @app.route('/admin')
