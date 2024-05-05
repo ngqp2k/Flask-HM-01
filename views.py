@@ -10,6 +10,7 @@ from werkzeug.security import check_password_hash
 
 
 import models as models
+import random
 
 @login_manager.user_loader
 def load_user(user_id):
@@ -52,13 +53,59 @@ def logout():
 @app.route('/')
 def index():
     current_time = datetime.now().strftime('%Y-%m-%d')
-    return render_template('index_home_page.html', current_time=current_time)
+    rooms = models.Room.query.all()
+    return render_template('index.html'
+                           , current_time=current_time
+                           , rooms=rooms)
 
+@app.route('/checkout/<int:room_id>', methods=['GET', 'POST'])
+def checkout_page(room_id):
+    room = models.Room.query.get(room_id)
+    print(f'Room ID: {room_id} {room} {request.method}')
+    if request.method == 'GET':
+        payment_methods = models.PaymentMethod.query.all()
+        return render_template('checkout.html'
+                               , room=room
+                               , payment_methods=payment_methods)
+        
+    return redirect(url_for('index'))
+
+
+@app.route('/checkout-handler/<int:room_id>', methods=['GET', 'POST'])
+def checkout_handler(room_id):
+    if request.method == 'POST':
+        # create booking
+        booking = models.Booking()
+        booking.customer_first_name = request.form['customer_first_name']
+        booking.customer_last_name = request.form['customer_last_name']
+        booking.email = request.form['email']
+        booking.created_date = datetime.now()
+        booking.checkin_date = datetime.now()
+        booking.checkout_date = datetime.now()
+        room = models.Room.query.get(room_id)
+        booking.room = room
+        booking.status = models.BookingStatus['CONFIRMED']
+        
+        # create payment
+        payment = models.Payment()
+        payment.booking = booking
+        payment.created_date = datetime.now()
+        payment.amount = room.room_type.price_per_night
+        payment.transaction_id = random.randint(100000, 999999)
+        
+        db.session.add(booking)
+        db.session.add(payment)
+        
+        db.session.commit()
+        
+        return f'success payment for room {room_id}'
+        
+    return redirect(url_for('index'))
 
 @app.route('/admin')
 @login_required
 def admin_page():
-    return render_template('index.html')
+    return render_template('admin.html')
 
 @app.template_filter()
 def to_string(obj):
