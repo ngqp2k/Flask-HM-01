@@ -37,13 +37,26 @@
                     </select>
                 </div>
             </div>
+            <div class="col-md-2">
+                <div class="form-group">
+                    <label for="" class="col-form-label">Status</label>
+                    <select class="form-select" name="status">
+                        {% for status in statuses %}
+                            {% if status == room.status.name %}
+                                <option selected>{{ status }}</option>
+                            {% else %}
+                                <option>{{ status }}</option>
+                            {% endif %}
+                        {% endfor %}
+                    </select>
+                </div>
+            </div>
         </div>
         <div class="row">
             <div class="col-md-12">
                 <div class="form-group">
                     <label for="" class="col-form-label">Description</label>
-                    <textarea class="form-control" placeholder="Description" name="description"
-                        value="{{ room.description }}"></textarea>
+                    <textarea class="form-control" placeholder="Description" name="description">{{ room.description }}</textarea>
                 </div>
             </div>
         </div>

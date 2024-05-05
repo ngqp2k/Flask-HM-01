@@ -53,7 +53,7 @@ def logout():
 @app.route('/')
 def index():
     current_time = datetime.now().strftime('%Y-%m-%d')
-    rooms = models.Room.query.all()
+    rooms = models.Room.query.filter_by(status=models.RoomStatus.AVAILABLE).all()
     return render_template('index.html'
                            , current_time=current_time
                            , rooms=rooms)
@@ -83,6 +83,7 @@ def checkout_handler(room_id):
         booking.checkin_date = datetime.now()
         booking.checkout_date = datetime.now()
         room = models.Room.query.get(room_id)
+        room.status = models.RoomStatus['BOOKED']
         booking.room = room
         booking.status = models.BookingStatus['CONFIRMED']
         
@@ -277,7 +278,8 @@ def delete_room_type(room_type_id):
 @app.route('/room')
 def room_page():
     rooms = models.Room.query.all()
-    return render_template('mdRoom.html', rooms=rooms)
+    return render_template('mdRoom.html'
+                           , rooms=rooms)
 
 
 @app.route('/add-room', methods=['GET', 'POST'])
@@ -296,9 +298,11 @@ def add_room():
         return redirect(url_for('room_page'))
     
     room_types = models.RoomType.query.all()
+    statuses = [status.name for status in models.RoomStatus]
     
     return render_template('add-room.html'
-                           , room_types=room_types)
+                           , room_types=room_types
+                           , statuses=statuses)
     
 @app.route('/edit-room/<int:room_id>', methods=['GET', 'POST'])
 def edit_room(room_id):
@@ -317,9 +321,13 @@ def edit_room(room_id):
         return redirect(url_for('room_page'))
     
     room_types = models.RoomType.query.all()
+    statuses = [status.name for status in models.RoomStatus]
+    print(f'ngqp2k: {statuses}')
     
     return render_template('edit-room.html'
-                           , room=room, room_types=room_types)
+                           , room=room
+                           , room_types=room_types
+                           , statuses=statuses)
     
 @app.route('/delete-room/<int:room_id>', methods=['GET', 'POST'])
 def delete_room(room_id):

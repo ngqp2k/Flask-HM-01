@@ -16,11 +16,11 @@
         <th>Customer first name</th>
         <th>Customer last name</th>
         <th>Phone</th>
-        <th>Is regioner</th>
         <th>Check-in date</th>
         <th>Check-out date</th>
         <th>Room</th>
         <th>Customer</th>
+        <th>Status</th>
         <th>Actions</th>
       </tr>
     </thead>
@@ -31,11 +31,11 @@
         <td>{{ booking.customer_first_name }}</td>
         <td>{{ booking.customer_last_name }}</td>
         <td>{{ booking.phone }}</td>
-        <td>{{ booking.is_regioner }}</td>
         <td>{{ booking.checkin_date }}</td>
         <td>{{ booking.checkout_date }}</td>
         <td>{{ booking.room }}</td>
         <td>{{ booking.customer }}</td>
+        <td>{{ booking.status.name }}</td>
         <td>
           <a href="{{ url_for('edit_booking', booking_id=booking.id) }}" class="btn btn-primary btn-sm">Edit</a>
           <a href="{{ url_for('delete_booking', booking_id=booking.id) }}" class="btn btn-danger btn-sm">Delete</a>

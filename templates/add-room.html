@@ -31,6 +31,16 @@
 					</select>
 				</div>
 			</div>
+			<div class="col-md-2">
+                <div class="form-group">
+                    <label for="" class="col-form-label">Status</label>
+                    <select class="form-select" name="status">
+                        {% for status in statuses %}
+							<option>{{ status }}</option>
+                        {% endfor %}
+                    </select>
+                </div>
+            </div>
 		</div>
 		<div class="row">
 			<div class="col-md-12">

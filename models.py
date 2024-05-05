@@ -74,6 +74,12 @@ class RoomType(db.Model):
         return self.name
 
 
+class RoomStatus(enum.Enum):
+    AVAILABLE = "Available"
+    PENDING = "Pending"
+    BOOKED = "Booked"
+
+
 class Room(db.Model):
     id = db.Column(db.Integer, primary_key=True)
     room_no = db.Column(db.String(50))  
@@ -81,6 +87,7 @@ class Room(db.Model):
     description = db.Column(db.Text)
     room_type_id = db.Column(db.Integer, db.ForeignKey('room_type.id'))
     room_type = db.relationship('RoomType', backref=db.backref('room', lazy=True))
+    status = db.Column(db.Enum(RoomStatus))
     
     def __str__(self) -> str:
         return self.room_no

@@ -26,10 +26,18 @@ def build_sample_db():
     db.session.add(room_type2)
     
     # Create 2 rooms
-    room1 = models.Room(room_no='101', room_type=room_type1)
-    room2 = models.Room(room_no='102', room_type=room_type2)
+    room1 = models.Room(room_no='101', room_type=room_type1, status=models.RoomStatus.AVAILABLE, image='https://res.cloudinary.com/dxll8tdwq/image/upload/v1714893503/060912db19ae3c89079d6f2cd14aa054_ikj0vc.jpg')
+    room2 = models.Room(room_no='102', room_type=room_type2, status=models.RoomStatus.AVAILABLE, image='https://res.cloudinary.com/dxll8tdwq/image/upload/v1714893540/19da767c8b8cd79a2ab68f9e2ece6b4a_dtutw8.jpg')
+    room3 = models.Room(room_no='103', room_type=room_type1, status=models.RoomStatus.AVAILABLE, image='https://res.cloudinary.com/dxll8tdwq/image/upload/v1714893503/060912db19ae3c89079d6f2cd14aa054_ikj0vc.jpg')
+    room4 = models.Room(room_no='201', room_type=room_type2, status=models.RoomStatus.AVAILABLE, image='https://res.cloudinary.com/dxll8tdwq/image/upload/v1714893540/19da767c8b8cd79a2ab68f9e2ece6b4a_dtutw8.jpg')
+    room5 = models.Room(room_no='202', room_type=room_type1, status=models.RoomStatus.AVAILABLE, image='https://res.cloudinary.com/dxll8tdwq/image/upload/v1714893503/060912db19ae3c89079d6f2cd14aa054_ikj0vc.jpg')
+    room6 = models.Room(room_no='203', room_type=room_type2, status=models.RoomStatus.AVAILABLE, image='https://res.cloudinary.com/dxll8tdwq/image/upload/v1714893540/19da767c8b8cd79a2ab68f9e2ece6b4a_dtutw8.jpg')
     db.session.add(room1)
     db.session.add(room2)
+    db.session.add(room3)
+    db.session.add(room4)
+    db.session.add(room5)
+    db.session.add(room6)
     
     # Create 2 customers
     customer1 = models.Customer(first_name='f1', last_name='l1', sex=models.Sex.Men, age=24, email='f1@example.com', phone='0123')
