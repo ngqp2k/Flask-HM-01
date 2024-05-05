@@ -5,7 +5,7 @@ from flask_login import login_user, logout_user, login_required
 # from models import User, Role, Sex
 from flask_wtf import FlaskForm
 from wtforms import StringField
-from datetime import datetime
+from datetime import datetime, timedelta
 from werkzeug.security import check_password_hash
 
 
@@ -52,10 +52,12 @@ def logout():
 
 @app.route('/')
 def index():
-    current_time = datetime.now().strftime('%Y-%m-%d')
+    today = datetime.now().strftime('%Y-%m-%d')
+    tomorrow = (datetime.now() + timedelta(days=1)).strftime('%Y-%m-%d')
     rooms = models.Room.query.filter_by(status=models.RoomStatus.AVAILABLE).all()
     return render_template('index.html'
-                           , current_time=current_time
+                           , current_time=today
+                           , tomorrow=tomorrow
                            , rooms=rooms)
 
 @app.route('/checkout/<int:room_id>', methods=['GET', 'POST'])
@@ -98,8 +100,6 @@ def checkout_handler(room_id):
         db.session.add(payment)
         
         db.session.commit()
-        
-        return f'success payment for room {room_id}'
         
     return redirect(url_for('index'))
 

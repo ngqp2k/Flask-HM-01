@@ -148,15 +148,36 @@
                             <div class="col-md-10">
                                 <div class="row g-2">
                                     <div class="col-md-3">
-                                        <label for="date1">Check in</label>
-                                        <input type="date" class="form-control" placeholder="Check in"
-                                            name="checkin_date" value="{{ current_time }}" />
+                                        <label for="date1">Nhận phòng</label>
+                                        <input type="date" onchange="calculateReturnDate()" id="startDate" class="form-control" name="checkin_date"
+                                            value="{{ current_time }}" />
+                                    </div>
+                                    <div class="col-md-3">
+                                        <label for="date2">Số đêm</label>
+                                        <input type="number" onchange="calculateReturnDate()" id="numOfNights" class="form-control" placeholder="Số đêm"
+                                            name="checkout_date" value="1" min="1" />
                                     </div>
                                     <div class="col-md-3">
                                         <label for="date2">Check out</label>
-                                        <input type="date" class="form-control" placeholder="Check out"
-                                            name="checkout_date" value="{{ current_time }}" />
+                                        <input type="date" id="returnDate" class="form-control" placeholder="Check out"
+                                            name="checkout_date" value="{{ tomorrow }}" disabled />
                                     </div>
+                                    
+                                    <script>
+                                        function calculateReturnDate() {
+                                            var startDate = document.getElementById("startDate").value;
+                                            var numOfNights = parseInt(document.getElementById("numOfNights").value);
+                                
+                                            if (startDate && numOfNights) {
+                                                var date = new Date(startDate);
+                                                date.setDate(date.getDate() + numOfNights);
+                                                var returnDate = date.toISOString().split('T')[0];
+                                                document.getElementById("returnDate").value = returnDate;
+                                            } else {
+                                                alert("Vui lòng nhập đầy đủ thông tin.");
+                                            }
+                                        }
+                                    </script>
                                     <div class="col-md-3">
                                         <label for="room">Adult</label>
                                         <select class="form-select">
@@ -181,8 +202,6 @@
             {% for room in rooms %}
             <!--ROOM SECTION-->
             <div class="room">
-                <div class="ribbon ribbon-top-left"><span>Featured</span>
-                </div>
                 <!--ROOM IMAGE-->
                 <!-- {{ url_for('static', filename='images/h-trip.png') }} -->
                 <div class="r1 r-com"><img src="{{ room.image }}" alt="" />

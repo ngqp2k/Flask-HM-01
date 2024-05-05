@@ -92,6 +92,7 @@
                 <div class="form-group">
                     <label for="" class="col-form-label">User</label>
                     <select class="form-select" name="sex">
+                        <option></option>
                         {% for user in users %}
                         <option>{{ user }}</option>
                         {% endfor %}
@@ -112,6 +113,7 @@
                 <div class="form-group">
                     <label for="" class="col-form-label">Customer</label>
                     <select class="form-select" name="sex">
+                        <option></option>
                         {% for customer in customers %}
                         <option>{{ customer }}</option>
                         {% endfor %}
@@ -132,7 +134,7 @@
 
         <div class="row pt-2">
             <div class="col-auto">
-                <input class="btn btn-secondary btn-block" type="submit" value="close">
+                <a href="javascript:history.back()" class="btn btn-secondary btn-block">Close</a>
             </div>
             <div class="col-auto">
                 <input class="btn btn-primary btn-block" type="submit" value="Save" style="width: 200%;">
