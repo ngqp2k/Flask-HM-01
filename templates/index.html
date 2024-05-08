@@ -121,10 +121,10 @@
 
                 <ul class="nav col-12 col-md-auto mb-2 justify-content-center mb-md-0">
                     <li><a href="#" class="nav-link px-2 link-dark">Home</a></li>
-                    <li><a href="#" class="nav-link px-2 link-dark">Features</a></li>
+                    <!-- <li><a href="#" class="nav-link px-2 link-dark">Features</a></li>
                     <li><a href="#" class="nav-link px-2 link-dark">Pricing</a></li>
                     <li><a href="#" class="nav-link px-2 link-dark">FAQs</a></li>
-                    <li><a href="#" class="nav-link px-2 link-dark">About</a></li>
+                    <li><a href="#" class="nav-link px-2 link-dark">About</a></li> -->
                     {% if current_user.is_authenticated %}
                     <li><a href="{{ url_for('admin_page') }}" class="nav-link px-2 link-dark">Admin page</a></li>
                     {% endif %}
@@ -149,25 +149,25 @@
                                 <div class="row g-2">
                                     <div class="col-md-3">
                                         <label for="date1">Nhận phòng</label>
-                                        <input type="date" onchange="calculateReturnDate()" id="startDate" class="form-control" name="checkin_date"
-                                            value="{{ current_time }}" />
+                                        <input type="date" onchange="calculateReturnDate()" id="startDate"
+                                            class="form-control" name="checkin_date" value="{{ current_time }}" />
                                     </div>
                                     <div class="col-md-3">
                                         <label for="date2">Số đêm</label>
-                                        <input type="number" onchange="calculateReturnDate()" id="numOfNights" class="form-control" placeholder="Số đêm"
-                                            name="checkout_date" value="1" min="1" />
+                                        <input type="number" onchange="calculateReturnDate()" id="numOfNights"
+                                            class="form-control" placeholder="Số đêm" name="num" value="1" min="1" />
                                     </div>
                                     <div class="col-md-3">
                                         <label for="date2">Check out</label>
                                         <input type="date" id="returnDate" class="form-control" placeholder="Check out"
                                             name="checkout_date" value="{{ tomorrow }}" disabled />
                                     </div>
-                                    
+
                                     <script>
                                         function calculateReturnDate() {
                                             var startDate = document.getElementById("startDate").value;
                                             var numOfNights = parseInt(document.getElementById("numOfNights").value);
-                                
+
                                             if (startDate && numOfNights) {
                                                 var date = new Date(startDate);
                                                 date.setDate(date.getDate() + numOfNights);
@@ -220,7 +220,7 @@
                     </div>
                     <ul>
                         <li>{{ room.room_type }}</li>
-                        <li>{{ room.room_type.price_per_night }}</li>
+                        <li>Số phòng: {{ room.room_no }}</li>
                         <!-- <li></li> -->
                         <!-- <li></li> -->
                     </ul>
@@ -237,17 +237,19 @@
                 </div>
                 <!--ROOM PRICE-->
                 <div class="r4 r-com">
-                    <p>Price for 1 night</p>
+                    <p>Giá một đêm</p>
                     <p>
-                        <span class="room-price-1">{{ room.room_type.price_per_night }}$</span>
+                        <span class="room-price-1">{{ "{:,.0f}".format(room.room_type.price_per_night) }} VNĐ</span>
                         <!-- <span class="room-price">$: 7000</span> -->
                     </p>
-                    <p>Non Refundable</p>
+                    <!-- <p>Non Refundable</p> -->
                 </div>
                 <!--ROOM BOOKING BUTTON-->
                 <div class="r5 r-com">
                     <div class="r2-available">Available</div>
                     <p>Price for 1 night</p>
+                    <!-- <input type="hidden" name="checkin_date" value="{{ checkin_date }}" /> -->
+                    <!-- <input type="hidden" name="checkin_date" value="{{ checkout_date }}" /> -->
                     <a href="{{ url_for('checkout_page', room_id=room.id) }}" class="inn-room-book">Book</a>
                 </div>
             </div>

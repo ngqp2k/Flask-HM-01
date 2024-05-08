@@ -13,9 +13,9 @@
     <thead>
       <tr>
         <th>#</th>
-        <th>Name</th>
-        <th>Description</th>
-        <th>Price</th>
+        <th>Tên</th>
+        <th>Mô tả</th>
+        <th>Đơn giá</th>
         <th>Actions</th>
       </tr>
     </thead>
@@ -25,7 +25,7 @@
         <td>{{ service.id }}</td>
         <td>{{ service.name }}</td>
         <td>{{ service.description }}</td>
-        <td>{{ service.price }}</td>
+        <td>{{ "{:,.0f}".format(service.price) }} VNĐ</td>
         <td>
           <a href="{{ url_for('edit_service', service_id=service.id) }}" class="btn btn-primary btn-sm">Edit</a>
           <a href="{{ url_for('delete_service', service_id=service.id) }}" class="btn btn-danger btn-sm">Delete</a>

@@ -66,10 +66,16 @@ def checkout_page(room_id):
     room = models.Room.query.get(room_id)
     print(f'Room ID: {room_id} {room} {request.method}')
     if request.method == 'GET':
+        
+        checkin_date = datetime.now().strftime('%d/%m/%Y')
+        checkout_date = (datetime.now() + timedelta(days=2)).strftime('%d/%m/%Y')
+        
         payment_methods = models.PaymentMethod.query.all()
         return render_template('checkout.html'
                                , room=room
-                               , payment_methods=payment_methods)
+                               , payment_methods=payment_methods
+                               , checkin_date=checkin_date
+                               , checkout_date=checkout_date)
         
     return redirect(url_for('index'))
 
@@ -82,9 +88,10 @@ def checkout_handler(room_id):
         booking.customer_first_name = request.form['customer_first_name']
         booking.customer_last_name = request.form['customer_last_name']
         booking.email = request.form['email']
+        booking.phone = request.form['phone']
         booking.created_date = datetime.now()
         booking.checkin_date = datetime.now()
-        booking.checkout_date = datetime.now()
+        booking.checkout_date = datetime.now() + timedelta(days=2)
         room = models.Room.query.get(room_id)
         room.status = models.RoomStatus['BOOKED']
         booking.room = room
@@ -94,7 +101,7 @@ def checkout_handler(room_id):
         payment = models.Payment()
         payment.booking = booking
         payment.created_date = datetime.now()
-        payment.amount = room.room_type.price_per_night
+        payment.amount = room.room_type.price_per_night * 2
         payment.transaction_id = random.randint(100000, 999999)
         
         db.session.add(booking)
@@ -700,8 +707,8 @@ class InvoiceDetail():
         self.qty = qty
         self.amount = amount
 
-@app.route('/create-invoice/<int:booking_id>?', methods=['GET', 'POST'])
-def create_invoice_page(booking_id):
+@app.route('/create-invoice/<int:booking_id>', methods=['GET', 'POST'])
+def invoice_detail_page(booking_id):
     booking = models.Booking.query.get(booking_id)
     
     print(f'ngqp2k-debug: {request.method} {booking_id}')
@@ -741,6 +748,8 @@ def create_invoice_page(booking_id):
     else:
         reminder = total_amount - payment.amount
         
+    is_read_only = booking.status == models.BookingStatus.CHECKED_OUT
+        
     if request.method == 'POST':
         invoice = models.Invoice()
         invoice.booking = booking
@@ -748,6 +757,14 @@ def create_invoice_page(booking_id):
         invoice.total_price = total_amount
         
         db.session.add(invoice)
+        
+        booking.status = models.BookingStatus.CHECKED_OUT
+        db.session.add(booking)
+        
+        room = booking.room
+        room.status = models.RoomStatus.AVAILABLE
+        db.session.add(room)
+        
         db.session.commit()
         
         return redirect(url_for('invoice_page'))
@@ -757,8 +774,11 @@ def create_invoice_page(booking_id):
                            , invoice_details=invoice_details
                            , total_amount=total_amount
                            , payment=payment
-                           , reminder=reminder)
+                           , reminder=reminder
+                           , is_read_only=is_read_only
+                           , current_time=datetime.now().strftime('%d-%m-%Y'))
     
+
 @app.route('/create-invoice-test', methods=['GET', 'POST'])
 def create_invoice_test():
     return "abc"

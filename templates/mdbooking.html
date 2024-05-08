@@ -37,7 +37,11 @@
         <td>{{ booking.customer }}</td>
         <td>{{ booking.status.name }}</td>
         <td>
-          <a href="{{ url_for('create_invoice_page', booking_id=booking.id) }}" class="btn btn-success btn-sm">Pay</a>
+          {% if booking.status.name == 'CHECKED_OUT' %}
+          <a href="{{ url_for('invoice_detail_page', booking_id=booking.id) }}" class="btn btn-success btn-sm">View</a>
+          {% else %}
+          <a href="{{ url_for('invoice_detail_page', booking_id=booking.id) }}" class="btn btn-success btn-sm">Pay</a>
+          {% endif %}
           <a href="{{ url_for('edit_booking', booking_id=booking.id) }}" class="btn btn-primary btn-sm">Edit</a>
           <a href="{{ url_for('delete_booking', booking_id=booking.id) }}" class="btn btn-danger btn-sm">Delete</a>
         </td>

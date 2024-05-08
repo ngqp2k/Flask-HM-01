@@ -14,11 +14,11 @@
     <thead>
       <tr>
         <th>#</th>
-        <th>Booking</th>
-        <th>Created date</th>
-        <th>Amount</th>
-        <th>Payment method</th>
         <th>Transaction ID</th>
+        <th>Booking ID</th>
+        <th>Ngày tạo</th>
+        <th>Phương thức thanh toán</th>
+        <th>Số tiền thanh toán</th>
         <th>Actions</th>
       </tr>
     </thead>
@@ -26,11 +26,11 @@
       {% for payment in payments %}
       <tr>
         <td>{{ payment.id }}</td>
-        <td>{{ payment.booking }}</td>
-        <td>{{ payment.created_date }}</td>
-        <td>{{ payment.amount }}</td>
-        <td>{{ payment.payment_method }}</td>
         <td>{{ payment.transaction_id }}</td>
+        <td>{{ payment.booking.id }}</td>
+        <td>{{ payment.created_date }}</td>
+        <td>{{ payment.payment_method }}</td>
+        <td>{{ "{:,.0f}".format(payment.amount) }} VNĐ</td>
         <td>
           <a href="{{ url_for('edit_payment', payment_id=payment.id) }}" class="btn btn-primary btn-sm">Edit</a>
           <a href="{{ url_for('delete_payment', payment_id=payment.id) }}" class="btn btn-danger btn-sm">Delete</a>
