@@ -1,3 +1,4 @@
+import decimal
 import enum
 from app import app, db, login_manager
 from flask import render_template, request, redirect, url_for, flash
@@ -258,6 +259,9 @@ def edit_room_type(room_type_id):
     
     if request.method == 'POST':
         room_type.name = request.form['name']
+        room_type.price_per_night = request.form['price_per_night']
+        room_type.capacity = request.form['capacity']
+        room_type.bed_quantity = request.form['bed_quantity']
         
         db.session.commit()
         
@@ -512,9 +516,10 @@ def add_additional_charge():
         
         return redirect(url_for('additional_charge_page'))
     
-    bookings = models.Booking.query.all()
+    bookings = models.Booking.query.filter_by(status=models.BookingStatus.CHECKED_IN).all()
+    today = datetime.now().strftime('%Y-%m-%d')
     
-    return render_template('add-additional-charge.html', bookings=bookings)
+    return render_template('add-additional-charge.html', bookings=bookings, current_time=today)
 
 @app.route('/edit-additional-charge/<int:additional_charge_id>', methods=['GET', 'POST'])
 def edit_additional_charge(additional_charge_id):
@@ -635,3 +640,125 @@ def delete_booking(booking_id):
     db.session.commit()
     
     return redirect(url_for('booking_page'))
+
+@app.route('/booking-service')
+def booking_service_page():
+    booking_services = models.BookingServices.query.all()
+    return render_template('mdBookingService.html', booking_services=booking_services)
+
+@app.route('/add-booking-service', methods=['GET', 'POST'])
+def add_booking_service():
+    if request.method == 'POST':
+        booking_service = models.BookingServices()
+        booking_service.booking = models.Booking.query.get(request.form['booking'])
+        booking_service.service = models.Service.query.get(request.form['service'])
+        booking_service.qty = request.form['qty']
+        
+        db.session.add(booking_service)
+        db.session.commit()
+        
+        return redirect(url_for('booking_service_page'))
+    
+    bookings = models.Booking.query.filter_by(status=models.BookingStatus.CHECKED_IN).all()
+    services = models.Service.query.all()
+    today = datetime.now().strftime('%Y-%m-%d')
+    
+    return render_template('add-booking-service.html', bookings=bookings, services=services, current_time=today)
+
+@app.route('/edit-booking-service/<int:booking_service_id>', methods=['GET', 'POST'])
+def edit_booking_service(booking_service_id):
+    booking_service = models.BookingServices.query.get(booking_service_id)
+    
+    if request.method == 'POST':
+        booking_service.booking = models.Booking.query.get(request.form['booking'])
+        booking_service.service = models.Service.query.get(request.form['service'])
+        booking_service.qty = request.form['qty']
+        
+        db.session.commit()
+        
+        return redirect(url_for('booking_service_page'))
+    
+    bookings = models.Booking.query.all()
+    services = models.Service.query.all()
+    
+    return render_template('edit-booking-service.html', booking_service=booking_service, bookings=bookings, services=services)
+
+@app.route('/delete-booking-service/<int:booking_service_id>', methods=['GET', 'POST'])
+def delete_booking_service(booking_service_id):
+    booking_service = models.BookingServices.query.get(booking_service_id)
+    db.session.delete(booking_service)
+    db.session.commit()
+    
+    return redirect(url_for('booking_service_page'))
+
+
+class InvoiceDetail():
+    def __init__(self, no, description, unit_price, qty, amount):
+        self.no = no
+        self.description = description
+        self.unit_price = unit_price
+        self.qty = qty
+        self.amount = amount
+
+@app.route('/create-invoice/<int:booking_id>?', methods=['GET', 'POST'])
+def create_invoice_page(booking_id):
+    booking = models.Booking.query.get(booking_id)
+    
+    print(f'ngqp2k-debug: {request.method} {booking_id}')
+        
+    # get all payment of booking
+    payment = models.Payment.query.filter_by(booking_id=booking_id).first()
+    # get all additional charges of booking
+    additional_charges = models.AdditionalCharge.query.filter_by(booking_id=booking_id).all()
+    # get all services of booking
+    booking_services = models.BookingServices.query.filter_by(booking_id=booking_id).all()
+    
+    # create invoice details
+    row_count = 1
+    total_amount = 0
+    
+    invoice_details = []
+    
+    cnt_date = (booking.checkout_date - booking.checkin_date).days
+    invoice_detail = InvoiceDetail(row_count, 'Tiền phòng', booking.room.room_type.price_per_night, cnt_date, booking.room.room_type.price_per_night * cnt_date)
+    total_amount += decimal.Decimal(invoice_detail.amount)
+    invoice_details.append(invoice_detail)
+        
+    for additional_charge in additional_charges:
+        row_count += 1
+        invoice_detail = InvoiceDetail(row_count, additional_charge.description, additional_charge.amount, 1, additional_charge.amount)
+        total_amount += invoice_detail.amount
+        invoice_details.append(invoice_detail)
+        
+    for booking_service in booking_services:
+        row_count += 1
+        invoice_detail = InvoiceDetail(row_count, booking_service.service.name, booking_service.service.price, booking_service.qty, booking_service.service.price * booking_service.qty)
+        total_amount += decimal.Decimal(invoice_detail.amount)
+        invoice_details.append(invoice_detail)
+        
+    if payment is None:
+        reminder = total_amount
+    else:
+        reminder = total_amount - payment.amount
+        
+    if request.method == 'POST':
+        invoice = models.Invoice()
+        invoice.booking = booking
+        invoice.created_date = datetime.now()
+        invoice.total_price = total_amount
+        
+        db.session.add(invoice)
+        db.session.commit()
+        
+        return redirect(url_for('invoice_page'))
+        
+    return render_template('create-invoice.html'
+                           , booking=booking
+                           , invoice_details=invoice_details
+                           , total_amount=total_amount
+                           , payment=payment
+                           , reminder=reminder)
+    
+@app.route('/create-invoice-test', methods=['GET', 'POST'])
+def create_invoice_test():
+    return "abc"

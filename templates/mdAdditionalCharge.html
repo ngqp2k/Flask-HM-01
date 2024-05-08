@@ -13,7 +13,8 @@
     <thead>
       <tr>
         <th>#</th>
-        <th>Booking</th>
+        <th>Booking ID</th>
+        <th>Booking room</th>
         <th>Created date</th>
         <th>Description</th>
         <th>Amount</th>
@@ -24,6 +25,7 @@
       {% for additional_charge in additional_charges %}
       <tr>
         <td>{{ additional_charge.id }}</td>
+        <td>{{ additional_charge.booking.id }}</td>
         <td>{{ additional_charge.booking }}</td>
         <td>{{ additional_charge.created_date }}</td>
         <td>{{ additional_charge.description }}</td>

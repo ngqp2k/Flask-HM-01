@@ -1,0 +1,42 @@
+{% extends 'admin.html' %}
+
+{% block title %}Edit service{% endblock %}
+
+{% block content %}
+
+<div class="container">
+    <form class="" method="post" action="#" role="form">
+        <div class="form-row">
+            <div class="col-md-12">
+                <div class="form-group">
+                    <label for="" class="col-form-label">Name</label>
+                    <input type="text" id="first-name" class="form-control" placeholder="Service name" name="name"
+                        value="{{ service.name }}" autofocus>
+                </div>
+            </div>
+            <div class="col-md-12">
+                <div class="form-group">
+                    <label for="" class="col-form-label">Description</label>
+                    <input type="text" id="first-name" class="form-control" placeholder="Service description"
+                        name="description" value="{{ service.description }}" autofocus>
+                </div>
+            </div>
+            <div class="col-md-12">
+                <div class="form-group">
+                    <label for="" class="col-form-label">Price</label>
+                    <input type="text" id="first-name" class="form-control" placeholder="Role name" name="price"
+                        value="{{ service.price }}" autofocus>
+                </div>
+            </div>
+            <div class="row pt-2">
+                <div class="col-auto">
+                    <a href="javascript:history.back()" class="btn btn-secondary btn-block">Close</a>
+                </div>
+                <div class="col-auto">
+                    <input class="btn btn-primary btn-block" type="submit" value="Save" style="width: 200%;">
+                </div>
+            </div>
+    </form>
+</div>
+
+{% endblock %}

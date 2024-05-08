@@ -141,7 +141,7 @@ class Booking(db.Model):
     status = db.Column(db.Enum(BookingStatus))
     
     def __str__(self) -> str:
-        return str(self.id)
+        return str(self.room)
 
 
 class Service(db.Model):

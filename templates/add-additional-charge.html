@@ -5,44 +5,54 @@
 {% block content %}
 
 <div class="container">
-  <form class="" method="post" action="#" role="form">
-    <div class="form-row">
-      <div class="col-md-12">
-        <div class="form-group">
-          <label for="" class="col-form-label">Booking</label>
-          <select class="custom-select" name="booking">
-            {% for booking in bookings %}
-                <option>{{ booking }}</option>
-            {% endfor %}
-        </select>
+    <form class="" method="post" action="#" role="form">
+        <div class="form-row">
+            <div class="row">
+                <div class="col-md-3">
+                    <div class="form-group">
+                        <label for="" class="col-form-label">Booking</label>
+                        <select class="form-select" name="booking">
+                            {% for booking in bookings %}
+                            <option value="{{ booking.id }}">{{ booking }}</option>
+                            {% endfor %}
+                        </select>
+                    </div>
+                </div>
+                <div class="col-md-3">
+                    <div class="form-group">
+                        <label for="" class="col-form-label">Created date</label>
+                        <input type="date" id="first-name" class="form-control" placeholder="Created date"
+                            name="created_date" value="{{ current_time }}">
+                    </div>
+                </div>
+            </div>
+            
+            <div class="row">
+                <div class="col-md-6">
+                    <div class="form-group">
+                        <label for="" class="col-form-label">Description</label>
+                        <textarea class="form-control" placeholder="Description" name="description"></textarea>
+                    </div>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-md-6">
+                    <div class="form-group">
+                        <label for="" class="col-form-label">Amount</label>
+                        <input type="text" id="first-name" class="form-control" placeholder="Amount" name="amount">
+                    </div>
+                </div>
+            </div>
+            <div class="row pt-2">
+                <div class="col-auto">
+                    <a href="javascript:history.back()" class="btn btn-secondary btn-block">Close</a>
+                </div>
+                <div class="col-auto">
+                    <input class="btn btn-primary btn-block" type="submit" value="Save" style="width: 200%;">
+                </div>
+            </div>
         </div>
-      </div>
-      <div class="col-md-12">
-        <div class="form-group">
-          <label for="" class="col-form-label">Created date</label>
-          <input type="date" id="first-name" class="form-control" placeholder="Created date" name="created_date" >
-        </div>
-      </div>
-      <div class="col-md-12">
-        <div class="form-group">
-          <label for="" class="col-form-label">Description</label>
-          <input type="text" id="first-name" class="form-control" placeholder="Description" name="description" >
-        </div>
-      </div>
-      <div class="col-md-12">
-        <div class="form-group">
-          <label for="" class="col-form-label">Amount</label>
-          <input type="text" id="first-name" class="form-control" placeholder="Amount" name="amount" >
-        </div>
-      </div>
-      <div class="col-auto">
-            <a href="javascript:history.back()" class="btn btn-secondary btn-block">Close</a>
-        </div>
-        <div class="col-auto">
-            <input class="btn btn-primary btn-block" type="submit" value="Save" style="width: 200%;">
-        </div>
-    </div>
-  </form>
+    </form>
 </div>
 
 {% endblock %}

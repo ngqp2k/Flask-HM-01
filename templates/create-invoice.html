@@ -1,0 +1,124 @@
+{% extends 'admin.html' %}
+
+{% block title %}Add user{% endblock %}
+
+{% block content %}
+
+<div class="container">
+    <form method="post" action="{{ url_for('create_invoice_page', booking_id=booking.id) }}">
+        <div class="row">
+            <div class="container-fluid">
+                <div class="col-md-12">
+                    <div class="nk-content-inner">
+                        <div class="nk-content-body">
+                            <div class="nk-block">
+                                <div class="invoice">
+                                    <div class="invoice-action">
+                                        <a class="btn btn-icon btn-white btn-dim btn-outline-primary" href="#"
+                                            target="_blank"><span data-feather="printer"></span></a>
+                                    </div><!-- .invoice-actions -->
+                                    <div class="invoice-wrap">
+                                        <div class="invoice-brand text-center">
+                                            <h3 class="title">Invoice</h3>
+                                        </div>
+                                        <div class="invoice-head">
+                                            <div class="invoice-contact">
+                                                <!-- <span class="overline-title">Invoice To</span> -->
+                                                <div class="invoice-contact-info">
+                                                    <h4 class="title">Q.Phu Nguyen</h4>
+                                                    <ul class="list-plain">
+                                                        <li>
+                                                            <span data-feather="phone"></span>
+                                                            <span>+012 8764 556</span>
+                                                        </li>
+                                                        <li>
+                                                            <span data-feather="mail"></span>
+                                                            <span>ngqp2k@outlook.com</span>
+                                                        </li>
+                                                    </ul>
+                                                </div>
+                                            </div>
+                                            <div class="invoice-desc">
+                                                <ul class="list-plain">
+                                                    <li class="invoice-id"><span>Invoice ID</span>:<span>66K5W3</span>
+                                                    </li>
+                                                    <li class="invoice-date"><span>Ngày tạo</span>:<span>26 Jan,
+                                                            2020</span>
+                                                    </li>
+                                                </ul>
+                                            </div>
+                                        </div><!-- .invoice-head -->
+                                        <div class="invoice-bills">
+                                            <div class="table-responsive">
+                                                <table class="table table-striped">
+                                                    <thead>
+                                                        <tr>
+                                                            <th>No. </th>
+                                                            <th width="30%">Chi tiết</th>
+                                                            <th style="text-align: right">Đơn giá</th>
+                                                            <th style="text-align: right">Số lượng</th>
+                                                            <th>Thành tiền</th>
+                                                        </tr>
+                                                    </thead>
+                                                    <tbody>
+                                                        {% for invoice_detail in invoice_details %}
+                                                        <tr>
+                                                            <td>{{ invoice_detail.no }}</td>
+                                                            <td>{{ invoice_detail.description }}</td>
+                                                            <td style="text-align: right">{{
+                                                                "{:,.0f}".format(invoice_detail.unit_price) }} VNĐ</td>
+                                                            <td style="text-align: right">{{ invoice_detail.qty }}</td>
+                                                            <td>{{ "{:,.0f}".format(invoice_detail.amount) }} VNĐ</td>
+                                                        </tr>
+                                                        {% endfor %}
+                                                    </tbody>
+                                                    <tfoot>
+                                                        <tr>
+                                                            <td colspan="3"></td>
+                                                            <td colspan="">Tổng thanh toán</td>
+                                                            <td>{{ "{:,.0f}".format(total_amount) }} VNĐ</td>
+                                                        </tr>
+                                                        {% if payment != None %}
+                                                        <tr>
+                                                            <td colspan="3"></td>
+                                                            <td colspan="">Đã thanh toán</td>
+                                                            <td>{{ "{:,.0f}".format(payment.amount) }} VNĐ</td>
+                                                        </tr>
+                                                        {% endif %}
+                                                        <!-- <tr>
+                                                        <td colspan="2"></td>
+                                                        <td colspan="2">TAX</td>
+                                                        <td>$43.50</td>
+                                                    </tr> -->
+                                                        <tr>
+                                                            <td colspan="3"></td>
+                                                            <td colspan="">Tổng thanh toán còn lại</td>
+                                                            <td>{{ "{:,.0f}".format(reminder) }} VNĐ</td>
+                                                        </tr>
+                                                    </tfoot>
+                                                </table>
+                                            </div>
+                                        </div><!-- .invoice-bills -->
+                                    </div><!-- .invoice-wrap -->
+                                </div><!-- .invoice -->
+                            </div><!-- .nk-block -->
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="row pt-2">
+            <div class="col-auto">
+                <a href="javascript:history.back()" class="btn btn-secondary btn-block">Close</a>
+            </div>
+            <div class="col-auto">
+                <input class="btn btn-primary btn-block" type="submit" value="Save" style="width: 200%;">
+            </div>
+        </div>
+    </form>
+</div>
+<!-- content @e -->
+
+
+{% endblock %}
