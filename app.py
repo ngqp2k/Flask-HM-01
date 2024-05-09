@@ -32,7 +32,7 @@ def create_app():
 
 app = create_app()
 
-from views import *
+from routers import *
 
 
 # @app.route('/test', methods=['GET', 'POST'])
