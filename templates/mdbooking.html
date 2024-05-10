@@ -31,8 +31,8 @@
         <td>{{ booking.customer_first_name }}</td>
         <td>{{ booking.customer_last_name }}</td>
         <td>{{ booking.phone }}</td>
-        <td>{{ booking.checkin_date }}</td>
-        <td>{{ booking.checkout_date }}</td>
+        <td>{{ booking.checkin_date.strftime('%d/%m/%Y') }}</td>
+        <td>{{ booking.checkout_date.strftime('%d/%m/%Y') }}</td>
         <td>{{ booking.room }}</td>
         <td>{{ booking.customer }}</td>
         <td>{{ booking.status.name }}</td>

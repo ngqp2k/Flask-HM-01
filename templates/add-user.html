@@ -5,78 +5,95 @@
 {% block content %}
 
 <div class="container">
-    <form class="row g-2" method="post" action="#" role="form">
-        <div class="col-md-6">
-            <div class="form-group">
-                <label for="" class="col-form-label">First name</label>
-                <input type="text" id="" class="form-control" placeholder="First name" name="first_name" required
-                    autofocus>
-            </div>
+  <form class="row g-2" method="post" action="#" role="form"
+    oninput='confirm_password.setCustomValidity(confirm_password.value != password.value ? "Passwords do not match." : "")'>
+    <div class="row">
+    <div class="col-md-4">
+      <div class="form-group">
+        <label for="" class="col-form-label">First name</label>
+        <input type="text" id="" class="form-control" placeholder="First name" name="first_name">
+      </div>
+    </div>
+    <div class=" col-md-3">
+      <div class="form-group">
+        <label for="" class="col-form-label">last name</label>
+        <input type="text" id="" class="form-control" placeholder="Last name" name="last_name">
+      </div>
+    </div>
+  </div>
+    <div class="row">
+      <div class="col-md-2">
+        <div class="form-group">
+          <label for="" class="col-form-label">Sex</label>
+          <select class="form-select" name="sex">
+            {% for sex in sexs %}
+            <option>{{ sex }}</option>
+            {% endfor %}
+          </select>
         </div>
-        <div class="col-md-6">
-            <div class="form-group">
-                <label for="" class="col-form-label">last name</label>
-                <input type="text" id="" class="form-control" placeholder="Last name" name="last_name" required>
-            </div>
+      </div>
+      <div class="col-md-2">
+        <div class="form-group">
+          <label for="" class="col-form-label">Birthday</label>
+          <input type="date" id="" class="form-control" placeholder="Birthday" name="birthdate">
         </div>
-        <div class="col-md-6">
-            <div class="form-group">
-                <label for="" class="col-form-label">Sex</label>
-                <input type="text" id="" class="form-control" placeholder="Sex" name="sex">
-            </div>
-        </div>
-        <div class="col-md-6">
-            <div class="form-group">
-                <label for="" class="col-form-label">Birthday</label>
-                <input type="date" id="" class="form-control" placeholder="Birthday" name="birthdate">
-            </div>
-        </div>
+      </div>
 
-        <div class="col-6">
-            <div class="form-group">
-                <label for="" class="col-form-label">Email</label>
-                <input type="email" id="" class="form-control" placeholder="Email" name="email">
-            </div>
+      <div class="col-3">
+        <div class="form-group">
+          <label for="" class="col-form-label">Email</label>
+          <input type="email" id="" class="form-control" placeholder="Email" name="email">
         </div>
-        <div class="col-6">
-            <div class="form-group">
-                <label for="" class="col-form-label">Phone</label>
-                <input type="text" id="" class="form-control" placeholder="Phone" name="phone">
-            </div>
+      </div>
+      <div class="col-3">
+        <div class="form-group">
+          <label for="" class="col-form-label">Phone</label>
+          <input type="text" id="" class="form-control" placeholder="Phone" name="phone">
         </div>
-        <div class="col-12">
-            <div class="form-group">
-                <label for="" class="col-form-label">Role</label>
-                <input type="text" id="" class="form-control" placeholder="Role" name="role" required>
-            </div>
+      </div>
+    </div>
+    <div class="row">
+      <div class="col-2">
+        <div class="form-group">
+          <label for="" class="col-form-label">Username</label>
+          <input type="text" id="" class="form-control" placeholder="Username" name="username" required>
         </div>
-
-        <div class="col-12">
-            <div class="form-group">
-                <label for="" class="col-form-label">Username</label>
-                <input type="text" id="" class="form-control" placeholder="Username" name="username" required>
-            </div>
+      </div>
+      <div class="col-2">
+        <div class="form-group">
+          <label for="" class="col-form-label">Role</label>
+          <select class="form-select" name="role">
+            {% for role in roles %}
+            <option value="{{ role.id }}">{{ role }}</option>
+            {% endfor %}
+          </select>
         </div>
-        <div class="col-12">
-            <div class="form-group">
-                <label for="" class="col-form-label">Password</label>
-                <input type="password" id="" class="form-control" placeholder="Password" name="password" required>
-            </div>
+      </div>
+    </div>
+    <div class="row">
+      <div class="col-3">
+        <div class="form-group">
+          <label for="" class="col-form-label">Password</label>
+          <input type="password" id="" class="form-control" placeholder="Password" name="password" required>
         </div>
-        <div class="col-12">
-            <div class="form-group">
-                <label for="" class="col-form-label">Confirm password</label>
-                <input type="password" id="" class="form-control" placeholder="Confirm password" name="confirm_password"
-                    required>
-            </div>
+      </div>
+      <div class="col-3">
+        <div class="form-group">
+          <label for="" class="col-form-label">Confirm password</label>
+          <input type="password" id="" class="form-control" placeholder="Confirm password" name="confirm_password"
+            required>
         </div>
-        <div class="col-auto">
-            <a href="javascript:history.back()" class="btn btn-secondary btn-block">Close</a>
-        </div>
-        <div class="col-auto">
-            <input class="btn btn-primary btn-block" type="submit" value="Save" style="width: 200%;">
-        </div>
-    </form>
+      </div>
+    </div>
+    <div class="row pt-2">
+      <div class="col-auto">
+        <a href="javascript:history.back()" class="btn btn-secondary btn-block">Close</a>
+      </div>
+      <div class="col-auto">
+        <input class="btn btn-primary btn-block" type="submit" value="Save" style="width: 200%;">
+      </div>
+    </div>
+  </form>
 </div>
 
 

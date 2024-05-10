@@ -5,47 +5,40 @@
 {% block content %}
 
 <div class="container">
-  <form class="" method="post" action="#" role="form"
+  <form class="row g-2" method="post" action="#" role="form"
     oninput='confirm_password.setCustomValidity(confirm_password.value != password.value ? "Passwords do not match." : "")'>
-    <!-- <div class="text-center mb-4">
-    <img class="mb-4" src="{{ url_for('static', filename='assets/brand/bootstrap-solid.svg') }}" alt=""
-      width="72" height="72">
-    <h1 class="h3 mb-3 font-weight-normal">Floating labels</h1>
-  </div> -->
-
-    <div class="form-row">
-      <div class="col-md-6">
-        <div class="form-group">
-          <label for="" class="col-form-label">First name</label>
-          <input type="text" id="first-name" class="form-control" placeholder="First name" name="first_name" required
-            autofocus value="{{ user.first_name }}">
-        </div>
+    <div class="row">
+    <div class="col-md-4">
+      <div class="form-group">
+        <label for="" class="col-form-label">First name</label>
+        <input type="text" id="" class="form-control" placeholder="First name" name="first_name" required
+          value="{{ user.first_name }}">
       </div>
-
-      <div class="col-md-6">
-        <div class="form-group">
-          <label for="" class="col-form-label">last name</label>
-          <input type="text" id="" class="form-control" placeholder="Last name" name="last_name" required
-            value="{{ user.last_name}}">
-        </div>
+    </div>
+    <div class=" col-md-3">
+      <div class="form-group">
+        <label for="" class="col-form-label">last name</label>
+        <input type="text" id="" class="form-control" placeholder="Last name" name="last_name" required
+          value="{{ user.last_name}}">
       </div>
-      <div class="col-md-6">
+    </div>
+  </div>
+    <div class="row">
+      <div class="col-md-2">
         <div class="form-group">
           <label for="" class="col-form-label">Sex</label>
-          <!-- <input type="text" id="" class="form-control" placeholder="Sex" name="sex" value="{{ user.sex }}"> -->
-          <!-- <select class="form-control" id="exampleFormControlSelect2"> -->
-          <select class="custom-select" name="sex">
+          <select class="form-select" name="sex">
             {% for sex in sexs %}
-              {% if sex == user.sex.name %}
-                <option selected>{{ sex }}</option>
-              {% else %}
-                <option>{{ sex }}</option>
-              {% endif %}
+            {% if sex == user.sex.name %}
+            <option selected>{{ sex }}</option>
+            {% else %}
+            <option>{{ sex }}</option>
+            {% endif %}
             {% endfor %}
           </select>
         </div>
       </div>
-      <div class="col-md-6">
+      <div class="col-md-2">
         <div class="form-group">
           <label for="" class="col-form-label">Birthday</label>
           <input type="date" id="" class="form-control" placeholder="Birthday" name="birthdate"
@@ -53,71 +46,65 @@
         </div>
       </div>
 
-      <div class="col-6">
+      <div class="col-3">
         <div class="form-group">
           <label for="" class="col-form-label">Email</label>
           <input type="email" id="" class="form-control" placeholder="Email" name="email" value="{{ user.email }}">
         </div>
       </div>
-      <div class="col-6">
+      <div class="col-3">
         <div class="form-group">
           <label for="" class="col-form-label">Phone</label>
           <input type="text" id="" class="form-control" placeholder="Phone" name="phone" value="{{ user.phone }}">
         </div>
       </div>
-      <div class="col-12">
-        <div class="form-group">
-          <label for="" class="col-form-label">Role</label>
-          <select class="custom-select" name="role">
-            {% for role in roles %}
-              {% if role == user.role %}
-                <option selected value="{{ role.id }}">{{ role }}</option>
-              {% else %}
-                <option value="{{ role.id }}">{{ role }}</option>
-              {% endif %}
-            {% endfor %}
-          </select>
-        </div>
-      </div>
-
-      <div class="col-12">
+    </div>
+    <div class="row">
+      <div class="col-2">
         <div class="form-group">
           <label for="" class="col-form-label">Username</label>
           <input type="text" id="" class="form-control" placeholder="Username" name="username" required
             value="{{ user.username }}">
         </div>
       </div>
-      <div class="col-12">
+      <div class="col-2">
+        <div class="form-group">
+          <label for="" class="col-form-label">Role</label>
+          <select class="form-select" name="role">
+            {% for role in roles %}
+            {% if role == user.role %}
+            <option selected value="{{ role.id }}">{{ role }}</option>
+            {% else %}
+            <option value="{{ role.id }}">{{ role }}</option>
+            {% endif %}
+            {% endfor %}
+          </select>
+        </div>
+      </div>
+    </div>
+    <div class="row">
+      <div class="col-3">
         <div class="form-group">
           <label for="" class="col-form-label">Password</label>
           <input type="password" id="" class="form-control" placeholder="Password" name="password" required>
         </div>
       </div>
-      <div class="col-12">
+      <div class="col-3">
         <div class="form-group">
           <label for="" class="col-form-label">Confirm password</label>
           <input type="password" id="" class="form-control" placeholder="Confirm password" name="confirm_password"
             required>
         </div>
       </div>
-      <div class="col-1">
-        <div class="form-group">
-          <button class="btn btn-lg btn-secondary btn-block" type="">Close</button>
-        </div>
+    </div>
+    <div class="row pt-2">
+      <div class="col-auto">
+        <a href="javascript:history.back()" class="btn btn-secondary btn-block">Close</a>
       </div>
-      <div class="col-2">
-        <div class="form-group">
-          <input class="btn btn-lg btn-primary btn-block" type="submit" value="Save">
-          <!-- <button class="btn btn-lg btn-primary btn-block" type="submit">Save</button> -->
-        </div>
+      <div class="col-auto">
+        <input class="btn btn-primary btn-block" type="submit" value="Save" style="width: 200%;">
       </div>
     </div>
-    <!-- <div class="checkbox mb-3">
-    <label>
-      <input type="checkbox" value="remember-me"> Remember me
-    </label>
-  </div> -->
-    <!-- <p class="mt-5 mb-3 text-muted text-center">&copy; 2017-2022</p> -->
   </form>
 </div>
 

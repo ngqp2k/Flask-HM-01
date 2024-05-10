@@ -26,7 +26,7 @@ def add_booking_service():
     
     bookings = models.Booking.query.filter_by(status=models.BookingStatus.CHECKED_IN).all()
     services = models.Service.query.all()
-    today = datetime.now().strftime('%Y-%m-%d')
+    today = datetime.now().strftime('%d-%m-%Y')
     
     return render_template('add-booking-service.html', bookings=bookings, services=services, current_time=today)
 

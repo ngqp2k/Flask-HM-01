@@ -6,9 +6,6 @@ import random
 import models as models
 
 
-
-
-
 @app.route('/checkout/<int:room_id>', methods=['GET', 'POST'])
 def checkout_page(room_id):
     room = models.Room.query.get(room_id)

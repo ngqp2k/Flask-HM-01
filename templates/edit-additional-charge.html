@@ -1,44 +1,62 @@
 {% extends 'admin.html' %}
 
-{% block title %}Edit Additional charge{% endblock %}
+{% block title %}Add Additional charge{% endblock %}
 
 {% block content %}
 
 <div class="container">
-  <form class="" method="post" action="#" role="form">
-    <div class="form-row">
-      <div class="col-md-12">
-        <div class="form-group">
-          <label for="" class="col-form-label">Booking</label>
-          <input type="text" id="first-name" class="form-control" placeholder="Booking" name="booking" value="{{ additional_charge.booking }}" autofocus>
+    <form class="" method="post" action="#" role="form">
+        <div class="form-row">
+            <div class="row">
+                <div class="col-md-3">
+                    <div class="form-group">
+                        <label for="" class="col-form-label">Booking</label>
+                        <select class="form-select" name="booking">
+                            {% for booking in bookings %}
+                            {% if booking.id == additional_charge.booking.id %}
+                            <option value="{{ booking.id }}" selected>{{ booking }}</option>
+                            {% else %}
+                            <option value="{{ booking.id }}">{{ booking }}</option>
+                            {% endif %}
+                            {% endfor %}
+                        </select>
+                    </div>
+                </div>
+                <div class="col-md-3">
+                    <div class="form-group">
+                        <label for="" class="col-form-label">Created date</label>
+                        <input type="date" id="first-name" class="form-control" placeholder="Created date"
+                            name="created_date" value="{{ additional_charge.created_date }}">
+                    </div>
+                </div>
+            </div>
+            
+            <div class="row">
+                <div class="col-md-6">
+                    <div class="form-group">
+                        <label for="" class="col-form-label">Description</label>
+                        <textarea class="form-control" placeholder="Description" name="description">{{ additional_charge.description }}</textarea>
+                    </div>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-md-6">
+                    <div class="form-group">
+                        <label for="" class="col-form-label">Amount</label>
+                        <input type="text" id="first-name" class="form-control" placeholder="Amount" name="amount" value="{{ additional_charge.amount }}">
+                    </div>
+                </div>
+            </div>
+            <div class="row pt-2">
+                <div class="col-auto">
+                    <a href="javascript:history.back()" class="btn btn-secondary btn-block">Close</a>
+                </div>
+                <div class="col-auto">
+                    <input class="btn btn-primary btn-block" type="submit" value="Save" style="width: 200%;">
+                </div>
+            </div>
         </div>
-      </div>
-      <div class="col-md-12">
-        <div class="form-group">
-          <label for="" class="col-form-label">Created date</label>
-          <input type="date" id="first-name" class="form-control" placeholder="Created date" name="created_date" value="{{ additional_charge.created_date }}" >
-        </div>
-      </div>
-      <div class="col-md-12">
-        <div class="form-group">
-          <label for="" class="col-form-label">Description</label>
-          <input type="text" id="first-name" class="form-control" placeholder="Description" name="description" value="{{ additional_charge.description }}" >
-        </div>
-      </div>
-      <div class="col-md-12">
-        <div class="form-group">
-          <label for="" class="col-form-label">Amount</label>
-          <input type="text" id="first-name" class="form-control" placeholder="Amount" name="amount" value="{{ additional_charge.amount }}" >
-        </div>
-      </div>
-      <div class="col-auto">
-            <a href="javascript:history.back()" class="btn btn-secondary btn-block">Close</a>
-        </div>
-        <div class="col-auto">
-            <input class="btn btn-primary btn-block" type="submit" value="Save" style="width: 200%;">
-        </div>
-    </div>
-  </form>
+    </form>
 </div>
 
 {% endblock %}

@@ -28,7 +28,7 @@
         <td>{{ payment.id }}</td>
         <td>{{ payment.transaction_id }}</td>
         <td>{{ payment.booking.id }}</td>
-        <td>{{ payment.created_date }}</td>
+        <td>{{ payment.created_date.strftime('%d/%m/%Y') }}</td>
         <td>{{ payment.payment_method }}</td>
         <td>{{ "{:,.0f}".format(payment.amount) }} VNĐ</td>
         <td>

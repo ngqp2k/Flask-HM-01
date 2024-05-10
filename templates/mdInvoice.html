@@ -24,7 +24,7 @@
       <tr>
         <td>{{ invoice.id }}</td>
         <td>{{ invoice.booking.id }}</td>
-        <td>{{ invoice.created_date }}</td>
+        <td>{{ invoice.created_date.strftime('%d/%m/%Y') }}</td>
         <td>{{ "{:,.0f}".format(invoice.total_price) }} VNĐ</td>
         <td>
           <a href="{{ url_for('invoice_detail_page', booking_id=invoice.booking.id) }}" class="btn btn-primary btn-sm">View</a>

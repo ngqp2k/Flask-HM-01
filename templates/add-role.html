@@ -6,37 +6,24 @@
 
 <div class="container">
     <form class="row g-2" method="post" action="#" role="form">
-        <div class="col-md-6">
-            <div class="form-group">
-                <label for="" class="col-form-label">Role name</label>
-                <input type="text" id="first-name" class="form-control" placeholder="Role name" name="name" required
-                    autofocus>
+        <div class="row">
+            <div class="col-md-6">
+                <div class="form-group">
+                    <label for="" class="col-form-label">Role name</label>
+                    <input type="text" id="first-name" class="form-control" placeholder="Role name" name="name" required
+                        autofocus>
+                </div>
             </div>
         </div>
-        <div class="col-auto">
-            <a href="javascript:history.back()" class="btn btn-secondary btn-block">Close</a>
-        </div>
-        <div class="col-auto">
-            <input class="btn btn-primary btn-block" type="submit" value="Save" style="width: 200%;">
+
+        <div class="row pt-2">
+            <div class="col-auto">
+                <a href="javascript:history.back()" class="btn btn-secondary btn-block">Close</a>
+            </div>
+            <div class="col-auto">
+                <input class="btn btn-primary btn-block" type="submit" value="Save" style="width: 200%;">
+            </div>
         </div>
     </form>
 </div>
-value="{{ room.room_no }}"
 {% endblock %}
-
-<div class="row pt-2">
-    <div class="col-auto">
-        <a href="javascript:history.back()" class="btn btn-secondary btn-block">Close</a>
-    </div>
-    <div class="col-auto">
-        <input class="btn btn-primary btn-block" type="submit" value="Save" style="width: 200%;">
-    </div>
-</div>
-
-{% for room_type in room_types %}
-{% if room_type == room.room_type %}
-<option selected value="{{ room_type.id }}">{{ room_type }}</option>
-{% else %}
-<option value="{{ room_type.id }}">{{ room_type }}</option>
-{% endif %}
-{% endfor %}

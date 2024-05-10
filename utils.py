@@ -14,22 +14,22 @@ def build_sample_db():
     db.session.add(role2)
     
     # Create 2 users
-    user1 = models.User(first_name='Phu', last_name='Nguyen', sex=models.Sex.Men, email='ngqp2k@outlook.com', phone='+84857110010' ,birthdate=datetime(2000, 3, 25), username='nqgp2k', password='123', role=role1)
-    user2 = models.User(first_name='Hazard', last_name='Eden', sex=models.Sex.Men, email='ngqp2k@outlook.com', phone='+84857110010' , birthdate=datetime(2000, 3, 25), username='eden', password='123', role=role2)
+    user1 = models.User(first_name='Phu', last_name='Nguyen', sex=models.Sex.Men, email='ngqp2k@outlook.com', phone='+84857110010' ,birthdate=datetime(2000, 3, 25), username='admin', password='admin', role=role1)
+    user2 = models.User(first_name='Hazard', last_name='Eden', sex=models.Sex.Women, email='eden99@example.com', phone='+841231234567' , birthdate=datetime(1997, 5, 9), username='user1', password='123', role=role2)
     db.session.add(user1)
     db.session.add(user2)
     
     # Create 2 room types
-    room_type1 = models.RoomType(name='Standard', price_per_night=100, capacity=3, bed_quantity=1)
-    room_type2 = models.RoomType(name='Deluxe', price_per_night=200, capacity=3, bed_quantity=2)
+    room_type1 = models.RoomType(name='Standard', price_per_night=1000000, capacity=3, bed_quantity=1)
+    room_type2 = models.RoomType(name='Deluxe', price_per_night=1900000, capacity=3, bed_quantity=2)
     db.session.add(room_type1)
     db.session.add(room_type2)
     
     # Create 2 rooms
-    room1 = models.Room(room_no='101', room_type=room_type1, status=models.RoomStatus.AVAILABLE, image='https://res.cloudinary.com/dxll8tdwq/image/upload/v1714893503/060912db19ae3c89079d6f2cd14aa054_ikj0vc.jpg')
+    room1 = models.Room(room_no='101', room_type=room_type1, status=models.RoomStatus.BOOKED, image='https://res.cloudinary.com/dxll8tdwq/image/upload/v1714893503/060912db19ae3c89079d6f2cd14aa054_ikj0vc.jpg')
     room2 = models.Room(room_no='102', room_type=room_type2, status=models.RoomStatus.AVAILABLE, image='https://res.cloudinary.com/dxll8tdwq/image/upload/v1714893540/19da767c8b8cd79a2ab68f9e2ece6b4a_dtutw8.jpg')
     room3 = models.Room(room_no='103', room_type=room_type1, status=models.RoomStatus.AVAILABLE, image='https://res.cloudinary.com/dxll8tdwq/image/upload/v1714893503/060912db19ae3c89079d6f2cd14aa054_ikj0vc.jpg')
-    room4 = models.Room(room_no='201', room_type=room_type2, status=models.RoomStatus.AVAILABLE, image='https://res.cloudinary.com/dxll8tdwq/image/upload/v1714893540/19da767c8b8cd79a2ab68f9e2ece6b4a_dtutw8.jpg')
+    room4 = models.Room(room_no='201', room_type=room_type2, status=models.RoomStatus.BOOKED, image='https://res.cloudinary.com/dxll8tdwq/image/upload/v1714893540/19da767c8b8cd79a2ab68f9e2ece6b4a_dtutw8.jpg')
     room5 = models.Room(room_no='202', room_type=room_type1, status=models.RoomStatus.AVAILABLE, image='https://res.cloudinary.com/dxll8tdwq/image/upload/v1714893503/060912db19ae3c89079d6f2cd14aa054_ikj0vc.jpg')
     room6 = models.Room(room_no='203', room_type=room_type2, status=models.RoomStatus.AVAILABLE, image='https://res.cloudinary.com/dxll8tdwq/image/upload/v1714893540/19da767c8b8cd79a2ab68f9e2ece6b4a_dtutw8.jpg')
     db.session.add(room1)
@@ -40,41 +40,60 @@ def build_sample_db():
     db.session.add(room6)
     
     # Create 2 customers
-    customer1 = models.Customer(first_name='f1', last_name='l1', sex=models.Sex.Men, age=24, email='f1@example.com', phone='0123')
+    customer1 = models.Customer(first_name='A', last_name='Trần Văn', sex=models.Sex.Men, age=24, email='a@example.com', phone='0123')
+    customer2 = models.Customer(first_name='B', last_name='Lê Nguyễn', sex=models.Sex.Men, age=30, email='b@example.com', phone='0789')
+    db.session.add(customer1)
+    db.session.add(customer2)
     
     # Create 2 bookings
-    booking1 = models.Booking(customer_first_name='Phu', customer_last_name='Nguyen',age=20,sex=models.Sex.Men, email='ngqp2k@outlook.com', phone='0123',is_regioner=False,created_date=datetime(2000, 3, 25), checkin_date=datetime(2000, 3, 25), checkout_date=datetime(2000, 3, 25), total_price=1000, user=user1, room=room1, status=models.BookingStatus.PENDING, customer=customer1)
-    booking2 = models.Booking(customer_first_name='Eden', customer_last_name='Nguyen',age=22,sex=models.Sex.Men, email='ngqp2k@example.com', phone='0948',is_regioner=False,created_date=datetime(2000, 3, 25), checkin_date=datetime(2000, 3, 25), checkout_date=datetime(2000, 3, 25), total_price=1000, user=user1, room=room2, status=models.BookingStatus.PENDING)
+    booking1 = models.Booking(customer_first_name='John', customer_last_name='Conner',age=20,sex=models.Sex.Men, email='John@outlook.com', phone='095749574',is_regioner=False,created_date=datetime(2024, 5, 10), checkin_date=datetime(2024, 5, 10), checkout_date=datetime(2024, 5, 12), total_price=0, user=user1, room=room1, status=models.BookingStatus.CONFIRMED, customer=customer1)
+    booking2 = models.Booking(customer_first_name='Widow', customer_last_name='Black',age=22,sex=models.Sex.Women, email='Widow@example.com', phone='038471265',is_regioner=False,created_date=datetime(2024, 5, 10), checkin_date=datetime(2024, 5, 10), checkout_date=datetime(2024, 5, 12), total_price=0, user=user1, room=room4, status=models.BookingStatus.CONFIRMED)
     db.session.add(booking1)
     db.session.add(booking2)
     
     # Create 2 invoice
-    invoice1 = models.Invoice(booking=booking1, created_date=datetime(2000, 3, 25), total_price=1000)
-    invoice2 = models.Invoice(booking=booking2, created_date=datetime(2000, 3, 25), total_price=2000)
-    db.session.add(invoice1)
-    db.session.add(invoice2)
+    # invoice1 = models.Invoice(booking=booking1, created_date=datetime(2000, 3, 25), total_price=1000)
+    # invoice2 = models.Invoice(booking=booking2, created_date=datetime(2000, 3, 25), total_price=2000)
+    # db.session.add(invoice1)
+    # db.session.add(invoice2)
     
     # Create 2 payment methods
-    payment_method1 = models.PaymentMethod(name='Cash')
+    payment_method1 = models.PaymentMethod(name='Debit Card')
     payment_method2 = models.PaymentMethod(name='Credit Card')
+    payment_method3 = models.PaymentMethod(name='Paypal')
     db.session.add(payment_method1)
     db.session.add(payment_method2)
+    db.session.add(payment_method3)
     
     # Create 2 payments
-    payment1 = models.Payment(booking=booking1, created_date=datetime(2000, 3, 25), amount=1000, payment_method=payment_method1, transaction_id='12345')
-    payment2 = models.Payment(booking=booking2, created_date=datetime(2000, 3, 25), amount=2000, payment_method=payment_method2, transaction_id='54321')
+    payment1 = models.Payment(booking=booking1, created_date=datetime(2024, 5, 10), amount=booking1.room.room_type.price_per_night * 2, payment_method=payment_method1, transaction_id='12345')
+    payment2 = models.Payment(booking=booking2, created_date=datetime(2024, 5, 10), amount=booking2.room.room_type.price_per_night * 2, payment_method=payment_method2, transaction_id='54321')
     db.session.add(payment1)
     db.session.add(payment2)
     
     # Create 2 services
-    service1 = models.Service(name='Breakfast', description='Breakfast', price=100)
-    service2 = models.Service(name='Dinner', description='Dinner', price=200)
+    service1 = models.Service(name='Bữa sáng 1', description='Bữa sáng 1', price=150000)
+    service2 = models.Service(name='Bữa sáng 2', description='Bữa sáng 2', price=250000)
+    service3 = models.Service(name='Bữa ăn tối 1', description='Bữa ăn tối 1', price=500000)
+    service4 = models.Service(name='Bữa ăn tối 2', description='Bữa ăn tối 2', price=700000)
+    service5 = models.Service(name='Bữa ăn tối 3', description='Bữa ăn tối 3', price=1000000)
+    service6 = models.Service(name='Nước suối', description='Nước suối', price=15000)
+    service7 = models.Service(name='Cocacola', description='Cocacola', price=22000)
+    service8 = models.Service(name='Message', description='Message', price=1500000)
+    
     db.session.add(service1)
     db.session.add(service2)
+    db.session.add(service3)
+    db.session.add(service4)
+    db.session.add(service5)
+    db.session.add(service6)
+    db.session.add(service7)
+    db.session.add(service8)
     
     # Create 2 additional charges
-    additional_charge1 = models.AdditionalCharge(booking=booking1, created_date=datetime(2000, 3, 25), description='Breakfast', amount=100)
-    additional_charge2 = models.AdditionalCharge(booking=booking2, created_date=datetime(2000, 3, 25), description='Dinner', amount=200)
+    additional_charge1 = models.AdditionalCharge(booking=booking1, created_date=datetime(2024, 5, 10), description='Phí làm hỏng bàn', amount=500000)
+    additional_charge2 = models.AdditionalCharge(booking=booking1, created_date=datetime(2024, 5, 10), description='Phí làm hỏng giường', amount=2000000)
+    # additional_charge2 = models.AdditionalCharge(booking=booking2, created_date=datetime(2024, 5, 10), description='Dinner', amount=200)
     db.session.add(additional_charge1)
     db.session.add(additional_charge2)
     

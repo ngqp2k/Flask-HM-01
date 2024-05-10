@@ -26,7 +26,7 @@ def add_additional_charge():
         return redirect(url_for('additional_charge_page'))
     
     bookings = models.Booking.query.filter_by(status=models.BookingStatus.CHECKED_IN).all()
-    today = datetime.now().strftime('%Y-%m-%d')
+    today = datetime.now().strftime('%d-%m-%Y')
     
     return render_template('add-additional-charge.html', bookings=bookings, current_time=today)
 

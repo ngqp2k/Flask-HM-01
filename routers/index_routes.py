@@ -17,8 +17,8 @@ def admin_page():
 # Index page
 @app.route('/')
 def index():
-    today = datetime.now().strftime('%Y-%m-%d')
-    tomorrow = (datetime.now() + timedelta(days=1)).strftime('%Y-%m-%d')
+    today = datetime.now().strftime('%d-%m-%Y')
+    tomorrow = (datetime.now() + timedelta(days=1)).strftime('%d-%m-%Y')
     rooms = models.Room.query.filter_by(status=models.RoomStatus.AVAILABLE).all()
     return render_template('index.html'
                            , current_time=today

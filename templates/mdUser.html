@@ -141,7 +141,7 @@
         <td>{{ user.first_name }}</td>
         <td>{{ user.last_name }}</td>
         <td>{{ user.sex.name }}</td>
-        <td>{{ user.birthdate }}</td>
+        <td>{{ user.birthdate.strftime('%d/%m/%Y') }}</td>
         <td>{{ user.email }}</td>
         <td>{{ user.phone }}</td>
         <td>{{ user.username }}</td>

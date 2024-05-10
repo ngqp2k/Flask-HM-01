@@ -25,7 +25,7 @@
       <tr>
         <td>{{ room_type.id }}</td>
         <td>{{ room_type.name }}</td>
-        <td>{{ room_type.price_per_night }}</td>
+        <td>{{"{:,.0f}".format(room_type.price_per_night) }} VNĐ</td>
         <td>{{ room_type.capacity }}</td>
         <td>{{ room_type.bed_quantity }}</td>
         <td>
