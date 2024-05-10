@@ -17,3 +17,6 @@ migrations
 env/
 venv/
 ENV/
+
+# vs code
+.vscode
