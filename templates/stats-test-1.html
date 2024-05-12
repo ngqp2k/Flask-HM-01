@@ -1,0 +1,116 @@
+{% extends 'admin.html' %}
+
+{% block title %}
+Thống kê doanh thu theo tháng
+{% endblock %}
+
+{% block content %}
+<form action="" method="get">
+    <div class="row p-2">
+        <div class="col-md-2">
+            <div class="form-group">
+                <label>Thời gian</label>
+                <input type="month" class="form-control" name="stats_time" value="{{stats_time}}">
+            </div>
+        </div>
+
+        <div class="col-md-1">
+            <div class="form-group">
+                <label></label>
+                <button type="submit" class="btn btn-primary form-control">Thống kê</button>
+            </div>
+        </div>
+    </div>
+</form>
+
+<div class="row">
+    <div class="col-6">
+        <div class="table-responsive">
+            <table class="table table-striped table-sm">
+                <thead>
+                    <tr>
+                        <th>#</th>
+                        <th>Loại phòng</th>
+                        <th>Doanh thu</th>
+                        <th>Số lượt thuê</th>
+                        <th>Tỉ lệ</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {% for stats_model in stats_models %}
+                    <tr>
+                        <td>{{ stats_model.no }}</td>
+                        <td>{{ stats_model.room_type }}</td>
+                        <td>{{ "{:,.0f}".format(stats_model.amount) }} VNĐ</td>
+                        <td>{{ stats_model.qty }}</td>
+                        <td>{{ stats_model.rate }}</td>
+                    <tr>
+                        {% endfor %}
+                </tbody>
+            </table>
+        </div>
+    </div>
+    <div class="col-6">
+        <canvas class="my-4 w-75 h-100" id="myChart1" width="500" height="380"></canvas>
+    </div>
+</div>
+
+{% endblock %}
+
+{% block scripts %}
+<script>
+    // labels
+    const labels = [];
+    {% for room_type in room_types %}
+        labels.push('{{ room_type.name }}');
+    {% endfor %}
+
+    const data = [];
+    {% for stats_model in stats_models %}
+        data.push({{ stats_model.amount }});
+    {% endfor %}
+
+
+    // Get random color
+    function getRandomColor() {
+        var letters = '0123456789ABCDEF';
+        var color = '#';
+        for (var i = 0; i < 6; i++) {
+            color += letters[Math.floor(Math.random() * 16)];
+        }
+        return color;
+    }
+
+    // Graphs
+    const ctx = document.getElementById('myChart1')
+    // eslint-disable-next-line no-unused-vars
+    const myChart = new Chart(ctx, {
+        type: 'doughnut',
+        data: {
+            labels: labels,
+            datasets: [{
+                label: 'Doanh thu',
+                data: data,
+                backgroundColor: [
+                    getRandomColor(),
+                    getRandomColor(),
+                    getRandomColor()
+                ],
+                hoverOffset: 4
+            }]
+        },
+        options: {
+            scales: {
+                yAxes: [{
+                    ticks: {
+                        beginAtZero: false
+                    }
+                }]
+            },
+            legend: {
+                display: false
+            }
+        }
+    })
+</script>
+{% endblock %}

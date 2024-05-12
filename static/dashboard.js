@@ -12,23 +12,17 @@
     type: 'line',
     data: {
       labels: [
-        'Sunday',
-        'Monday',
-        'Tuesday',
-        'Wednesday',
-        'Thursday',
-        'Friday',
-        'Saturday'
+        'Quý 1',
+        'Quý 2',
+        'Quý 3',
+        'Quý 4'
       ],
       datasets: [{
         data: [
-          15339,
-          21345,
-          18483,
-          24003,
-          23489,
-          24092,
-          12034
+          55000000,
+          22000000,
+          30000000,
+          88000000
         ],
         lineTension: 0,
         backgroundColor: 'transparent',

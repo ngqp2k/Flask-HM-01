@@ -1,0 +1,141 @@
+{% extends 'admin.html' %}
+
+{% block title %}
+Thống kê doanh thu
+{% endblock %}
+
+{% block content %}
+<div class="container">
+    <form action="" method="get">
+        <div class="row p-2">
+            <div class="col-md-2">
+                <div class="form-group">
+                    <label>Loại thống kê</label>
+                    <select class="form-select" name="stats_type">
+                        <option value="1" selected>Quý</option>
+                        <option value="2">Tháng</option>
+                    </select>
+                </div>
+            </div>
+            <div class="col-md-2">
+                <div class="form-group">
+                    <label>Thời gian</label>
+                    <input type="month" class="form-control" name="stats_time">
+                </div>
+            </div>
+
+            <div class="col-md-1">
+                <div class="form-group">
+                    <label></label>
+                    <button type="submit" class="btn btn-primary form-control">Submit</button>
+                </div>
+            </div>
+        </div>
+    </form>
+</div>
+
+<div class="row">
+    <div class="col-6">
+        <div class="table-responsive">
+            <table class="table table-striped table-sm">
+                <thead>
+                    <tr>
+                        <th>#</th>
+                        <th>Loại phòng</th>
+                        <th>Doanh thu</th>
+                        <th>Số lượt thuê</th>
+                        <th>Tỉ lệ</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {% for stats_model in stats_models %}
+                    <tr>
+                        <td>{{ stats_model.no }}</td>
+                        <td>{{ stats_model.room_type }}</td>
+                        <td>{{ "{:,.0f}".format(stats_model.amount) }} VNĐ</td>
+                        <td>{{ stats_model.qty }}</td>
+                        <td>{{ stats_model.rate }}</td>
+                    <tr>
+                        {% endfor %}
+                </tbody>
+            </table>
+        </div>
+    </div>
+    <div class="col-6">
+        <canvas class="my-4 w-100" id="myChart1" width="900" height="380"></canvas>
+    </div>
+</div>
+
+{% endblock %}
+
+{% block scripts %}
+<script>
+    // labels
+    const labels = [];
+    {% for label in labels %}
+    labels.push('{{ label }}');
+    {% endfor %}
+
+    const data = [];
+    {% for item1 in data %}
+    var data1 = [];
+    {% for item in item1 %}
+    data1.push({{ item }});
+    console.log({{ item }})
+    {% endfor %}
+    data.push(data1);
+    {% endfor %}
+
+    console.log(data);
+    // const data12 = [];
+    // {% for item in data_12 %}
+    // data12.push({{ item }});
+    // {% endfor %}
+
+    // Get random color
+    function getRandomColor() {
+        var letters = '0123456789ABCDEF';
+        var color = '#';
+        for (var i = 0; i < 6; i++) {
+            color += letters[Math.floor(Math.random() * 16)];
+        }
+        return color;
+    }
+
+    // Graphs
+    const ctx = document.getElementById('myChart1')
+    // eslint-disable-next-line no-unused-vars
+    const myChart = new Chart(ctx, {
+        type: 'line',
+        data: {
+            labels: labels,
+
+            datasets: [
+                {% for i in range(room_types | length) %}
+            {
+            label: '{{ room_types[i] }}',
+            data: data[{{ i }}],
+    lineTension: 0,
+        backgroundColor: 'transparent',
+            borderColor: getRandomColor(),
+                borderWidth: 4,
+                    pointBackgroundColor: getRandomColor(),
+                },
+    {% endfor %}
+            ]
+        },
+    options: {
+        scales: {
+            yAxes: [{
+                ticks: {
+                    beginAtZero: false
+                }
+            }]
+        },
+        legend: {
+            display: false
+        }
+    }
+    })
+</script>
+{% endblock %}
