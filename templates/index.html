@@ -250,7 +250,7 @@
                     <p>Price for 1 night</p>
                     <!-- <input type="hidden" name="checkin_date" value="{{ checkin_date }}" /> -->
                     <!-- <input type="hidden" name="checkin_date" value="{{ checkout_date }}" /> -->
-                    <a href="{{ url_for('checkout_page', room_id=room.id) }}" class="inn-room-book">Book</a>
+                    <a href="" class="inn-room-book" onclick="addToCart()">Book</a>
                 </div>
             </div>
             <!--END ROOM SECTION-->
@@ -259,7 +259,8 @@
 
     </main>
 
-    <script src="../assets/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="{{ url_for('static', filename='/assets/dist/js/bootstrap.bundle.min.js') }}"></script>
+    <script src="{{ url_for('static', filename='/js/script.js') }}"></script>
 
 
 </body>

@@ -55,3 +55,10 @@ def checkout_handler(room_id):
         db.session.commit()
         
     return redirect(url_for('index'))
+
+
+@app.route('/api/add-to-cart', methods=['POST'])
+def add_to_cart():
+    
+
+    return redirect(url_for('admin_page'))
