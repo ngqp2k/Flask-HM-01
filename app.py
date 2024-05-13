@@ -43,7 +43,7 @@ from routers import *
 
 
 if __name__ == '__main__':
-    # with app.app_context():
-    #     import utils
-    #     utils.build_sample_db()
+    with app.app_context():
+        import utils
+        utils.build_sample_db()
     app.run(debug=True)

@@ -15,18 +15,22 @@ class InvoiceDetail():
         self.qty = qty
         self.amount = amount
 
-@app.route('/create-invoice/<int:booking_id>', methods=['GET', 'POST'])
-def invoice_detail_page(booking_id):
+@app.route('/create-invoice/<int:booking_id>/<int:room_id>/<int:booking_room_id>', methods=['GET', 'POST'])
+def invoice_detail_page(booking_id, room_id, booking_room_id):
     booking = models.Booking.query.get(booking_id)
     
     print(f'ngqp2k-debug: {request.method} {booking_id}')
+
+    room = models.Room.query.get(room_id)
         
     # get all payment of booking
     payment = models.Payment.query.filter_by(booking_id=booking_id).first()
     # get all additional charges of booking
-    additional_charges = models.AdditionalCharge.query.filter_by(booking_id=booking_id).all()
+    additional_charges = models.AdditionalCharge.query.filter_by(booking_room_id=booking_room_id).all()
     # get all services of booking
-    booking_services = models.BookingServices.query.filter_by(booking_id=booking_id).all()
+    booking_services = models.BookingRoomService.query.filter_by(booking_room_id=booking_room_id).all()
+    
+    booking_room = models.BookingRoom.query.get(booking_room_id)
     
     # create invoice details
     row_count = 1
@@ -34,8 +38,8 @@ def invoice_detail_page(booking_id):
     
     invoice_details = []
     
-    cnt_date = (booking.checkout_date - booking.checkin_date).days
-    invoice_detail = InvoiceDetail(row_count, 'Tiền phòng', booking.room.room_type.price_per_night, cnt_date, booking.room.room_type.price_per_night * cnt_date)
+    cnt_date = (booking_room.checkout_date - booking_room.checkin_date).days
+    invoice_detail = InvoiceDetail(row_count, 'Tiền phòng', booking_room.room.room_type.price_per_night, cnt_date, booking_room.room.room_type.price_per_night * cnt_date)
     total_amount += decimal.Decimal(invoice_detail.amount)
     invoice_details.append(invoice_detail)
         
@@ -56,7 +60,7 @@ def invoice_detail_page(booking_id):
     else:
         reminder = total_amount - payment.amount
         
-    is_read_only = booking.status == models.BookingStatus.CHECKED_OUT
+    is_read_only = booking_room.status == models.BookingStatus.CHECKED_OUT
         
     if request.method == 'POST':
         invoice = models.Invoice()
@@ -78,7 +82,7 @@ def invoice_detail_page(booking_id):
         return redirect(url_for('invoice_page'))
         
     return render_template('create-invoice.html'
-                           , booking=booking
+                           , booking_room=booking_room
                            , invoice_details=invoice_details
                            , total_amount=total_amount
                            , payment=payment

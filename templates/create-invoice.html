@@ -5,7 +5,7 @@
 {% block content %}
 
 <div class="container">
-    <form method="post" action="{{ url_for('invoice_detail_page', booking_id=booking.id) }}">
+    <form method="post" action="{{ url_for('invoice_detail_page', booking_room_id=booking_room.id, booking_id=booking_room.booking.id, room_id=booking_room.room.id) }}">
         <div class="row">
             <div class="container-fluid">
                 <div class="col-md-12">
@@ -25,15 +25,15 @@
                                             <div class="invoice-contact">
                                                 <!-- <span class="overline-title">Invoice To</span> -->
                                                 <div class="invoice-contact-info">
-                                                    <h4 class="title">{{ booking.customer_first_name }} {{ booking.customer_last_name }}</h4>
+                                                    <h4 class="title">{{ booking_room.booking.customer_first_name }} {{ booking_room.booking.customer_last_name }}</h4>
                                                     <ul class="list-plain">
                                                         <li>
                                                             <span data-feather="phone"></span>
-                                                            <span>{{ booking.phone }}</span>
+                                                            <span>{{ booking_room.booking.phone }}</span>
                                                         </li>
                                                         <li>
                                                             <span data-feather="mail"></span>
-                                                            <span>{{ booking.email }}</span>
+                                                            <span>{{ booking_room.booking.email }}</span>
                                                         </li>
                                                     </ul>
                                                 </div>
@@ -77,13 +77,16 @@
                                                             <td colspan="">Tổng thanh toán</td>
                                                             <td>{{ "{:,.0f}".format(total_amount) }} VNĐ</td>
                                                         </tr>
-                                                        {% if payment != None %}
                                                         <tr>
                                                             <td colspan="3"></td>
                                                             <td colspan="">Đã thanh toán</td>
+                                                            {% if payment != None %}
                                                             <td>{{ "{:,.0f}".format(payment.amount) }} VNĐ</td>
+                                                            {% else %}
+                                                            <td>{{ "{:,.0f}".format(0) }} VNĐ</td>
+                                                            {% endif %}
+
                                                         </tr>
-                                                        {% endif %}
                                                         <!-- <tr>
                                                         <td colspan="2"></td>
                                                         <td colspan="2">TAX</td>

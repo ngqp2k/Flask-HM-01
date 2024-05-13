@@ -11,4 +11,5 @@ from routers.admin_user_routes import *
 from routers.admin_role_routes import *
 from routers.admin_additional_charges_routes import *
 from routers.admin_stats import *
+from routers.admin_booking_room_routes import *
 from routers.index_routes import *

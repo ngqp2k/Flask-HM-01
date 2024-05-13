@@ -15,3 +15,16 @@ function addToCart() {
         }
     })
 }
+
+function test() {
+    event.preventDefault();
+
+    alert('Test');
+
+    fetch('/api/test', {
+        method: 'POST',
+        headers: {
+            'Content-Type': 'application/json'
+        }
+    })
+}

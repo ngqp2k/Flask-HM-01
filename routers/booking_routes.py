@@ -62,3 +62,11 @@ def add_to_cart():
     
 
     return redirect(url_for('admin_page'))
+
+
+@app.route('/api/test', methods=['POST'])
+def testtest():
+    print('testtest')
+
+
+    return redirect(url_for('index'))

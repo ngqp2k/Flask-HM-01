@@ -25,8 +25,8 @@
       {% for additional_charge in additional_charges %}
       <tr>
         <td>{{ additional_charge.id }}</td>
-        <td>{{ additional_charge.booking.id }}</td>
-        <td>{{ additional_charge.booking }}</td>
+        <td>{{ additional_charge.booking_room.booking.id }}</td>
+        <td>{{ additional_charge.booking_room.room }}</td>
         <td>{{ additional_charge.created_date.strftime('%d/%m/%Y') }}</td>
         <td>{{ additional_charge.description }}</td>
         <td>{{"{:,.0f}".format(additional_charge.amount) }} VNĐ</td>
