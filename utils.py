@@ -21,7 +21,7 @@ def build_sample_db():
     
     # Create 2 room types
     room_type1 = models.RoomType(name='Tiêu chuẩn', price_per_night=1000000, capacity=3, bed_quantity=1)
-    room_type2 = models.RoomType(name='Cao cấp', price_per_night=200000, capacity=3, bed_quantity=2)
+    room_type2 = models.RoomType(name='Cao cấp', price_per_night=2000000, capacity=3, bed_quantity=2)
     room_type3 = models.RoomType(name='Đặc biệt', price_per_night=4000000, capacity=3, bed_quantity=2)
     db.session.add(room_type1)
     db.session.add(room_type2)

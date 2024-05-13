@@ -14,8 +14,11 @@
       <tr>
         <th>#</th>
         <th>Booking ID</th>
-        <th>Created date</th>
-        <th>Total price</th>
+        <th>Số phòng</th>
+        <th>Tên</th>
+        <th>Họ và tên đệm</th>
+        <th>Ngày tạo</th>
+        <th>Thành tiền</th>
         <th>Actions</th>
       </tr>
     </thead>
@@ -23,11 +26,14 @@
       {% for invoice in invoices %}
       <tr>
         <td>{{ invoice.id }}</td>
-        <td>{{ invoice.booking.id }}</td>
+        <td>{{ invoice.booking_room.booking.id }}</td>
+        <td>{{ invoice.booking_room.room }}</td>
+        <td>{{ invoice.first_name }}</td>
+        <td>{{ invoice.last_name }}</td>
         <td>{{ invoice.created_date.strftime('%d/%m/%Y') }}</td>
         <td>{{ "{:,.0f}".format(invoice.total_price) }} VNĐ</td>
         <td>
-          <a href="{{ url_for('invoice_detail_page', booking_id=invoice.booking.id) }}" class="btn btn-primary btn-sm">View</a>
+          <a href="{{ url_for('view_invoice', invoice_id=invoice.id) }}" class="btn btn-primary btn-sm">View</a>
           <a href="{{ url_for('edit_invoice', invoice_id=invoice.id) }}" class="btn btn-primary btn-sm disabled">Edit</a>
           <a href="{{ url_for('delete_invoice', invoice_id=invoice.id) }}" class="btn btn-danger btn-sm disabled">Delete</a>
         </td>

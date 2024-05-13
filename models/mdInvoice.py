@@ -3,12 +3,12 @@ from app import db
 
 class Invoice(db.Model):
     id = db.Column(db.Integer, primary_key=True)
-    booking_id = db.Column(db.Integer, db.ForeignKey('booking.id'))
-    booking = db.relationship('Booking', backref=db.backref('invoice', lazy=True))
-    room_id = db.Column(db.Integer, db.ForeignKey('room.id'))
-    room = db.relationship('Room', backref='Invoice')
+    first_name = db.Column(db.String(50))
+    last_name = db.Column(db.String(50))
+    booking_room_id = db.Column(db.Integer, db.ForeignKey('booking_room.id'))
+    booking_room = db.relationship('BookingRoom', backref='invoice')
     created_date = db.Column(db.Date)
     total_price = db.Column(db.DECIMAL)
-    
+
     def __str__(self) -> str:
         return self.booking.user.username

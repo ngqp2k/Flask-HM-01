@@ -15,22 +15,23 @@ class InvoiceDetail():
         self.qty = qty
         self.amount = amount
 
-@app.route('/create-invoice/<int:booking_id>/<int:room_id>/<int:booking_room_id>', methods=['GET', 'POST'])
-def invoice_detail_page(booking_id, room_id, booking_room_id):
-    booking = models.Booking.query.get(booking_id)
-    
-    print(f'ngqp2k-debug: {request.method} {booking_id}')
+@app.route('/create-invoice/<int:booking_room_id>', methods=['GET', 'POST'])
+def invoice_detail_page(booking_room_id):
 
-    room = models.Room.query.get(room_id)
+    booking_room = models.BookingRoom.query.get(booking_room_id)
+
+    booking = booking_room.booking
+
+    room = booking_room.room
+    
         
     # get all payment of booking
-    payment = models.Payment.query.filter_by(booking_id=booking_id).first()
+    payment = models.Payment.query.filter_by(booking_id=booking.id).first()
     # get all additional charges of booking
     additional_charges = models.AdditionalCharge.query.filter_by(booking_room_id=booking_room_id).all()
     # get all services of booking
     booking_services = models.BookingRoomService.query.filter_by(booking_room_id=booking_room_id).all()
     
-    booking_room = models.BookingRoom.query.get(booking_room_id)
     
     # create invoice details
     row_count = 1
@@ -64,22 +65,35 @@ def invoice_detail_page(booking_id, room_id, booking_room_id):
         
     if request.method == 'POST':
         invoice = models.Invoice()
-        invoice.booking = booking
+        invoice.first_name = booking.customer_first_name
+        invoice.last_name = booking.customer_last_name
+        invoice.booking_room = booking_room
         invoice.created_date = datetime.now()
         invoice.total_price = total_amount
         
         db.session.add(invoice)
         
-        booking.status = models.BookingStatus.CHECKED_OUT
-        db.session.add(booking)
+        booking_room.status = models.BookingStatus.CHECKED_OUT
+        db.session.add(booking_room)
         
-        room = booking.room
+        room = booking_room.room
         room.status = models.RoomStatus.AVAILABLE
         db.session.add(room)
+
+        for invoice_detail in invoice_details:
+            invoiceDetail = models.InvoiceDetail()
+            invoiceDetail.invoice = invoice
+            invoiceDetail.description = invoice_detail.description
+            invoiceDetail.unit_price = invoice_detail.unit_price
+            invoiceDetail.qty = invoice_detail.qty
+            invoiceDetail.amount = invoice_detail.amount
+            invoiceDetail.created_date = datetime.now()
+            db.session.add(invoiceDetail)
+
         
         db.session.commit()
         
-        return redirect(url_for('invoice_page'))
+        return redirect(url_for('booking_room_page'))
         
     return render_template('create-invoice.html'
                            , booking_room=booking_room
@@ -139,3 +153,37 @@ def delete_invoice(invoice_id):
     db.session.commit()
     
     return redirect(url_for('invoice_page'))
+
+
+@app.route('/view-invoice-1/<int:invoice_id>')
+def view_invoice(invoice_id):
+    invoice = models.Invoice.query.get(invoice_id)
+    
+    payment = models.Payment.query.filter_by(booking_id=invoice.booking_room.booking.id).first()
+
+    reminder = invoice.total_price - payment.amount if payment is not None else invoice.total_price
+
+    invoice_details = models.InvoiceDetail.query.filter_by(invoice_id=invoice_id).all()
+
+    return render_template('view-invoice.html'
+                           , invoice=invoice
+                           , payment=payment
+                           , reminder=reminder
+                           , invoice_details=invoice_details)
+
+
+@app.route('/view-invoice-2/<int:booking_room_id>')
+def view_invoice_2(booking_room_id):
+    invoice = models.Invoice.query.filter_by(booking_room_id=booking_room_id).first()
+    
+    payment = models.Payment.query.filter_by(booking_id=invoice.booking_room.booking.id).first()
+
+    reminder = invoice.total_price - payment.amount if payment is not None else invoice.total_price
+
+    invoice_details = models.InvoiceDetail.query.filter_by(invoice_id=invoice.id).all()
+
+    return render_template('view-invoice.html'
+                           , invoice=invoice
+                           , payment=payment
+                           , reminder=reminder
+                           , invoice_details=invoice_details)

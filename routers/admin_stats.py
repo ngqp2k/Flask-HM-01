@@ -70,8 +70,8 @@ def test_stats_page():
                            , stats_models=stats_models)
 
 
-@app.route('/test-stats-1', methods=['GET'])
-def test_stats_1_page():
+@app.route('/test-stats-1', methods=['GET', 'POST'])
+def test_stats_1_page(num = 0):
     stats_models = []
 
     room_types = models.RoomType.query.all()
@@ -82,26 +82,22 @@ def test_stats_1_page():
         stats_models.append(StatsModel(room_type.name, 0, 0, 0, idx))
         idx += 1
 
-    stats_time = datetime.datetime.now()
-
-
     if request.method == 'GET':
         stats_time = request.args.get('stats_time')
-        if stats_time:
-            month = stats_time.split('-')[1]
-            invoices = models.Invoice.query.all()
-            idx = 0
-            for invoice in invoices:
-                if (invoice.created_date.month == int(month)):
-                    idx += 1
-                    print(f'ngqp2k debug: {invoice.created_date.day} {invoice.created_date.month} {type(invoice.created_date.day)}')
 
-                    for stats in stats_models:
-                        if invoice.booking.room.room_type.name == stats.room_type:
-                            stats.amount += invoice.total_price
-                            stats.qty += 1
-        else:
-            print('nullll')
+        if stats_time is None:
+            stats_time = datetime.datetime.now().strftime("%Y-%m")
+
+        month = stats_time.split('-')[1]
+        invoices = models.Invoice.query.all()
+        idx = 0
+        for invoice in invoices:
+            if (invoice.created_date.month == int(month)):
+                idx += 1
+                for stats in stats_models:
+                    if invoice.booking_room.room.room_type.name == stats.room_type:
+                        stats.amount += invoice.total_price
+                        stats.qty += 1
 
 
     return render_template('stats-test-1.html'

@@ -5,7 +5,7 @@
 {% block content %}
 
 <div class="container">
-    <form method="post" action="{{ url_for('invoice_detail_page', booking_room_id=booking_room.id) }}">
+    <form method="post" action="">
         <div class="row">
             <div class="container-fluid">
                 <div class="col-md-12">
@@ -25,15 +25,15 @@
                                             <div class="invoice-contact">
                                                 <!-- <span class="overline-title">Invoice To</span> -->
                                                 <div class="invoice-contact-info">
-                                                    <h4 class="title">{{ booking_room.booking.customer_first_name }} {{ booking_room.booking.customer_last_name }}</h4>
+                                                    <h4 class="title">{{ invoice.first_name }} {{ invoice.last_name }}</h4>
                                                     <ul class="list-plain">
                                                         <li>
                                                             <span data-feather="phone"></span>
-                                                            <span>{{ booking_room.booking.phone }}</span>
+                                                            <span>{{ invoice.booking_room.booking.phone }}</span>
                                                         </li>
                                                         <li>
                                                             <span data-feather="mail"></span>
-                                                            <span>{{ booking_room.booking.email }}</span>
+                                                            <span>{{ invoice.booking_room.booking.email }}</span>
                                                         </li>
                                                     </ul>
                                                 </div>
@@ -42,7 +42,7 @@
                                                 <ul class="list-plain">
                                                     <li class="invoice-id"><span>Invoice ID</span>:<span>66K5W3</span>
                                                     </li>
-                                                    <li class="invoice-date"><span>Ngày tạo</span>:<span>{{current_time}}</span>
+                                                    <li class="invoice-date"><span>Ngày tạo</span>:<span>{{ invoice.created_date.strftime('%d-%m-%Y') }}</span>
                                                     </li>
                                                 </ul>
                                             </div>
@@ -62,7 +62,7 @@
                                                     <tbody>
                                                         {% for invoice_detail in invoice_details %}
                                                         <tr>
-                                                            <td>{{ invoice_detail.no }}</td>
+                                                            <td>{{ loop.index }}</td>
                                                             <td>{{ invoice_detail.description }}</td>
                                                             <td style="text-align: right">{{
                                                                 "{:,.0f}".format(invoice_detail.unit_price) }} VNĐ</td>
@@ -75,7 +75,7 @@
                                                         <tr>
                                                             <td colspan="3"></td>
                                                             <td colspan="">Tổng thanh toán</td>
-                                                            <td>{{ "{:,.0f}".format(total_amount) }} VNĐ</td>
+                                                            <td>{{ "{:,.0f}".format(invoice.total_price) }} VNĐ</td>
                                                         </tr>
                                                         <tr>
                                                             <td colspan="3"></td>
