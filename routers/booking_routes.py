@@ -22,23 +22,28 @@ def checkout_page():
 
     room = models.Room.query.get(1)
     print(f'Room ID: {request.method}')
-    if request.method == 'GET':
+
+    # my_list = [elem[0] for elem in your_dict.values()]
+    print()
         
-        checkin_date = datetime.now().strftime('%d/%m/%Y')
-        checkout_date = (datetime.now() + timedelta(days=2)).strftime('%d/%m/%Y')
-        
-        payment_methods = models.PaymentMethod.query.all()
-        return render_template('checkout.html'
-                               , room=room
-                               , payment_methods=payment_methods
-                               , checkin_date=checkin_date
-                               , checkout_date=checkout_date)
+    checkin_date = cart[next(iter(cart))]['check_in_date']
+    checkout_date = cart[next(iter(cart))]['check_out_date']
+    
+    payment_methods = models.PaymentMethod.query.all()
+    return render_template('checkout.html'
+                            , room=room
+                            , payment_methods=payment_methods
+                            , checkin_date=checkin_date
+                            , checkout_date=checkout_date
+                            , num_of_nights=cart[next(iter(cart))]['num_of_nights'])
         
     return redirect(url_for('index'))
 
 
-@app.route('/checkout-handler/<int:room_id>', methods=['GET', 'POST'])
-def checkout_handler(room_id):
+@app.route('/checkout-handler', methods=['POST'])
+def checkout_handler():
+
+    room_id = 0
     if request.method == 'POST':
         # create booking
         booking = models.Booking()
@@ -47,18 +52,36 @@ def checkout_handler(room_id):
         booking.email = request.form['email']
         booking.phone = request.form['phone']
         booking.created_date = datetime.now()
-        booking.checkin_date = datetime.now()
-        booking.checkout_date = datetime.now() + timedelta(days=2)
-        room = models.Room.query.get(room_id)
-        room.status = models.RoomStatus['BOOKED']
-        booking.room = room
-        booking.status = models.BookingStatus['CONFIRMED']
+        # booking.checkin_date = datetime.now()
+        # booking.checkout_date = datetime.now() + timedelta(days=2)
+
+        cart = session.get('cart')
+
+        for c in cart.values():
+            booking_room = models.BookingRoom()
+            booking_room.booking = booking
+            room = models.Room.query.get(c['id'])
+            booking_room.room = room
+            booking_room.checkin_date = datetime.strptime(c['check_in_date'], '%Y-%m-%d')
+            booking_room.checkout_date = datetime.strptime(c['check_out_date'], '%Y-%m-%d')
+
+            db.session.add(booking_room)
+
+            room.status = models.RoomStatus['BOOKED']
+
+            db.session.add(room)
+
+
+        # room = models.Room.query.get(room_id)
+        # room.status = models.RoomStatus['BOOKED']
+        # booking.room = room
+        # booking.status = models.BookingStatus['CONFIRMED']
         
         # create payment
         payment = models.Payment()
         payment.booking = booking
         payment.created_date = datetime.now()
-        payment.amount = room.room_type.price_per_night * 2
+        payment.amount = utils.count_cart(cart)['total_amount']
         payment.transaction_id = random.randint(100000, 999999)
         
         db.session.add(booking)
@@ -83,6 +106,8 @@ def add_to_cart():
     name = str(data.get('name'))
     price = data.get('price')
     num_of_nights = int(data.get('num_of_nights'))
+    check_in_date = data.get('check_in_date')
+    check_out_date = data.get('check_out_date')
 
     cart = session.get('cart')
 
@@ -99,7 +124,9 @@ def add_to_cart():
             'name': name,
             'price': price,
             'quantity': 1,
-            'num_of_nights': num_of_nights
+            'num_of_nights': num_of_nights,
+            'check_in_date': check_in_date,
+            'check_out_date': check_out_date
         }
 
     session['cart'] = cart

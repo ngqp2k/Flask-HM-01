@@ -8,7 +8,9 @@ function addToCart(id, name, price) {
                 id: id,
                 name: name,
                 price: price,
-                num_of_nights: document.getElementById('numOfNights').value
+                num_of_nights: document.getElementById('numOfNights').value,
+                check_in_date: document.getElementById('startDate').value,
+                check_out_date: document.getElementById('returnDate').value
             }
         ),
         headers: {

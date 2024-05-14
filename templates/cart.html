@@ -13,6 +13,8 @@
         <th>Số phòng</th>
         <th>Đơn giá</th>
         <th>Số đêm</th>
+        <th>Check-in</th>
+        <th>Check-out</th>
         <th>Thành tiền</th>
         <th></th>
     </tr>
@@ -22,6 +24,8 @@
         <td>{{ c.name }}</td>
         <td>{{ "{:,.0f}".format(c.price) }} VNĐ</td>
         <td>{{ c.num_of_nights }}</td>
+        <td>{{ c.check_in_date }}</td>
+        <td>{{ c.check_out_date }}</td>
         <td>{{ "{:,.0f}".format(c.price * c.quantity) }} VNĐ</td>
         <td>
             <button onclick="deleteCart({{c.id}})" class="btn btn-danger">&times;</button>
