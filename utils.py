@@ -48,13 +48,13 @@ def build_sample_db():
     # db.session.add(customer2)
     
     # Create 2 bookings
-    booking1 = models.Booking(customer_first_name='John', customer_last_name='Conner',age=20,sex=models.Sex.Men, email='John@outlook.com', phone='095749574',is_regioner=False,created_date=datetime(2024, 5, 10), user=user1)
+    booking1 = models.Booking(first_name='John', last_name='Conner', email='John@outlook.com', phone='095749574', created_date=datetime(2024, 5, 10), check_in_date=datetime(2024, 5, 10), check_out_date=datetime(2024, 5, 12), number_of_guests=2, number_of_rooms=1, user=user1)
     # booking2 = models.Booking(customer_first_name='Widow', customer_last_name='Black',age=22,sex=models.Sex.Women, email='Widow@example.com', phone='038471265',is_regioner=False,created_date=datetime(2024, 5, 10), checkin_date=datetime(2024, 5, 10), checkout_date=datetime(2024, 5, 12), total_price=0, user=user1, room=room4, status=models.BookingStatus.CONFIRMED)
     db.session.add(booking1)
     # db.session.add(booking2)
 
-    booking_room_1 = models.BookingRoom(booking=booking1, room=room1, checkin_date=datetime(2024, 5, 10), checkout_date=datetime(2024, 5, 12), status=models.BookingStatus.CONFIRMED)
-    booking_room_2 = models.BookingRoom(booking=booking1, room=room2, checkin_date=datetime(2024, 5, 10), checkout_date=datetime(2024, 5, 12), status=models.BookingStatus.CONFIRMED)
+    booking_room_1 = models.BookingRoom(booking=booking1, room=room1, check_in_date=datetime(2024, 5, 10), check_out_date=datetime(2024, 5, 12), status=models.BookingStatus.CONFIRMED)
+    booking_room_2 = models.BookingRoom(booking=booking1, room=room2, check_in_date=datetime(2024, 5, 10), check_out_date=datetime(2024, 5, 12), status=models.BookingStatus.CONFIRMED)
     db.session.add(booking_room_1)
     db.session.add(booking_room_2)
     

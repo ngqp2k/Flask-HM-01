@@ -14,22 +14,20 @@ def booking_page():
 
 @app.route('/add-booking', methods=['GET', 'POST'])
 def add_booking():
+    booking = models.Booking()
+
     if request.method == 'POST':
-        booking = models.Booking()
-        booking.customer_first_name = request.form['customer_first_name']
-        booking.customer_last_name = request.form['customer_last_name']
-        booking.age = request.form['age']
-        booking.sex = models.Sex[request.form['sex']]
+        booking.first_name = request.form['first_name']
+        booking.last_name = request.form['last_name']
         booking.email = request.form['email']
         booking.phone = request.form['phone']
-        booking.is_regioner = request.form['is_regioner']
         booking.created_date = datetime.strptime(request.form['created_date'], '%Y-%m-%d')
-        booking.checkin_date = datetime.strptime(request.form['checkin_date'], '%Y-%m-%d')
-        booking.checkout_date = datetime.strptime(request.form['checkout_date'], '%Y-%m-%d')
+        booking.checkin_date = datetime.strptime(request.form['check_in_date'], '%Y-%m-%d')
+        booking.checkout_date = datetime.strptime(request.form['check_out_date'], '%Y-%m-%d')
         booking.user = models.User.query.get(request.form['user'])
-        booking.room = models.Room.query.get(request.form['room'])
-        booking.customer = models.Customer.query.get(request.form['customer'])
         booking.status = models.BookingStatus[request.form['status']]
+        booking.number_of_guests = 0
+        booking.number_of_rooms = 0
         
         db.session.add(booking)
         db.session.commit()
@@ -44,6 +42,7 @@ def add_booking():
     statuses = [status.name for status in models.BookingStatus]
     
     return render_template('add-booking.html'
+                           , booking=booking
                            , sexs=sexs
                            , users=users
                            , rooms=rooms
@@ -56,21 +55,15 @@ def edit_booking(booking_id):
     booking = models.Booking.query.get(booking_id)
     
     if request.method == 'POST':
-        booking.customer_first_name = request.form['customer_first_name']
-        booking.customer_last_name = request.form['customer_last_name']
-        booking.age = request.form['age']
-        booking.sex = models.Sex[request.form['sex']]
+        booking.first_name = request.form['first_name']
+        booking.last_name = request.form['last_name']
         booking.email = request.form['email']
         booking.phone = request.form['phone']
-        booking.is_regioner = request.form.get('is_regioner', False)
         booking.created_date = datetime.strptime(request.form['created_date'], '%Y-%m-%d')
-        booking.checkin_date = datetime.strptime(request.form['checkin_date'], '%Y-%m-%d')
-        booking.checkout_date = datetime.strptime(request.form['checkout_date'], '%Y-%m-%d')
+        booking.checkin_date = datetime.strptime(request.form['check_in_date'], '%Y-%m-%d')
+        booking.checkout_date = datetime.strptime(request.form['check_out_date'], '%Y-%m-%d')
         booking.user = models.User.query.get(request.form['user'])
-        booking.room = models.Room.query.get(request.form['room'])
-        booking.customer = models.Customer.query.get(request.form['customer'])
-        status = request.form['status']
-        booking.status = models.BookingStatus[status]
+        booking.status = models.BookingStatus[request.form['status']]
         
         db.session.add(booking)
         db.session.commit()
