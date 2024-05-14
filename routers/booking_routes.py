@@ -6,10 +6,22 @@ import random
 import models as models
 import utils as utils
 
-@app.route('/checkout/<int:room_id>', methods=['GET', 'POST'])
-def checkout_page(room_id):
-    room = models.Room.query.get(room_id)
-    print(f'Room ID: {room_id} {room} {request.method}')
+@app.route('/checkout/', methods=['GET', 'POST'])
+def checkout_page():
+    # r = Receipt(user=current_user)
+    #     db.session.add(r)
+
+    #     for c in cart.values():
+    #         d = ReceiptDetails(quantity=c['quantity'], unit_price=c['price'],
+    #                            receipt=r, product_id=c['id'])
+    #         db.session.add(d)
+
+    #     db.session.commit()
+
+    cart = session.get('cart')
+
+    room = models.Room.query.get(1)
+    print(f'Room ID: {request.method}')
     if request.method == 'GET':
         
         checkin_date = datetime.now().strftime('%d/%m/%Y')
@@ -70,6 +82,7 @@ def add_to_cart():
     id = data.get('id')
     name = str(data.get('name'))
     price = data.get('price')
+    num_of_nights = int(data.get('num_of_nights'))
 
     cart = session.get('cart')
 
@@ -79,19 +92,39 @@ def add_to_cart():
     id = str(request.json.get('id'))
 
     if id in cart:
-        cart[id]['quantity'] += 1
+        cart[id]['num_of_nights'] = num_of_nights
     else:
         cart[id] = {
             'id': id,
             'name': name,
             'price': price,
-            'quantity': 1
+            'quantity': 1,
+            'num_of_nights': num_of_nights
         }
 
     session['cart'] = cart
 
-    response = jsonify({'message': 'Add to cart successfully!'})
+    return jsonify(utils.count_cart(cart))
 
-    # import pdb; pdb.set_trace()
+
+@app.route("/api/pay", methods=['post'])
+def pay():
+    cart = session.get('cart')
+    try:
+        print(cart)
+    except Exception as ex:
+        print(ex)
+        return jsonify({'status': 500})
+    else:
+        del session['cart']
+        return jsonify({'status': 200})
+    
+
+@app.route('/api/cart/<room_id>', methods=['delete'])
+def delete_cart(room_id):
+    cart = session.get('cart')
+    if cart and room_id in cart:
+        del cart[room_id]
+        session['cart'] = cart
 
     return jsonify(utils.count_cart(cart))

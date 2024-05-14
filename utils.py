@@ -120,10 +120,10 @@ def count_cart(cart):
 
     if cart:
         for c in cart.values():
-            total_quantity += c['quantity']
-            total_amount += c['quantity'] * c['price']
+            total_quantity += c['num_of_nights']
+            total_amount += c['num_of_nights'] * c['price']
 
     return {
-        'total_quantity': total_quantity,
+        'total_quantity': cart.__len__() if cart else 0,
         'total_amount': total_amount
     }

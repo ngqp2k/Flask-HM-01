@@ -121,10 +121,7 @@
 
                 <ul class="nav col-12 col-md-auto mb-2 justify-content-center mb-md-0">
                     <li><a href="{{ url_for('index') }}" class="nav-link px-2 link-dark">Trang chủ</a></li>
-                    <li><a href="{{ url_for('cart_page') }}" class="nav-link px-2 link-dark">Giỏ hàng <span class="badge text-bg-success" id="cartCounter">{{ cart_stats.total_quantity }}</span></a></li>
-                    <!-- <li><a href="#" class="nav-link px-2 link-dark">Pricing</a></li>
-                    <li><a href="#" class="nav-link px-2 link-dark">FAQs</a></li>
-                    <li><a href="#" class="nav-link px-2 link-dark">About</a></li> -->
+                    <li><a href="{{ url_for('cart_page') }}" class="nav-link px-2 link-dark">Giỏ hàng <span class="badge text-bg-success cart-counter" id="cartCounter">{{ cart_stats.total_quantity }}</span></a></li>
                     {% if current_user.is_authenticated %}
                     <li><a href="{{ url_for('admin_page') }}" class="nav-link px-2 link-dark">Admin page</a></li>
                     {% endif %}
@@ -151,7 +148,7 @@
                                     <div class="col-md-3">
                                         <label for="date1">Nhận phòng</label>
                                         <input type="date" onchange="calculateReturnDate()" id="startDate"
-                                            class="form-control" name="checkin_date" value="{{ current_time }}" />
+                                            class="form-control" name="checkin_date" value="{{ current_time }}" format="dd/MM/yyy" />
                                     </div>
                                     <div class="col-md-3">
                                         <label for="date2">Số đêm</label>
@@ -249,9 +246,7 @@
                 <div class="r5 r-com">
                     <div class="r2-available">Available</div>
                     <p>Price for 1 night</p>
-                    <!-- <input type="hidden" name="checkin_date" value="{{ checkin_date }}" /> -->
-                    <!-- <input type="hidden" name="checkin_date" value="{{ checkout_date }}" /> -->
-                    <a href="" class="inn-room-book" onclick="addToCart(1, 'Room 1', 1000000.0)">Book</a>
+                    <a href="" class="inn-room-book" onclick="addToCart({{ room.id }}, '{{ room.room_no }}', {{ room.room_type.price_per_night }})">Add to cart</a>
                 </div>
             </div>
             <!--END ROOM SECTION-->
@@ -263,7 +258,6 @@
 
     <script src="{{ url_for('static', filename='/assets/dist/js/bootstrap.bundle.min.js') }}"></script>
     <script src="{{ url_for('static', filename='/js/script.js') }}"></script>
-
 
 </body>
 
