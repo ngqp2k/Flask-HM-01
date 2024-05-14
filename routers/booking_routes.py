@@ -1,10 +1,10 @@
 from app import app, db
-from flask import render_template, request, redirect, url_for
+from flask import render_template, request, redirect, url_for, session, jsonify
 from datetime import datetime, timedelta
 
 import random
 import models as models
-
+import utils as utils
 
 @app.route('/checkout/<int:room_id>', methods=['GET', 'POST'])
 def checkout_page(room_id):
@@ -57,16 +57,41 @@ def checkout_handler(room_id):
     return redirect(url_for('index'))
 
 
+@app.route('/cart')
+def cart_page():
+    return render_template('cart.html')
+
+
 @app.route('/api/add-to-cart', methods=['POST'])
 def add_to_cart():
-    
 
-    return redirect(url_for('admin_page'))
+    data = request.json
 
+    id = data.get('id')
+    name = str(data.get('name'))
+    price = data.get('price')
 
-@app.route('/api/test', methods=['POST'])
-def testtest():
-    print('testtest')
+    cart = session.get('cart')
 
+    if not cart:
+        cart = {}
 
-    return redirect(url_for('index'))
+    id = str(request.json.get('id'))
+
+    if id in cart:
+        cart[id]['quantity'] += 1
+    else:
+        cart[id] = {
+            'id': id,
+            'name': name,
+            'price': price,
+            'quantity': 1
+        }
+
+    session['cart'] = cart
+
+    response = jsonify({'message': 'Add to cart successfully!'})
+
+    # import pdb; pdb.set_trace()
+
+    return jsonify(utils.count_cart(cart))

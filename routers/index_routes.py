@@ -1,10 +1,11 @@
 from app import app
-from flask import render_template
+from flask import render_template, session
 from flask_login import login_required
 from datetime import datetime, timedelta
 
 
 import models as models
+import utils as utils
 
 
 # Index Admin page
@@ -24,3 +25,10 @@ def index():
                            , current_time=today
                            , tomorrow=tomorrow
                            , rooms=rooms)
+
+
+@app.context_processor
+def common_response():
+    return {
+        'cart_stats': utils.count_cart(session.get('cart'))
+    }

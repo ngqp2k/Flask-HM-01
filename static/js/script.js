@@ -1,30 +1,27 @@
-function addToCart() {
+function addToCart(id, name, price) {
     event.preventDefault();
 
     fetch('/api/add-to-cart', {
         method: 'POST',
         body: JSON.stringify(
             {
-                id: 1,
-                name: "Item 1",
-                price: 10.00
+                id: id,
+                name: name,
+                price: price
             }
         ),
         headers: {
             'Content-Type': 'application/json'
         }
-    })
-}
+    }).then(function (response) {
+        console.info(response)
+        return response.json()
+    }).then(function (data) {
+        console.info(data)
+        let cartCounter = document.getElementById('cartCounter')
 
-function test() {
-    event.preventDefault();
-
-    alert('Test');
-
-    fetch('/api/test', {
-        method: 'POST',
-        headers: {
-            'Content-Type': 'application/json'
-        }
+        cartCounter.innerText = data.total_quantity
+    }).catch(function (error) {
+        console.error(error);
     })
 }
