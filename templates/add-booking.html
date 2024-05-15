@@ -41,21 +41,21 @@
                 <div class="form-group">
                     <label for="" class="col-form-label">Ngày tạo</label>
                     <input type="date" class="form-control" placeholder="" name="created_date"
-                        value="{{ booking.created_date}}">
+                        value="{{ current_date }}">
                 </div>
             </div>
             <div class="col-md-2">
                 <div class="form-group">
                     <label for="" class="col-form-label">Check-in date</label>
                     <input type="date" class="form-control" placeholder="" name="check_in_date"
-                        value="{{ booking.check_in_date}}">
+                        value="{{ current_date }}">
                 </div>
             </div>
             <div class="col-md-2">
                 <div class="form-group">
                     <label for="" class="col-form-label">Check-out date</label>
                     <input type="date" class="form-control" placeholder="" name="check_out_date"
-                        value="{{ booking.check_out_date}}">
+                        value="{{ current_date }}">
                 </div>
             </div>
         </div>
@@ -83,20 +83,6 @@
                         <option selected value="{{ user.id }}">{{ user }}</option>
                         {% else %}
                         <option value="{{ user.id }}">{{ user }}</option>
-                        {% endif %}
-                        {% endfor %}
-                    </select>
-                </div>
-            </div>
-            <div class="col-md-2">
-                <div class="form-group">
-                    <label for="" class="col-form-label">Trạng thái</label>
-                    <select class="form-select" name="status">
-                        {% for status in statuses %}
-                        {% if status == booking.status %}
-                        <option selected>{{ status }}</option>
-                        {% else %}
-                        <option>{{ status }}</option>
                         {% endif %}
                         {% endfor %}
                     </select>

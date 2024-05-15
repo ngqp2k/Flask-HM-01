@@ -25,7 +25,7 @@ def add_booking_room():
         db.session.add(booking_room)
         db.session.commit()
         
-        return redirect(url_for('booking_service_page'))
+        return redirect(url_for('booking_room_page'))
     
     bookings = models.Booking.query.all()
     rooms = models.Room.query.all()

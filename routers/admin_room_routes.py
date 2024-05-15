@@ -42,6 +42,7 @@ def edit_room(room_id):
         room.room_no = request.form['room_no']
         room.image = request.form['image']
         room.description = request.form['description']
+        room.status = models.RoomStatus[request.form['status']]
         
         room_type = models.RoomType.query.get(request.form['room_type'])
         room.room_type = room_type

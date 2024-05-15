@@ -26,14 +26,23 @@ def build_sample_db():
     db.session.add(room_type1)
     db.session.add(room_type2)
     db.session.add(room_type3)
+
+    url_rooms = [
+        'https://res.cloudinary.com/dxll8tdwq/image/upload/v1715790428/point3d-commercial-imaging-ltd-oxeCZrodz78-unsplash_zchecn.jpg',
+        'https://res.cloudinary.com/dxll8tdwq/image/upload/v1715790426/vojtech-bruzek-Yrxr3bsPdS0-unsplash_negjhq.jpg',
+        'https://res.cloudinary.com/dxll8tdwq/image/upload/v1715790417/point3d-commercial-imaging-ltd-5BV56SdvLmo-unsplash_atjs7s.jpg',
+        'https://res.cloudinary.com/dxll8tdwq/image/upload/v1715790413/roberto-nickson-emqnSQwQQDo-unsplash_c3ahu9.jpg',
+        'https://res.cloudinary.com/dxll8tdwq/image/upload/v1715790411/iwood-R5v8Xtc0ecg-unsplash_pyt7mu.jpg',
+        'https://res.cloudinary.com/dxll8tdwq/image/upload/v1715790289/visualsofdana-T5pL6ciEn-I-unsplash_hurwud.jpg'
+    ]
     
     # Create 2 rooms
-    room1 = models.Room(room_no='101', room_type=room_type1, status=models.RoomStatus.BOOKED, image='https://res.cloudinary.com/dxll8tdwq/image/upload/v1714893503/060912db19ae3c89079d6f2cd14aa054_ikj0vc.jpg')
-    room2 = models.Room(room_no='102', room_type=room_type2, status=models.RoomStatus.BOOKED, image='https://res.cloudinary.com/dxll8tdwq/image/upload/v1714893540/19da767c8b8cd79a2ab68f9e2ece6b4a_dtutw8.jpg')
-    room3 = models.Room(room_no='103', room_type=room_type3, status=models.RoomStatus.AVAILABLE, image='https://res.cloudinary.com/dxll8tdwq/image/upload/v1714893503/060912db19ae3c89079d6f2cd14aa054_ikj0vc.jpg')
-    room4 = models.Room(room_no='201', room_type=room_type2, status=models.RoomStatus.AVAILABLE, image='https://res.cloudinary.com/dxll8tdwq/image/upload/v1714893540/19da767c8b8cd79a2ab68f9e2ece6b4a_dtutw8.jpg')
-    room5 = models.Room(room_no='202', room_type=room_type1, status=models.RoomStatus.AVAILABLE, image='https://res.cloudinary.com/dxll8tdwq/image/upload/v1714893503/060912db19ae3c89079d6f2cd14aa054_ikj0vc.jpg')
-    room6 = models.Room(room_no='203', room_type=room_type3, status=models.RoomStatus.AVAILABLE, image='https://res.cloudinary.com/dxll8tdwq/image/upload/v1714893540/19da767c8b8cd79a2ab68f9e2ece6b4a_dtutw8.jpg')
+    room1 = models.Room(room_no='101', room_type=room_type1, status=models.RoomStatus.BOOKED, image=url_rooms[0])
+    room2 = models.Room(room_no='102', room_type=room_type2, status=models.RoomStatus.BOOKED, image=url_rooms[1])
+    room3 = models.Room(room_no='103', room_type=room_type3, status=models.RoomStatus.AVAILABLE, image=url_rooms[2])
+    room4 = models.Room(room_no='201', room_type=room_type2, status=models.RoomStatus.AVAILABLE, image=url_rooms[3])
+    room5 = models.Room(room_no='202', room_type=room_type1, status=models.RoomStatus.AVAILABLE, image=url_rooms[4])
+    room6 = models.Room(room_no='203', room_type=room_type3, status=models.RoomStatus.AVAILABLE, image=url_rooms[5])
     db.session.add(room1)
     db.session.add(room2)
     db.session.add(room3)

@@ -39,7 +39,7 @@ def invoice_detail_page(booking_room_id):
     
     invoice_details = []
     
-    cnt_date = (booking_room.checkout_date - booking_room.checkin_date).days
+    cnt_date = (booking_room.check_out_date - booking_room.check_in_date).days
     invoice_detail = InvoiceDetail(row_count, 'Tiền phòng', booking_room.room.room_type.price_per_night, cnt_date, booking_room.room.room_type.price_per_night * cnt_date)
     total_amount += decimal.Decimal(invoice_detail.amount)
     invoice_details.append(invoice_detail)
@@ -65,8 +65,8 @@ def invoice_detail_page(booking_room_id):
         
     if request.method == 'POST':
         invoice = models.Invoice()
-        invoice.first_name = booking.customer_first_name
-        invoice.last_name = booking.customer_last_name
+        invoice.first_name = booking.first_name
+        invoice.last_name = booking.last_name
         invoice.booking_room = booking_room
         invoice.created_date = datetime.now()
         invoice.total_price = total_amount

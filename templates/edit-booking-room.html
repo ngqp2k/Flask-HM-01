@@ -50,7 +50,7 @@
                     <label for="" class="col-form-label">Trạng thái</label>
                     <select class="form-select" name="status">
                         {% for status in statuses %}
-                        {% if status == booking_room.status %}
+                        {% if status == booking_room.status.name %}
                         <option selected>{{ status }}</option>
                         {% else %}
                         <option>{{ status }}</option>
