@@ -1,31 +1,48 @@
 {% extends 'admin.html' %}
 
-{% block title %}Edit service{% endblock %}
+{% block title %}Edit BookingService{% endblock %}
 
 {% block content %}
 
 <div class="container">
     <form class="" method="post" action="#" role="form">
         <div class="form-row">
-            <div class="col-md-12">
-                <div class="form-group">
-                    <label for="" class="col-form-label">Name</label>
-                    <input type="text" id="first-name" class="form-control" placeholder="Service name" name="name"
-                        value="{{ service.name }}" autofocus>
+            <div class="row">
+                <div class="col-md-5">
+                    <div class="form-group">
+                        <label for="" class="col-form-label">Phòng đặt</label>
+                        <select class="form-select" name="booking_room">
+                            {% for booking_room in booking_rooms %}
+                            {% if booking_room.id == booking_service.booking_room.id %}
+                            <option value="{{ booking_room.id }}" selected>{{ booking_room }}</option>
+                            {% else %}
+                            <option value="{{ booking_room.id }}">{{ booking_room }}</option>
+                            {% endif %}
+                            {% endfor %}
+                        </select>
+                    </div>  
                 </div>
             </div>
-            <div class="col-md-12">
-                <div class="form-group">
-                    <label for="" class="col-form-label">Description</label>
-                    <input type="text" id="first-name" class="form-control" placeholder="Service description"
-                        name="description" value="{{ service.description }}" autofocus>
+            <div class="row">
+                <div class="col-md-3">
+                    <!-- <div class="form-group"> -->
+                    <label for="" class="col-form-label">Dịch vụ</label>
+                    <select class="form-select" name="service">
+                        {% for service in services %}
+                        {% if service.id == booking_service.service.id %}
+                        <option value="{{ service.id }}" selected>{{ service }}</option>
+                        {% else %}
+                        <option value="{{ service.id }}">{{ service }}</option>
+                        {% endif %}
+                        {% endfor %}
+                    </select>
+                    <!-- </div> -->
                 </div>
-            </div>
-            <div class="col-md-12">
-                <div class="form-group">
-                    <label for="" class="col-form-label">Price</label>
-                    <input type="text" id="first-name" class="form-control" placeholder="Role name" name="price"
-                        value="{{ service.price }}" autofocus>
+                <div class="col-md-2">
+                    <!-- <div class="form-group"> -->
+                    <label for="" class="col-form-label">Số lượng</label>
+                    <input type="number" id="first-name" class="form-control" placeholder="Số lượng" name="qty" min="0" value="{{ booking_service.qty }}">
+                    <!-- </div> -->
                 </div>
             </div>
             <div class="row pt-2">

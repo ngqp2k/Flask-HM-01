@@ -13,9 +13,9 @@
     <thead>
       <tr>
         <th>#</th>
-        <th>Booking room</th>
-        <th>Service</th>
-        <th>Qty</th>
+        <th>Số phòng</th>
+        <th>Dịch vụ</th>
+        <th>Số lượng</th>
         <th>Actions</th>
       </tr>
     </thead>
@@ -23,7 +23,7 @@
       {% for booking_service in booking_services %}
       <tr>
         <td>{{ booking_service.id }}</td>
-        <td>{{ booking_service.booking }}</td>
+        <td>{{ booking_service.booking_room.room }}</td>
         <td>{{ booking_service.service }}</td>
         <td>{{ booking_service.qty }}</td>
         <td>

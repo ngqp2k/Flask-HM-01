@@ -11,3 +11,6 @@ class BookingRoom(db.Model):
     check_in_date = db.Column(db.Date)
     check_out_date = db.Column(db.Date)
     status = db.Column(db.Enum(MyEnum.BookingStatus))
+
+    def __str__(self) -> str:
+        return self.room.room_no

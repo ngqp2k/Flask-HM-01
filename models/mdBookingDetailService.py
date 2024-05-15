@@ -8,3 +8,6 @@ class BookingRoomService(db.Model):
     service = db.relationship('Service', backref='booking_room_service')
     qty = db.Column(db.Integer)
     created_date = db.Column(db.Date)
+
+    def __str__(self) -> str:
+        return self.id

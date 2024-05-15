@@ -13,9 +13,10 @@ def booking_service_page():
 
 @app.route('/add-booking-service', methods=['GET', 'POST'])
 def add_booking_service():
+    booking_service = models.BookingRoomService()
+    
     if request.method == 'POST':
-        booking_service = models.BookingRoomService()
-        booking_service.booking = models.Booking.query.get(request.form['booking'])
+        booking_service.booking_room = models.BookingRoom.query.get(request.form['booking_room'])
         booking_service.service = models.Service.query.get(request.form['service'])
         booking_service.qty = request.form['qty']
         
@@ -24,18 +25,20 @@ def add_booking_service():
         
         return redirect(url_for('booking_service_page'))
     
-    bookings = models.Booking.query.filter_by(status=models.BookingStatus.CHECKED_IN).all()
+    booking_rooms = models.BookingRoom.query.all()
     services = models.Service.query.all()
-    today = datetime.now().strftime('%d-%m-%Y')
     
-    return render_template('add-booking-service.html', bookings=bookings, services=services, current_time=today)
+    return render_template('edit-booking-service.html'
+                           , booking_service=booking_service
+                           , booking_rooms=booking_rooms
+                           , services=services)
 
 @app.route('/edit-booking-service/<int:booking_service_id>', methods=['GET', 'POST'])
 def edit_booking_service(booking_service_id):
     booking_service = models.BookingRoomService.query.get(booking_service_id)
     
     if request.method == 'POST':
-        booking_service.booking = models.Booking.query.get(request.form['booking'])
+        booking_service.booking_room = models.BookingRoom.query.get(request.form['booking_room'])
         booking_service.service = models.Service.query.get(request.form['service'])
         booking_service.qty = request.form['qty']
         
@@ -43,10 +46,13 @@ def edit_booking_service(booking_service_id):
         
         return redirect(url_for('booking_service_page'))
     
-    bookings = models.Booking.query.all()
+    booking_rooms = models.BookingRoom.query.all()
     services = models.Service.query.all()
     
-    return render_template('edit-booking-service.html', booking_service=booking_service, bookings=bookings, services=services)
+    return render_template('edit-booking-service.html'
+                           , booking_service=booking_service
+                           , booking_rooms=booking_rooms
+                           , services=services)
 
 @app.route('/delete-booking-service/<int:booking_service_id>', methods=['GET', 'POST'])
 def delete_booking_service(booking_service_id):
