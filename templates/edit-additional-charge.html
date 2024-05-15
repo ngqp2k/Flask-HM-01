@@ -1,6 +1,6 @@
 {% extends 'admin.html' %}
 
-{% block title %}Add Additional charge{% endblock %}
+{% block title %}Edit Additional charge{% endblock %}
 
 {% block content %}
 
@@ -11,12 +11,12 @@
                 <div class="col-md-3">
                     <div class="form-group">
                         <label for="" class="col-form-label">Booking</label>
-                        <select class="form-select" name="booking">
-                            {% for booking in bookings %}
-                            {% if booking.id == additional_charge.booking.id %}
-                            <option value="{{ booking.id }}" selected>{{ booking }}</option>
+                        <select class="form-select" name="booking_room">
+                            {% for booking_room in booking_rooms %}
+                            {% if booking_room.id == additional_charge.booking_room.id %}
+                            <option value="{{ booking_room.id }}" selected>{{ booking_room }}</option>
                             {% else %}
-                            <option value="{{ booking.id }}">{{ booking }}</option>
+                            <option value="{{ booking_room.id }}">{{ booking_room }}</option>
                             {% endif %}
                             {% endfor %}
                         </select>

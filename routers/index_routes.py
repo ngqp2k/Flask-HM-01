@@ -35,4 +35,5 @@ def common_response():
         'check_out_date': (datetime.now() + timedelta(days=1)).strftime('%Y-%m-%d'),
         'num_of_nights': 1,
         'num_of_guests': 1,
+        'current_date': datetime.now().strftime('%Y-%m-%d'),
     }

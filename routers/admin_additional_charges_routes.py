@@ -13,29 +13,30 @@ def additional_charge_page():
 
 @app.route('/add-additional-charge', methods=['GET', 'POST'])
 def add_additional_charge():
+    additional_charge = models.AdditionalCharge()
+    
     if request.method == 'POST':
-        additional_charge = models.AdditionalCharge()
-        additional_charge.booking = models.Booking.query.get(request.form['booking'])
+        additional_charge.booking_room = models.BookingRoom.query.get(request.form['booking_room'])
         additional_charge.created_date = datetime.strptime(request.form['created_date'], '%Y-%m-%d')
         additional_charge.description = request.form['description']
         additional_charge.amount = request.form['amount']
         
-        db.session.add(additional_charge)
         db.session.commit()
         
         return redirect(url_for('additional_charge_page'))
     
-    bookings = models.Booking.query.filter_by(status=models.BookingStatus.CHECKED_IN).all()
-    today = datetime.now().strftime('%d-%m-%Y')
+    booking_rooms = models.BookingRoom.query.all()
     
-    return render_template('add-additional-charge.html', bookings=bookings, current_time=today)
+    return render_template('add-additional-charge.html'
+                           , additional_charge=additional_charge
+                           , booking_rooms=booking_rooms)
 
 @app.route('/edit-additional-charge/<int:additional_charge_id>', methods=['GET', 'POST'])
 def edit_additional_charge(additional_charge_id):
     additional_charge = models.AdditionalCharge.query.get(additional_charge_id)
     
     if request.method == 'POST':
-        additional_charge.booking = models.Booking.query.get(request.form['booking'])
+        additional_charge.booking_room = models.BookingRoom.query.get(request.form['booking_room'])
         additional_charge.created_date = datetime.strptime(request.form['created_date'], '%Y-%m-%d')
         additional_charge.description = request.form['description']
         additional_charge.amount = request.form['amount']
@@ -44,9 +45,11 @@ def edit_additional_charge(additional_charge_id):
         
         return redirect(url_for('additional_charge_page'))
     
-    bookings = models.Booking.query.all()
+    booking_rooms = models.BookingRoom.query.all()
     
-    return render_template('edit-additional-charge.html', additional_charge=additional_charge, bookings=bookings)
+    return render_template('edit-additional-charge.html'
+                           , additional_charge=additional_charge
+                           , booking_rooms=booking_rooms)
 
 @app.route('/delete-additional-charge/<int:additional_charge_id>', methods=['GET', 'POST'])
 def delete_additional_charge(additional_charge_id):
