@@ -1,0 +1,37 @@
+{% extends 'admin.html' %}
+
+{% block title %}Guest type{% endblock %}
+
+{% block content %}
+
+<a href="{{ url_for('add_guest_type') }}" class="btn btn-primary" tabindex="-1" role="button">Add Guest type</a>
+<br/>
+<br/>
+
+<div class="table-responsive">
+  <table class="table table-striped table-sm">
+    <thead>
+      <tr>
+        <th>#</th>
+        <th>Tên</th>
+        <th>Mô tả</th>
+        <th>Actions</th>
+      </tr>
+    </thead>
+    <tbody>
+      {% for guest_type in guest_types %}
+      <tr>
+        <td>{{ guest_type.id }}</td>
+        <td>{{ guest_type.name }}</td>
+        <td>{{ guest_type.description }}</td>
+        <td>
+          <a href="{{ url_for('edit_guest_type', guest_type_id=guest_type.id) }}" class="btn btn-primary btn-sm">Edit</a>
+          <a href="{{ url_for('delete_guest_type', guest_type_id=guest_type.id) }}" class="btn btn-danger btn-sm">Delete</a>
+        </td>
+      <tr>
+        {% endfor %}
+    </tbody>
+  </table>
+</div>
+
+{% endblock %}

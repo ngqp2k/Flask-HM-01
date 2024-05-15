@@ -1,0 +1,36 @@
+{% extends 'admin.html' %}
+
+{% block title %}Edit guest type{% endblock %}
+
+{% block content %}
+
+<div class="container">
+    <form class="row g-2" method="post" action="#" role="form">
+        <div class="row">
+            <div class="col-md-6">
+                <div class="form-group">
+                    <label for="" class="col-form-label">Tên</label>
+                    <input type="text" id="" class="form-control" placeholder="Tên" name="name" value="{{ guest_type.name }}">
+                </div>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-md-6">
+                <div class="form-group">
+                    <label for="" class="col-form-label">Mô tả</label>
+                    <input type="text" class="form-control" placeholder="Mô tả" name="description" value="{{ guest_type.description }}">
+                </div>
+            </div>
+        </div>
+
+        <div class="row pt-2">
+            <div class="col-auto">
+                <a href="javascript:history.back()" class="btn btn-secondary btn-block">Close</a>
+            </div>
+            <div class="col-auto">
+                <input class="btn btn-primary btn-block" type="submit" value="Save" style="width: 200%;">
+            </div>
+        </div>
+    </form>
+</div>
+{% endblock %}

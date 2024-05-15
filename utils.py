@@ -110,7 +110,24 @@ def build_sample_db():
     # additional_charge2 = models.AdditionalCharge(booking=booking2, created_date=datetime(2024, 5, 10), description='Dinner', amount=200)
     db.session.add(additional_charge1)
     # db.session.add(additional_charge2)
-    
+
+    guest_type1 = models.GuestType(name='Khách nội địa', description='Khách nội địa')
+    guest_type2 = models.GuestType(name='Khách nước ngoài', description='Khách nước ngoài')
+    db.session.add(guest_type1)
+    db.session.add(guest_type2)
+
+     
+    guest1 = models.Guest(first_name='John', last_name='Conner', sex=models.Sex.Men, identification_number='123456789', guest_type=guest_type1, booking_room=booking_room_1)
+    guest2 = models.Guest(first_name='Craig', last_name='Haley', sex=models.Sex.Men, identification_number='123456789', guest_type=guest_type1, booking_room=booking_room_1)
+    guest3 = models.Guest(first_name='Simone', last_name='Wolf', sex=models.Sex.Women, identification_number='987654321', guest_type=guest_type1, booking_room=booking_room_1)
+    guest4 = models.Guest(first_name='Christina', last_name='Shea', sex=models.Sex.Women, identification_number='456789123', guest_type=guest_type1, booking_room=booking_room_2)
+    guest5 = models.Guest(first_name='Aileen', last_name='Gomez', sex=models.Sex.Women, identification_number='321654987', guest_type=guest_type1, booking_room=booking_room_2)
+
+    db.session.add(guest1)
+    db.session.add(guest2)
+    db.session.add(guest3)
+    db.session.add(guest4)
+    db.session.add(guest5)
 
     db.session.commit()
 

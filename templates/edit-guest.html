@@ -1,0 +1,87 @@
+{% extends 'admin.html' %}
+
+{% block title %}Edit guest{% endblock %}
+
+{% block content %}
+
+<div class="container">
+  <form class="row g-2" method="post" action="#" role="form">
+    <div class="row">
+      <div class="col-md-4">
+        <div class="form-group">
+          <label for="" class="col-form-label">Tên</label>
+          <input type="text" id="" class="form-control" placeholder="Tên" name="first_name" required
+            value="{{ guest.first_name }}">
+        </div>
+      </div>
+      <div class=" col-md-3">
+        <div class="form-group">
+          <label for="" class="col-form-label">Họ và tên đệm</label>
+          <input type="text" id="" class="form-control" placeholder="Last name" name="last_name" required
+            value="{{ guest.last_name}}">
+        </div>
+      </div>
+    </div>
+    <div class="row">
+      <div class="col-md-2">
+        <div class="form-group">
+          <label for="" class="col-form-label">Giới tính</label>
+          <select class="form-select" name="sex">
+            {% for sex in sexs %}
+            {% if sex == guest.sex.name %}
+            <option selected>{{ sex }}</option>
+            {% else %}
+            <option>{{ sex }}</option>
+            {% endif %}
+            {% endfor %}
+          </select>
+        </div>
+      </div>
+      <div class="col-3">
+        <div class="form-group">
+          <label for="" class="col-form-label">Số định danh</label>
+          <input type="text" id="" class="form-control" placeholder="Phone" name="identification_number"
+            value="{{ guest.identification_number }}">
+        </div>
+      </div>
+    </div>
+    <div class="row">
+      <div class="form-group">
+        <label for="" class="col-form-label">Loại khách hàng</label>
+        <select class="form-select" name="guest_type">
+          {% for guest_type in guest_types %}
+          {% if guest_type == guest.guest_type %}
+          <option selected value="{{ guest_type.id }}">{{ guest_type }}</option>
+          {% else %}
+          <option value="{{ guest_type.id }}">{{ guest_type }}</option>
+          {% endif %}
+          {% endfor %}
+        </select>
+      </div>
+    </div>
+    <div class="row">
+      <div class="form-group">
+        <label for="" class="col-form-label">BookingRoom ID</label>
+        <select class="form-select" name="booking_room">
+          {% for booking_room in booking_rooms %}
+          {% if booking_room == guest.booking_room %}
+          <option selected value="{{ booking_room.id }}">{{ booking_room }}</option>
+          {% else %}
+          <option value="{{ booking_room.id }}">{{ booking_room }}</option>
+          {% endif %}
+          {% endfor %}
+        </select>
+      </div>
+    </div>
+    <div class="row pt-2">
+      <div class="col-auto">
+        <a href="javascript:history.back()" class="btn btn-secondary btn-block">Close</a>
+      </div>
+      <div class="col-auto">
+        <input class="btn btn-primary btn-block" type="submit" value="Save" style="width: 200%;">
+      </div>
+    </div>
+  </form>
+</div>
+
+{% endblock %}
