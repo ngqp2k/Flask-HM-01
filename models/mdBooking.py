@@ -17,4 +17,4 @@ class Booking(db.Model):
     user = db.relationship('User', backref=db.backref('booking', lazy=True))
     
     def __str__(self) -> str:
-        return str(self.room)
+        return str(self.id)

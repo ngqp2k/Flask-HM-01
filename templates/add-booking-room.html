@@ -1,0 +1,74 @@
+{% extends 'admin.html' %}
+
+{% block title %}{% endblock %}
+
+{% block content %}
+
+<div class="container">
+    <form class="row g-2" method="post" action="#" role="form">
+        <div class="row">
+            <div class="col-md-4">
+                <div class="form-group">
+                    <label for="" class="col-form-label">Booking ID</label>
+                    <select class="form-select" name="booking">
+                        {% for booking in bookings %}
+                        <option value="{{ booking.id }}">{{ booking }}</option>
+                        {% endfor %}
+                    </select>
+                </div>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-md-4">
+                <div class="form-group">
+                    <label for="" class="col-form-label">Số phòng</label>
+                    <select class="form-select" name="room">
+                        {% for room in rooms %}
+                        <option value="{{ room.id }}">{{ room }}</option>
+                        {% endfor %}
+                    </select>
+                </div>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-md-2">
+                <div class="form-group">
+                    <label for="" class="col-form-label">Check-in date</label>
+                    <input type="date" class="form-control" placeholder="" name="check_in_date"
+                        value="{{ current_time }}">
+                </div>
+            </div>
+            <div class="col-md-2">
+                <div class="form-group">
+                    <label for="" class="col-form-label">Check-out date</label>
+                    <input type="date" class="form-control" placeholder="" name="check_out_date"
+                        value="{{ current_time }}">
+                </div>
+            </div>
+            <div class="col-md-2">
+                <div class="form-group">
+                    <label for="" class="col-form-label">Trạng thái</label>
+                    <select class="form-select" name="status">
+                        {% for status in statuses %}
+                        {% if status == booking_room.status %}
+                        <option selected>{{ status }}</option>
+                        {% else %}
+                        <option>{{ status }}</option>
+                        {% endif %}
+                        {% endfor %}
+                    </select>
+                </div>
+            </div>
+        </div>
+        <div class="row pt-2">
+            <div class="col-auto">
+                <a href="javascript:history.back()" class="btn btn-secondary btn-block">Close</a>
+            </div>
+            <div class="col-auto">
+                <input class="btn btn-primary btn-block" type="submit" value="Save" style="width: 200%;">
+            </div>
+        </div>
+    </form>
+</div>
+
+{% endblock %}

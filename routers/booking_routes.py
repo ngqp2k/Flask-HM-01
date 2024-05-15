@@ -106,6 +106,7 @@ def add_to_cart():
     name = str(data.get('name'))
     price = data.get('price')
     num_of_nights = int(data.get('num_of_nights'))
+    num_of_guests = int(data.get('num_of_guests'))
     check_in_date = data.get('check_in_date')
     check_out_date = data.get('check_out_date')
 
@@ -125,9 +126,16 @@ def add_to_cart():
             'price': price,
             'quantity': 1,
             'num_of_nights': num_of_nights,
+            'num_of_guests': num_of_guests,
             'check_in_date': check_in_date,
-            'check_out_date': check_out_date
+            'check_out_date': check_out_date,
         }
+
+    for c in cart.values():
+        c['num_of_nights'] = num_of_nights
+        c['check_in_date'] = check_in_date
+        c['check_out_date'] = check_out_date
+        c['num_of_guests'] = num_of_guests
 
     session['cart'] = cart
 

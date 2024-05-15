@@ -9,6 +9,7 @@ function addToCart(id, name, price) {
                 name: name,
                 price: price,
                 num_of_nights: document.getElementById('numOfNights').value,
+                num_of_guests: document.getElementById('numOfGuests').value,
                 check_in_date: document.getElementById('startDate').value,
                 check_out_date: document.getElementById('returnDate').value
             }

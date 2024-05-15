@@ -30,5 +30,9 @@ def index():
 @app.context_processor
 def common_response():
     return {
-        'cart_stats': utils.count_cart(session.get('cart'))
+        'cart_stats': utils.count_cart(session.get('cart')),
+        'check_in_date': datetime.now().strftime('%Y-%m-%d'),
+        'check_out_date': (datetime.now() + timedelta(days=1)).strftime('%Y-%m-%d'),
+        'num_of_nights': 1,
+        'num_of_guests': 1,
     }
