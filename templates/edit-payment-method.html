@@ -1,0 +1,25 @@
+{% extends 'admin.html' %}
+
+{% block title %}Edit payment method{% endblock %}
+
+{% block content %}
+
+<div class="container">
+    <form class="row g-2" method="post" action="#" role="form">
+        <div class="col-md-12">
+            <div class="form-group">
+                <label for="" class="col-form-label">Name</label>
+                <input type="text" id="first-name" class="form-control" placeholder="Name" name="name"
+                    value="{{ payment_method.name }}">
+            </div>
+        </div>
+        <div class="col-auto">
+            <a href="javascript:history.back()" class="btn btn-secondary btn-block">Close</a>
+        </div>
+        <div class="col-auto">
+            <input class="btn btn-primary btn-block" type="submit" value="Save" style="width: 200%;">
+        </div>
+    </form>
+</div>
+
+{% endblock %}

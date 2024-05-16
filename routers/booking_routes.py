@@ -90,6 +90,9 @@ def checkout_handler():
         db.session.add(payment)
         
         db.session.commit()
+
+        cart = session.get('cart')
+        del session['cart']
         
     return redirect(url_for('index'))
 

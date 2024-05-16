@@ -6,6 +6,7 @@ from routers.admin_service_routes import *
 from routers.admin_booking_routes import *
 from routers.admin_booking_service_routes import *
 from routers.admin_payment_routes import *
+from routers.admin_payment_method_routes import *
 from routers.admin_invoice_routes import *
 from routers.admin_user_routes import *
 from routers.admin_role_routes import *
