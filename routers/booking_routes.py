@@ -47,8 +47,8 @@ def checkout_handler():
     if request.method == 'POST':
         # create booking
         booking = models.Booking()
-        booking.customer_first_name = request.form['customer_first_name']
-        booking.customer_last_name = request.form['customer_last_name']
+        booking.first_name = request.form['customer_first_name']
+        booking.last_name = request.form['customer_last_name']
         booking.email = request.form['email']
         booking.phone = request.form['phone']
         booking.created_date = datetime.now()
@@ -64,6 +64,7 @@ def checkout_handler():
             booking_room.room = room
             booking_room.checkin_date = datetime.strptime(c['check_in_date'], '%Y-%m-%d')
             booking_room.checkout_date = datetime.strptime(c['check_out_date'], '%Y-%m-%d')
+            booking_room.status = models.BookingStatus['CONFIRMED']
 
             db.session.add(booking_room)
 
@@ -83,7 +84,8 @@ def checkout_handler():
         payment.created_date = datetime.now()
         payment.amount = utils.count_cart(cart)['total_amount']
         payment.transaction_id = random.randint(100000, 999999)
-        
+        payment.payment_method = models.PaymentMethod.query.get(request.form['payment_method'])
+
         db.session.add(booking)
         db.session.add(payment)
         

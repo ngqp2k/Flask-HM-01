@@ -141,7 +141,7 @@
                         </li> -->
                         <li class="list-group-item d-flex justify-content-between">
                             <span>Tổng</span>
-                            <strong>{{ "{:,.0f}".format(room.room_type.price_per_night * 2) }} VNĐ</strong>
+                            <strong>{{ "{:,.0f}".format(cart_stats.total_amount) }} VNĐ</strong>
                         </li>
                     </ul>
 
@@ -203,25 +203,13 @@
                         <h4 class="mb-3">Thông tin thanh toán</h4>
 
                         <div class="my-3">
-                            {% for payment_method in payment_methods %}
-                            <div class="form-check">
-                                <input name="paymentMethod" type="radio" class="form-check-input" required>
-                                <label class="form-check-label">{{ payment_method }}</label>
+                            <div class="form-group">
+                                <select class="form-select" name="payment_method">
+                                    {% for payment_method in payment_methods %}
+                                    <option value="{{ payment_method.id }}">{{ payment_method }}</option>
+                                    {% endfor %}
+                                </select>
                             </div>
-                            {% endfor %}
-                            <!-- <div class="form-check">
-                                <input id="credit" name="paymentMethod" type="radio" class="form-check-input" checked
-                                    required>
-                                <label class="form-check-label" for="credit">Credit card</label>
-                            </div>
-                            <div class="form-check">
-                                <input id="debit" name="paymentMethod" type="radio" class="form-check-input" required>
-                                <label class="form-check-label" for="debit">Debit card</label>
-                            </div>
-                            <div class="form-check">
-                                <input id="paypal" name="paymentMethod" type="radio" class="form-check-input" required>
-                                <label class="form-check-label" for="paypal">PayPal</label>
-                            </div> -->
                         </div>
 
                         <div class="row gy-3">

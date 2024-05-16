@@ -26,7 +26,7 @@
         <td>{{ c.num_of_nights }}</td>
         <td>{{ c.check_in_date }}</td>
         <td>{{ c.check_out_date }}</td>
-        <td>{{ "{:,.0f}".format(c.price * c.quantity) }} VNĐ</td>
+        <td>{{ "{:,.0f}".format(c.price * c.num_of_nights) }} VNĐ</td>
         <td>
             <button onclick="deleteCart({{c.id}})" class="btn btn-danger">&times;</button>
         </td>
