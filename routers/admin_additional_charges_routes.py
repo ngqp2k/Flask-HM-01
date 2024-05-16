@@ -1,17 +1,20 @@
 from app import app, db
 from flask import render_template, request, redirect, url_for
 from datetime import datetime
+from flask_login import login_required
 
 
 import models as models
 
 
 @app.route('/additional-charge')
+@login_required
 def additional_charge_page():
     additional_charges = models.AdditionalCharge.query.all()
     return render_template('mdAdditionalCharge.html', additional_charges=additional_charges)
 
 @app.route('/add-additional-charge', methods=['GET', 'POST'])
+@login_required
 def add_additional_charge():
     additional_charge = models.AdditionalCharge()
     
@@ -33,6 +36,7 @@ def add_additional_charge():
                            , booking_rooms=booking_rooms)
 
 @app.route('/edit-additional-charge/<int:additional_charge_id>', methods=['GET', 'POST'])
+@login_required
 def edit_additional_charge(additional_charge_id):
     additional_charge = models.AdditionalCharge.query.get(additional_charge_id)
     
@@ -53,6 +57,7 @@ def edit_additional_charge(additional_charge_id):
                            , booking_rooms=booking_rooms)
 
 @app.route('/delete-additional-charge/<int:additional_charge_id>', methods=['GET', 'POST'])
+@login_required
 def delete_additional_charge(additional_charge_id):
     additional_charge = models.AdditionalCharge.query.get(additional_charge_id)
     db.session.delete(additional_charge)

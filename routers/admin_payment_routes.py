@@ -1,6 +1,7 @@
 from app import app, db
 from flask import render_template, request, redirect, url_for
 from datetime import datetime
+from flask_login import login_required
 
 
 import models as models
@@ -8,12 +9,14 @@ import models as models
 
 
 @app.route('/payment')
+@login_required
 def payment_page():
     payments = models.Payment.query.all()
     return render_template('mdPayment.html', payments=payments)
 
 
 @app.route('/add-payment', methods=['GET', 'POST'])
+@login_required
 def add_payment():
     if request.method == 'POST':
         payment = models.Payment()
@@ -33,6 +36,7 @@ def add_payment():
 
 
 @app.route('/edit-payment/<int:payment_id>', methods=['GET', 'POST'])
+@login_required
 def edit_payment(payment_id):
     payment = models.Payment.query.get(payment_id)
     
@@ -56,6 +60,7 @@ def edit_payment(payment_id):
 
 
 @app.route('/delete-payment/<int:payment_id>', methods=['GET', 'POST'])
+@login_required
 def delete_payment(payment_id):
     payment = models.Payment.query.get(payment_id)
     db.session.delete(payment)

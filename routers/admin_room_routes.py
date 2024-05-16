@@ -1,11 +1,13 @@
 from app import app, db
 from flask import render_template, request, redirect, url_for
+from flask_login import login_required
 
 
 import models as models
 
 
 @app.route('/room')
+@login_required
 def room_page():
     rooms = models.Room.query.all()
     return render_template('mdRoom.html'
@@ -13,6 +15,7 @@ def room_page():
 
 
 @app.route('/add-room', methods=['GET', 'POST'])
+@login_required
 def add_room():
     
     if request.method == 'POST':
@@ -35,6 +38,7 @@ def add_room():
                            , statuses=statuses)
     
 @app.route('/edit-room/<int:room_id>', methods=['GET', 'POST'])
+@login_required
 def edit_room(room_id):
     room = models.Room.query.get(room_id)
     
@@ -61,6 +65,7 @@ def edit_room(room_id):
                            , statuses=statuses)
     
 @app.route('/delete-room/<int:room_id>', methods=['GET', 'POST'])
+@login_required
 def delete_room(room_id):
     room = models.Room.query.get(room_id)
     db.session.delete(room)

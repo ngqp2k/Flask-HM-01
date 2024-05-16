@@ -1,17 +1,20 @@
 from app import app, db
 from flask import render_template, request, redirect, url_for
+from flask_login import login_required
 
 
 import models as models
 
 
 @app.route('/service')
+@login_required
 def service_page():
     services = models.Service.query.all()
     return render_template('mdService.html', services=services)
 
 
 @app.route('/add-service', methods=['GET', 'POST'])
+@login_required
 def add_service():
     if request.method == 'POST':
         service = models.Service()
@@ -28,6 +31,7 @@ def add_service():
 
 
 @app.route('/edit-service/<int:service_id>', methods=['GET', 'POST'])
+@login_required
 def edit_service(service_id):
     service = models.Service.query.get(service_id)
     
@@ -44,6 +48,7 @@ def edit_service(service_id):
 
 
 @app.route('/delete-service/<int:service_id>', methods=['GET', 'POST'])
+@login_required
 def delete_service(service_id):
     service = models.Service.query.get(service_id)
     db.session.delete(service)

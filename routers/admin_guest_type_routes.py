@@ -1,11 +1,13 @@
 from app import app, db
 from flask import render_template, request, redirect, url_for
+from flask_login import login_required
 
 
 import models as models
 
 
 @app.route('/guest-type')
+@login_required
 def guest_type_page():
     guest_types = models.GuestType.query.all()
     return render_template('mdGuestType.html'
@@ -13,6 +15,7 @@ def guest_type_page():
 
 
 @app.route('/add-guest-type', methods=['GET', 'POST'])
+@login_required
 def add_guest_type():
     guest_type = models.GuestType()
     
@@ -29,6 +32,7 @@ def add_guest_type():
                            , guest_type=guest_type)
     
 @app.route('/edit-guest-type/<int:guest_type_id>', methods=['GET', 'POST'])
+@login_required
 def edit_guest_type(guest_type_id):
     guest_type = models.GuestType.query.get(guest_type_id)
     
@@ -44,6 +48,7 @@ def edit_guest_type(guest_type_id):
                            , guest_type=guest_type)
     
 @app.route('/delete-guest-type/<int:guest_type_id>', methods=['GET', 'POST'])
+@login_required
 def delete_guest_type(guest_type_id):
     guest_type = models.GuestType.query.get(guest_type_id)
     db.session.delete(guest_type)

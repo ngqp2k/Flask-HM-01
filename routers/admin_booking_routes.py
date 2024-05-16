@@ -1,18 +1,21 @@
 from app import app, db
 from flask import render_template, request, redirect, url_for
 from datetime import datetime
+from flask_login import login_required
 
 
 import models as models
 
 
 @app.route('/booking')
+@login_required
 def booking_page():
     bookings = models.Booking.query.all()
     return render_template('mdBooking.html', bookings=bookings)
 
 
 @app.route('/add-booking', methods=['GET', 'POST'])
+@login_required
 def add_booking():
     booking = models.Booking()
 
@@ -50,6 +53,7 @@ def add_booking():
 
 
 @app.route('/edit-booking/<int:booking_id>', methods=['GET', 'POST'])
+@login_required
 def edit_booking(booking_id):
     booking = models.Booking.query.get(booking_id)
     
@@ -84,6 +88,7 @@ def edit_booking(booking_id):
 
 
 @app.route('/delete-booking/<int:booking_id>', methods=['GET', 'POST'])
+@login_required
 def delete_booking(booking_id):
     booking = models.Booking.query.get(booking_id)
     db.session.delete(booking)

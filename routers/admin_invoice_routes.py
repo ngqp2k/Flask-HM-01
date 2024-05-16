@@ -2,6 +2,7 @@ import decimal
 from app import app, db
 from flask import render_template, request, redirect, url_for
 from datetime import datetime
+from flask_login import login_required
 
 
 import models as models
@@ -16,6 +17,7 @@ class InvoiceDetail():
         self.amount = amount
 
 @app.route('/create-invoice/<int:booking_room_id>', methods=['GET', 'POST'])
+@login_required
 def invoice_detail_page(booking_room_id):
 
     booking_room = models.BookingRoom.query.get(booking_room_id)
@@ -68,7 +70,7 @@ def invoice_detail_page(booking_room_id):
         invoice.first_name = booking.first_name
         invoice.last_name = booking.last_name
         invoice.booking_room = booking_room
-        invoice.created_date = datetime.now()
+        invoice.created_date = booking.check_out_date
         invoice.total_price = total_amount
         
         db.session.add(invoice)
@@ -106,11 +108,13 @@ def invoice_detail_page(booking_room_id):
 
 
 @app.route('/invoice')
+@login_required
 def invoice_page():
     invoices = models.Invoice.query.all()
     return render_template('mdInvoice.html', invoices=invoices)
 
 @app.route('/add-invoice', methods=['GET', 'POST'])
+@login_required
 def add_invoice():
     if request.method == 'POST':
         invoice = models.Invoice()
@@ -129,6 +133,7 @@ def add_invoice():
 
 
 @app.route('/edit-invoice/<int:invoice_id>', methods=['GET', 'POST'])
+@login_required
 def edit_invoice(invoice_id):
     invoice = models.Invoice.query.get(invoice_id)
     
@@ -147,6 +152,7 @@ def edit_invoice(invoice_id):
 
 
 @app.route('/delete-invoice/<int:invoice_id>', methods=['GET', 'POST'])
+@login_required
 def delete_invoice(invoice_id):
     invoice = models.Invoice.query.get(invoice_id)
     db.session.delete(invoice)
@@ -156,6 +162,7 @@ def delete_invoice(invoice_id):
 
 
 @app.route('/view-invoice-1/<int:invoice_id>')
+@login_required
 def view_invoice(invoice_id):
     invoice = models.Invoice.query.get(invoice_id)
     
@@ -173,6 +180,7 @@ def view_invoice(invoice_id):
 
 
 @app.route('/view-invoice-2/<int:booking_room_id>')
+@login_required
 def view_invoice_2(booking_room_id):
     invoice = models.Invoice.query.filter_by(booking_room_id=booking_room_id).first()
     

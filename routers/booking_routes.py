@@ -52,8 +52,6 @@ def checkout_handler():
         booking.email = request.form['email']
         booking.phone = request.form['phone']
         booking.created_date = datetime.now()
-        booking.check_in_date = datetime.strptime(c['check_in_date'], '%Y-%m-%d')
-        booking.check_out_date = datetime.strptime(c['check_out_date'], '%Y-%m-%d')
 
         cart = session.get('cart')
 
@@ -64,6 +62,11 @@ def checkout_handler():
             booking_room.room = room
             booking_room.check_in_date = datetime.strptime(c['check_in_date'], '%Y-%m-%d')
             booking_room.check_out_date = datetime.strptime(c['check_out_date'], '%Y-%m-%d')
+
+            booking.check_in_date = datetime.strptime(c['check_in_date'], '%Y-%m-%d')
+            booking.check_out_date = datetime.strptime(c['check_out_date'], '%Y-%m-%d')
+            booking.number_of_guests = c['num_of_guests']
+
             booking_room.status = models.BookingStatus['CONFIRMED']
 
             db.session.add(booking_room)
@@ -71,6 +74,8 @@ def checkout_handler():
             room.status = models.RoomStatus['BOOKED']
 
             db.session.add(room)
+
+        booking.number_of_rooms = len(cart) if cart else 0
 
 
         # room = models.Room.query.get(room_id)

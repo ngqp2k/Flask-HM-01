@@ -1,6 +1,7 @@
 from app import app, db
 from flask import render_template, request, redirect, url_for
 import datetime
+from flask_login import login_required
 
 
 import models as models
@@ -20,6 +21,7 @@ class StatsModel2:
 
 
 @app.route('/test-stats', methods=['GET'])
+@login_required
 def test_stats_page():
 
     labels_1 = ['Quý 1', 'Quý 2', 'Quý 3', 'Quý 4']
@@ -58,6 +60,7 @@ def test_stats_page():
 
 
 @app.route('/test-stats-1', methods=['GET', 'POST'])
+@login_required
 def test_stats_1_page(num = 0):
     stats_models = []
 
@@ -99,6 +102,7 @@ def test_stats_1_page(num = 0):
 
 
 @app.route('/test-stats-2', methods=['GET', 'POST'])
+@login_required
 def test_stats_2_page():
     stats_models = []
 

@@ -1,18 +1,21 @@
 from app import app, db
 from flask import render_template, request, redirect, url_for
 from datetime import datetime
+from flask_login import login_required
 
 
 import models as models
 
 
 @app.route('/user')
+@login_required
 def user_page():
     users = models.User.query.all()
     return render_template('mdUser.html', users=users)
 
 
 @app.route('/add-user', methods=['GET', 'POST'])
+@login_required
 def add_user():
     
     if request.method == 'POST':
@@ -39,6 +42,7 @@ def add_user():
     
     
 @app.route('/edit-user/<int:user_id>', methods=['GET', 'POST'])
+@login_required
 def edit_user(user_id):
     user = models.User.query.get(user_id)
     
@@ -68,6 +72,7 @@ def edit_user(user_id):
 
 
 @app.route('/delete-user/<int:user_id>', methods=['GET', 'POST'])
+@login_required
 def delete_user(user_id):
     user = models.User.query.get(user_id)
     print(user)

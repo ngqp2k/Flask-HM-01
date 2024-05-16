@@ -37,8 +37,8 @@ def build_sample_db():
     ]
     
     # Create 2 rooms
-    room1 = models.Room(room_no='101', room_type=room_type1, status=models.RoomStatus.BOOKED, image=url_rooms[0])
-    room2 = models.Room(room_no='102', room_type=room_type2, status=models.RoomStatus.BOOKED, image=url_rooms[1])
+    room1 = models.Room(room_no='101', room_type=room_type1, status=models.RoomStatus.AVAILABLE, image=url_rooms[0])
+    room2 = models.Room(room_no='102', room_type=room_type2, status=models.RoomStatus.AVAILABLE, image=url_rooms[1])
     room3 = models.Room(room_no='103', room_type=room_type3, status=models.RoomStatus.AVAILABLE, image=url_rooms[2])
     room4 = models.Room(room_no='201', room_type=room_type2, status=models.RoomStatus.AVAILABLE, image=url_rooms[3])
     room5 = models.Room(room_no='202', room_type=room_type1, status=models.RoomStatus.AVAILABLE, image=url_rooms[4])
@@ -51,16 +51,100 @@ def build_sample_db():
     db.session.add(room6)
     
     
-    # Create 2 bookings
-    booking1 = models.Booking(first_name='John', last_name='Conner', email='John@outlook.com', phone='095749574', created_date=datetime(2024, 5, 10), check_in_date=datetime(2024, 5, 10), check_out_date=datetime(2024, 5, 12), number_of_guests=2, number_of_rooms=1, user=user1)
-    # booking2 = models.Booking(customer_first_name='Widow', customer_last_name='Black',age=22,sex=models.Sex.Women, email='Widow@example.com', phone='038471265',is_regioner=False,created_date=datetime(2024, 5, 10), checkin_date=datetime(2024, 5, 10), checkout_date=datetime(2024, 5, 12), total_price=0, user=user1, room=room4, status=models.BookingStatus.CONFIRMED)
-    db.session.add(booking1)
-    # db.session.add(booking2)
+    # Create 3 bookings in April 2024
+    booking1 = models.Booking(
+        first_name='John', last_name='Conner', email='John@outlook.com', phone='095749574'
+        , created_date=datetime(2024, 4, 10), check_in_date=datetime(2024, 4, 10), check_out_date=datetime(2024, 4, 12)
+        , number_of_guests=2, number_of_rooms=1, user=user1
+    )
+    booking2 = models.Booking(
+        first_name='Shaw', last_name='Luk', email='Luk@outlook.com', phone='0123214'
+        , created_date=datetime(2024, 4, 13), check_in_date=datetime(2024, 4, 13), check_out_date=datetime(2024, 4, 14)
+        , number_of_guests=2, number_of_rooms=2, user=user1
+    )
+    booking3 = models.Booking(
+        first_name='Hazard', last_name='Eden', email='Hazard@outlook.com', phone='0764382'
+        , created_date=datetime(2024, 4, 23), check_in_date=datetime(2024, 4, 23), check_out_date=datetime(2024, 4, 26)
+        , number_of_guests=2, number_of_rooms=2, user=user1
+    )
 
-    booking_room_1 = models.BookingRoom(booking=booking1, room=room1, check_in_date=datetime(2024, 5, 10), check_out_date=datetime(2024, 5, 12), status=models.BookingStatus.CONFIRMED)
-    booking_room_2 = models.BookingRoom(booking=booking1, room=room2, check_in_date=datetime(2024, 5, 10), check_out_date=datetime(2024, 5, 12), status=models.BookingStatus.CONFIRMED)
+     # Create 3 bookings in May 2024
+    booking4 = models.Booking(
+        first_name='Widow', last_name='Black', email='Widow@outlook.com', phone='038471265'
+        , created_date=datetime(2024, 5, 10), check_in_date=datetime(2024, 5, 10), check_out_date=datetime(2024, 5, 12)
+        , number_of_guests=2, number_of_rooms=1, user=user1
+    )
+    booking5 = models.Booking(
+        first_name='Thor', last_name='Odinson', email='Thor@outlook.com', phone='0987654321'
+        , created_date=datetime(2024, 5, 15), check_in_date=datetime(2024, 5, 15), check_out_date=datetime(2024, 5, 17)
+        , number_of_guests=1, number_of_rooms=1, user=user1
+    )
+    booking6 = models.Booking(
+        first_name='Natasha', last_name='Romanoff', email='Natasha@outlook.com', phone='0123456789'
+        , created_date=datetime(2024, 5, 20), check_in_date=datetime(2024, 5, 20), check_out_date=datetime(2024, 5, 22)
+        , number_of_guests=2, number_of_rooms=2, user=user1
+    )
+
+    
+    db.session.add(booking1)
+    db.session.add(booking2)
+    db.session.add(booking3)
+    db.session.add(booking4)
+    db.session.add(booking5)
+    db.session.add(booking6)
+
+    booking_room_1 = models.BookingRoom(booking=booking1, room=room1
+                                        , check_in_date=booking1.check_in_date, check_out_date=booking1.check_out_date
+                                        , status=models.BookingStatus.CONFIRMED)
+    
+    booking_room_2 = models.BookingRoom(booking=booking2, room=room1
+                                        , check_in_date=booking2.check_in_date, check_out_date=booking2.check_out_date
+                                        , status=models.BookingStatus.CONFIRMED)
+    
+    booking_room_3 = models.BookingRoom(booking=booking2, room=room2
+                                        , check_in_date=booking2.check_in_date, check_out_date=booking2.check_out_date
+                                        , status=models.BookingStatus.CONFIRMED)
+    
+    booking_room_4 = models.BookingRoom(booking=booking3, room=room3
+                                        , check_in_date=booking3.check_in_date, check_out_date=booking3.check_out_date
+                                        , status=models.BookingStatus.CONFIRMED)
+    
+    booking_room_5 = models.BookingRoom(booking=booking3, room=room4
+                                        , check_in_date=booking3.check_in_date, check_out_date=booking3.check_out_date
+                                        , status=models.BookingStatus.CONFIRMED)
+    
+    booking_room_7 = models.BookingRoom(booking=booking4, room=room1
+                                        , check_in_date=booking4.check_in_date, check_out_date=booking4.check_out_date
+                                        , status=models.BookingStatus.CONFIRMED)
+
+    booking_room_8 = models.BookingRoom(booking=booking5, room=room2
+                                        , check_in_date=booking5.check_in_date, check_out_date=booking5.check_out_date
+                                        , status=models.BookingStatus.CONFIRMED)
+
+    booking_room_9 = models.BookingRoom(booking=booking5, room=room3
+                                        , check_in_date=booking5.check_in_date, check_out_date=booking5.check_out_date
+                                        , status=models.BookingStatus.CONFIRMED)
+
+    booking_room_10 = models.BookingRoom(booking=booking6, room=room4
+                                         , check_in_date=booking6.check_in_date, check_out_date=booking6.check_out_date
+                                         , status=models.BookingStatus.CONFIRMED)
+
+    booking_room_11 = models.BookingRoom(booking=booking6, room=room5
+                                         , check_in_date=booking6.check_in_date, check_out_date=booking6.check_out_date
+                                         , status=models.BookingStatus.CONFIRMED)
+    
     db.session.add(booking_room_1)
     db.session.add(booking_room_2)
+    db.session.add(booking_room_3)
+    db.session.add(booking_room_4)
+    db.session.add(booking_room_5)
+    db.session.add(booking_room_7)
+    db.session.add(booking_room_8)
+    db.session.add(booking_room_9)
+    db.session.add(booking_room_10)
+    db.session.add(booking_room_11)
+    
+    
     
     # Create 2 invoice
     # invoice1 = models.Invoice(booking=booking1, created_date=datetime(2000, 3, 25), total_price=1000)
@@ -106,15 +190,69 @@ def build_sample_db():
     booking_room_service_1 = models.BookingRoomService(booking_room=booking_room_1, service=service1, qty=2)
     booking_room_service_2 = models.BookingRoomService(booking_room=booking_room_1, service=service6, qty=3)
     booking_room_service_3 = models.BookingRoomService(booking_room=booking_room_1, service=service7, qty=7)
+
+    booking_room_service_4 = models.BookingRoomService(booking_room=booking_room_2, service=service2, qty=1)
+    booking_room_service_5 = models.BookingRoomService(booking_room=booking_room_2, service=service1, qty=2)
+
+    booking_room_service_6 = models.BookingRoomService(booking_room=booking_room_3, service=service2, qty=3)
+    booking_room_service_7 = models.BookingRoomService(booking_room=booking_room_3, service=service3, qty=2)
+
+    booking_room_service_8 = models.BookingRoomService(booking_room=booking_room_4, service=service3, qty=2)
+    booking_room_service_9 = models.BookingRoomService(booking_room=booking_room_4, service=service1, qty=4)
+    booking_room_service_10 = models.BookingRoomService(booking_room=booking_room_4, service=service2, qty=1)
+
+    booking_room_service_11 = models.BookingRoomService(booking_room=booking_room_5, service=service5, qty=5)
+    booking_room_service_12 = models.BookingRoomService(booking_room=booking_room_5, service=service2, qty=2)
+    booking_room_service_13 = models.BookingRoomService(booking_room=booking_room_5, service=service3, qty=1)
+
+    booking_room_service_14 = models.BookingRoomService(booking_room=booking_room_10, service=service4, qty=3)
+    booking_room_service_15 = models.BookingRoomService(booking_room=booking_room_10, service=service5, qty=2)
+    booking_room_service_16 = models.BookingRoomService(booking_room=booking_room_10, service=service6, qty=1)
+
+    booking_room_service_17 = models.BookingRoomService(booking_room=booking_room_7, service=service1, qty=2)
+    booking_room_service_18 = models.BookingRoomService(booking_room=booking_room_7, service=service2, qty=1)
+    booking_room_service_19 = models.BookingRoomService(booking_room=booking_room_7, service=service3, qty=3)
+
+    booking_room_service_20 = models.BookingRoomService(booking_room=booking_room_8, service=service4, qty=2)
+    booking_room_service_21 = models.BookingRoomService(booking_room=booking_room_8, service=service5, qty=1)
+    booking_room_service_22 = models.BookingRoomService(booking_room=booking_room_8, service=service6, qty=3)
+
+    booking_room_service_23 = models.BookingRoomService(booking_room=booking_room_9, service=service1, qty=1)
+    booking_room_service_24 = models.BookingRoomService(booking_room=booking_room_9, service=service2, qty=2)
+    booking_room_service_25 = models.BookingRoomService(booking_room=booking_room_9, service=service3, qty=2)
+
+    db.session.add(booking_room_service_14)
+    db.session.add(booking_room_service_15)
+    db.session.add(booking_room_service_16)
+    db.session.add(booking_room_service_17)
+    db.session.add(booking_room_service_18)
+    db.session.add(booking_room_service_19)
+    db.session.add(booking_room_service_20)
+    db.session.add(booking_room_service_21)
+    db.session.add(booking_room_service_22)
+    db.session.add(booking_room_service_23)
+    db.session.add(booking_room_service_24)
+    db.session.add(booking_room_service_25)
+
     db.session.add(booking_room_service_1)
     db.session.add(booking_room_service_2)
     db.session.add(booking_room_service_3)
+    db.session.add(booking_room_service_4)
+    db.session.add(booking_room_service_5)
+    db.session.add(booking_room_service_6)
+    db.session.add(booking_room_service_7)
+    db.session.add(booking_room_service_8)
+    db.session.add(booking_room_service_9)
+    db.session.add(booking_room_service_10)
+    db.session.add(booking_room_service_11)
+    db.session.add(booking_room_service_12)
+    db.session.add(booking_room_service_13)
 
     # Create 2 additional charges
-    additional_charge1 = models.AdditionalCharge(booking_room=booking_room_1, created_date=datetime(2024, 5, 10), description='Phí làm hỏng bàn', amount=500000)
+    # additional_charge1 = models.AdditionalCharge(booking_room=booking_room_1, created_date=datetime(2024, 5, 10), description='Phí làm hỏng bàn', amount=500000)
     # additional_charge2 = models.AdditionalCharge(booking=booking1, created_date=datetime(2024, 5, 10), description='Phí làm hỏng giường', amount=2000000)
     # additional_charge2 = models.AdditionalCharge(booking=booking2, created_date=datetime(2024, 5, 10), description='Dinner', amount=200)
-    db.session.add(additional_charge1)
+    # db.session.add(additional_charge1)
     # db.session.add(additional_charge2)
 
     guest_type1 = models.GuestType(name='Khách nội địa', description='Khách nội địa')

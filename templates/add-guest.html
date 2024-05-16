@@ -65,9 +65,9 @@
         <select class="form-select" name="booking_room">
           {% for booking_room in booking_rooms %}
           {% if booking_room == guest.booking_room %}
-          <option selected value="{{ booking_room.id }}">{{ booking_room }}</option>
+          <option selected value="{{ booking_room.id }}">RoomNo: {{ booking_room }} - BookingID {{ booking_room.booking.id }}</option>
           {% else %}
-          <option value="{{ booking_room.id }}">{{ booking_room }}</option>
+          <option value="{{ booking_room.id }}">RoomNo: {{ booking_room }} - BookingID {{ booking_room.booking.id }}</option>
           {% endif %}
           {% endfor %}
         </select>

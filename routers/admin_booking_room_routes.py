@@ -1,17 +1,20 @@
 from app import app, db
 from flask import render_template, request, redirect, url_for
 from datetime import datetime
+from flask_login import login_required
 
 
 import models as models
 
 
 @app.route('/booking-room')
+@login_required
 def booking_room_page():
     booking_rooms = models.BookingRoom.query.all()
     return render_template('mdBookingRoom.html', booking_rooms=booking_rooms)
 
 @app.route('/add-booking-room', methods=['GET', 'POST'])
+@login_required
 def add_booking_room():
     booking_room = models.BookingRoom()
 
@@ -40,6 +43,7 @@ def add_booking_room():
                            , statuses=statuses)
 
 @app.route('/edit-booking-room/<int:booking_room_id>', methods=['GET', 'POST'])
+@login_required
 def edit_booking_room(booking_room_id):
     booking_room = models.BookingRoom.query.get(booking_room_id)
     
@@ -67,6 +71,7 @@ def edit_booking_room(booking_room_id):
                            , statuses=statuses)
 
 @app.route('/delete-booking-room/<int:booking_room_id>', methods=['GET', 'POST'])
+@login_required
 def delete_booking_room(booking_room_id):
     booking_room = models.BookingRoom.query.get(booking_room_id)
     db.session.delete(booking_room)
