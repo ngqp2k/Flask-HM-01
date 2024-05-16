@@ -20,8 +20,7 @@ def add_payment():
         payment.booking = models.Booking.query.get(request.form['booking'])
         payment.created_date = datetime.strptime(request.form['created_date'], '%Y-%m-%d')
         payment.amount = request.form['amount']
-        payment.transaction_id = request.form['transaction_id']
-        payment.payment_method = models.PaymentMethod.query.get(request.form['payment_method'])
+        payment.payment_method = models.PaymentMethod.query.filter_by(name='Cash').first()
         
         db.session.add(payment)
         db.session.commit()

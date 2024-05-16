@@ -62,8 +62,8 @@ def checkout_handler():
             booking_room.booking = booking
             room = models.Room.query.get(c['id'])
             booking_room.room = room
-            booking_room.checkin_date = datetime.strptime(c['check_in_date'], '%Y-%m-%d')
-            booking_room.checkout_date = datetime.strptime(c['check_out_date'], '%Y-%m-%d')
+            booking_room.check_in_date = datetime.strptime(c['check_in_date'], '%Y-%m-%d')
+            booking_room.check_out_date = datetime.strptime(c['check_out_date'], '%Y-%m-%d')
             booking_room.status = models.BookingStatus['CONFIRMED']
 
             db.session.add(booking_room)
@@ -114,6 +114,8 @@ def add_to_cart():
     num_of_guests = int(data.get('num_of_guests'))
     check_in_date = data.get('check_in_date')
     check_out_date = data.get('check_out_date')
+
+    print(f'Check-in Date: {check_in_date} Check-out Date: {check_out_date}')
 
     cart = session.get('cart')
 
