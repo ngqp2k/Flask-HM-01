@@ -1,38 +1,27 @@
 {% extends 'admin.html' %}
 
 {% block title %}
-Thống kê doanh thu
+Tần suất sử dụng phòng
 {% endblock %}
 
 {% block content %}
-<div class="container">
-    <form action="" method="get">
-        <div class="row p-2">
-            <div class="col-md-2">
-                <div class="form-group">
-                    <label>Loại thống kê</label>
-                    <select class="form-select" name="stats_type">
-                        <option value="1" selected>Quý</option>
-                        <option value="2">Tháng</option>
-                    </select>
-                </div>
-            </div>
-            <div class="col-md-2">
-                <div class="form-group">
-                    <label>Thời gian</label>
-                    <input type="month" class="form-control" name="stats_time">
-                </div>
-            </div>
-
-            <div class="col-md-1">
-                <div class="form-group">
-                    <label></label>
-                    <button type="submit" class="btn btn-primary form-control">Submit</button>
-                </div>
+<form action="" method="get">
+    <div class="row p-2">
+        <div class="col-md-2">
+            <div class="form-group">
+                <label>Thời gian</label>
+                <input type="month" class="form-control" name="stats_time" value="{{ stats_time }}">
             </div>
         </div>
-    </form>
-</div>
+
+        <div class="col-md-1">
+            <div class="form-group">
+                <label></label>
+                <button type="submit" class="btn btn-primary form-control">Thống kê</button>
+            </div>
+        </div>
+    </div>
+</form>
 
 <div class="row">
     <div class="col-6">
@@ -41,8 +30,7 @@ Thống kê doanh thu
                 <thead>
                     <tr>
                         <th>#</th>
-                        <th>Loại phòng</th>
-                        <th>Doanh thu</th>
+                        <th>Số phòng</th>
                         <th>Số lượt thuê</th>
                         <th>Tỉ lệ</th>
                     </tr>
@@ -50,11 +38,10 @@ Thống kê doanh thu
                 <tbody>
                     {% for stats_model in stats_models %}
                     <tr>
-                        <td>{{ stats_model.no }}</td>
-                        <td>{{ stats_model.room_type }}</td>
-                        <td>{{ "{:,.0f}".format(stats_model.amount) }} VNĐ</td>
+                        <td>{{ loop.index }}</td>
+                        <td>{{ stats_model.room_no }}</td>
                         <td>{{ stats_model.qty }}</td>
-                        <td>{{ stats_model.rate }}</td>
+                        <td>{{ stats_model.rate }} %</td>
                     <tr>
                         {% endfor %}
                 </tbody>
@@ -62,7 +49,7 @@ Thống kê doanh thu
         </div>
     </div>
     <div class="col-6">
-        <canvas class="my-4 w-100" id="myChart1" width="900" height="380"></canvas>
+        <canvas class="my-4 w-75 h-100" id="myChart1" width="500" height="380"></canvas>
     </div>
 </div>
 
@@ -72,25 +59,15 @@ Thống kê doanh thu
 <script>
     // labels
     const labels = [];
-    {% for label in labels %}
-    labels.push('{{ label }}');
+    {% for room in rooms %}
+        labels.push('{{ room.room_no }}');
     {% endfor %}
 
     const data = [];
-    {% for item1 in data %}
-    var data1 = [];
-    {% for item in item1 %}
-    data1.push({{ item }});
-    console.log({{ item }})
-    {% endfor %}
-    data.push(data1);
+    {% for stats_model in stats_models %}
+        data.push({{ stats_model.qty }});
     {% endfor %}
 
-    console.log(data);
-    // const data12 = [];
-    // {% for item in data_12 %}
-    // data12.push({{ item }});
-    // {% endfor %}
 
     // Get random color
     function getRandomColor() {
@@ -106,36 +83,28 @@ Thống kê doanh thu
     const ctx = document.getElementById('myChart1')
     // eslint-disable-next-line no-unused-vars
     const myChart = new Chart(ctx, {
-        type: 'line',
+        type: 'bar',
         data: {
             labels: labels,
-
-            datasets: [
-                {% for i in range(room_types | length) %}
-            {
-            label: '{{ room_types[i] }}',
-            data: data[{{ i }}],
-    lineTension: 0,
-        backgroundColor: 'transparent',
-            borderColor: getRandomColor(),
-                borderWidth: 4,
-                    pointBackgroundColor: getRandomColor(),
-                },
-    {% endfor %}
-            ]
-        },
-    options: {
-        scales: {
-            yAxes: [{
-                ticks: {
-                    beginAtZero: false
-                }
+            datasets: [{
+                label: 'Số lượt thuê',
+                data: data,
+                backgroundColor: [
+                    {% for room in rooms %}
+                    getRandomColor(),
+                    {% endfor %}
+                ],
+                hoverOffset: 4,
+                borderWidth: 1
             }]
         },
-        legend: {
-            display: false
-        }
-    }
+        options: {
+            scales: {
+            y: {
+                beginAtZero: true
+            }
+            }
+        },
     })
 </script>
 {% endblock %}

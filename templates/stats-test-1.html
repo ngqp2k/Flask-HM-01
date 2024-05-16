@@ -39,11 +39,11 @@ Thống kê doanh thu theo tháng
                 <tbody>
                     {% for stats_model in stats_models %}
                     <tr>
-                        <td>{{ stats_model.no }}</td>
+                        <td>{{ loop.index }}</td>
                         <td>{{ stats_model.room_type }}</td>
                         <td>{{ "{:,.0f}".format(stats_model.amount) }} VNĐ</td>
                         <td>{{ stats_model.qty }}</td>
-                        <td>{{ stats_model.rate }}</td>
+                        <td>{{ stats_model.rate }} %</td>
                     <tr>
                         {% endfor %}
                 </tbody>

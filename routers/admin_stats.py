@@ -6,10 +6,15 @@ import datetime
 import models as models
 
 class StatsModel:
-    def __init__(self, room_type, amount, rate, qty, no):
-        self.no = no
+    def __init__(self, room_type, amount, rate, qty):
         self.room_type = room_type
         self.amount = amount
+        self.qty = qty
+        self.rate = rate
+
+class StatsModel2:
+    def __init__(self, room_no, qty, rate):
+        self.room_no = room_no
         self.qty = qty
         self.rate = rate
 
@@ -45,24 +50,6 @@ def test_stats_page():
 
     room_types = [room_type.name for room_type in models.RoomType.query.all()]
 
-    # if request.method == 'GET':
-    #     stats_type = request.args.get('stats_type')
-
-    #     stats_time = request.args.get('stats_time')
-
-    #     # if stats_time is not None:
-    #         # month = stats_time.split('-')[1]
-    #         # year = stats_time.split('-')[0]
-
-    #         # invoices = models.Invoice.query.filter_by(month=month, year=year).all()
-
-    #         # print(f'ngqp2k debug: {stats_type} {month} {year} {type(stats_type)} {type(month)} {type(year)} ')
-
-    #     if stats_type == '1':
-    #         return render_template('stats-test.html', labels=labels_1, data11=data_11, data12=data_12, stats_type=stats_type)
-    #     elif stats_type == '2':
-    #         return render_template('stats-test.html', labels=labels_2, data=data_2, stats_type=stats_type)
-
     return render_template('stats-test.html'
                            , labels=labels_2
                            , data=data
@@ -76,11 +63,9 @@ def test_stats_1_page(num = 0):
 
     room_types = models.RoomType.query.all()
 
-    idx = 1;
     for room_type in room_types:
         print(f'ngqp2k debug: {room_type.name}')
-        stats_models.append(StatsModel(room_type.name, 0, 0, 0, idx))
-        idx += 1
+        stats_models.append(StatsModel(room_type.name, 0, 0, 0))
 
     if request.method == 'GET':
         stats_time = request.args.get('stats_time')
@@ -90,14 +75,20 @@ def test_stats_1_page(num = 0):
 
         month = stats_time.split('-')[1]
         invoices = models.Invoice.query.all()
-        idx = 0
+
+        total = 0
+
         for invoice in invoices:
             if (invoice.created_date.month == int(month)):
-                idx += 1
                 for stats in stats_models:
                     if invoice.booking_room.room.room_type.name == stats.room_type:
                         stats.amount += invoice.total_price
                         stats.qty += 1
+                        total += invoice.total_price
+        
+        if total > 0:
+            for stats in stats_models:
+                stats.rate = round(stats.amount / total * 100, 2)
 
 
     return render_template('stats-test-1.html'
@@ -106,3 +97,44 @@ def test_stats_1_page(num = 0):
                            , stats_time=stats_time)
 
 
+
+@app.route('/test-stats-2', methods=['GET', 'POST'])
+def test_stats_2_page():
+    stats_models = []
+
+    rooms = models.Room.query.all()
+
+    for room in rooms:
+        stats_models.append(StatsModel2(room.room_no, 0, 0))
+
+    if request.method == 'GET':
+        stats_time = request.args.get('stats_time')
+
+        if stats_time is None:
+            stats_time = datetime.datetime.now().strftime("%Y-%m")
+
+        month = stats_time.split('-')[1]
+        booking_rooms = models.BookingRoom.query.all()
+
+        bookings = models.Booking.query.all()
+
+        total = 0
+
+        for booking in bookings:
+            booking_rooms = models.BookingRoom.query.filter_by(booking_id=booking.id).all()
+            if booking.created_date.month == int(month):
+                for booking_room in booking_rooms:
+                    print(f'ngqp2k debug: {booking_room.room.room_no}')
+                    for stats in stats_models:
+                        if booking_room.room.room_no == stats.room_no:
+                            stats.qty += 1
+                            total += 1
+
+        if total > 0:
+            for stats in stats_models:
+                stats.rate = round(stats.qty / total * 100, 2)
+
+    return render_template('stats-test-2.html'
+                           , stats_models=stats_models
+                           , stats_time=stats_time
+                           , rooms=rooms)
