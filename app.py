@@ -18,7 +18,8 @@ def create_app():
 
     # Create in-memory database
     app.config['DATABASE_FILE'] = 'hotel_management_db.sqlite'
-    app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:///' + app.config['DATABASE_FILE']
+    # app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:///' + app.config['DATABASE_FILE']
+    app.config['SQLALCHEMY_DATABASE_URI'] = 'mysql+pymysql://root:123456@localhost/hotel_management_db'
     # app.config['SQLALCHEMY_ECHO'] = True
     
     # Initialize SQLAlchemy with this Flask app
@@ -35,15 +36,8 @@ app = create_app()
 from routers import *
 
 
-# @app.route('/test', methods=['GET', 'POST'])
-# def test():
-#     first_name = request.form['first_name']  # pass the form field name as key
-#     last_name = request.form['last_name']  # pass the form field name as key
-#     return (f'User.first_name: {first_name} User.last_name: {last_name}')
-
-
 if __name__ == '__main__':
-    # with app.app_context():
-    #     import utils
-    #     utils.build_sample_db()
+    with app.app_context():
+        import utils
+        utils.build_sample_db()
     app.run(debug=True)

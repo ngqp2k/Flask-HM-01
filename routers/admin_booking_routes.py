@@ -22,10 +22,9 @@ def add_booking():
         booking.email = request.form['email']
         booking.phone = request.form['phone']
         booking.created_date = datetime.strptime(request.form['created_date'], '%Y-%m-%d')
-        booking.checkin_date = datetime.strptime(request.form['check_in_date'], '%Y-%m-%d')
-        booking.checkout_date = datetime.strptime(request.form['check_out_date'], '%Y-%m-%d')
+        booking.check_in_date = datetime.strptime(request.form['check_in_date'], '%Y-%m-%d')
+        booking.check_out_date = datetime.strptime(request.form['check_out_date'], '%Y-%m-%d')
         booking.user = models.User.query.get(request.form['user'])
-        booking.status = models.BookingStatus[request.form['status']]
         booking.number_of_guests = 0
         booking.number_of_rooms = 0
         
@@ -60,10 +59,9 @@ def edit_booking(booking_id):
         booking.email = request.form['email']
         booking.phone = request.form['phone']
         booking.created_date = datetime.strptime(request.form['created_date'], '%Y-%m-%d')
-        booking.checkin_date = datetime.strptime(request.form['check_in_date'], '%Y-%m-%d')
-        booking.checkout_date = datetime.strptime(request.form['check_out_date'], '%Y-%m-%d')
+        booking.check_in_date = datetime.strptime(request.form['check_in_date'], '%Y-%m-%d')
+        booking.check_out_date = datetime.strptime(request.form['check_out_date'], '%Y-%m-%d')
         booking.user = models.User.query.get(request.form['user'])
-        booking.status = models.BookingStatus[request.form['status']]
         
         db.session.add(booking)
         db.session.commit()

@@ -21,6 +21,7 @@ def add_additional_charge():
         additional_charge.description = request.form['description']
         additional_charge.amount = request.form['amount']
         
+        db.session.add(additional_charge)
         db.session.commit()
         
         return redirect(url_for('additional_charge_page'))

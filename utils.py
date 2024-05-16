@@ -50,11 +50,6 @@ def build_sample_db():
     db.session.add(room5)
     db.session.add(room6)
     
-    # Create 2 customers
-    # customer1 = models.Customer(first_name='A', last_name='Trần Văn', sex=models.Sex.Men, age=24, email='a@example.com', phone='0123')
-    # customer2 = models.Customer(first_name='B', last_name='Lê Nguyễn', sex=models.Sex.Men, age=30, email='b@example.com', phone='0789')
-    # db.session.add(customer1)
-    # db.session.add(customer2)
     
     # Create 2 bookings
     booking1 = models.Booking(first_name='John', last_name='Conner', email='John@outlook.com', phone='095749574', created_date=datetime(2024, 5, 10), check_in_date=datetime(2024, 5, 10), check_out_date=datetime(2024, 5, 12), number_of_guests=2, number_of_rooms=1, user=user1)
@@ -77,9 +72,11 @@ def build_sample_db():
     payment_method1 = models.PaymentMethod(name='Debit Card')
     payment_method2 = models.PaymentMethod(name='Credit Card')
     payment_method3 = models.PaymentMethod(name='Paypal')
+    payment_method4 = models.PaymentMethod(name='Cash')
     db.session.add(payment_method1)
     db.session.add(payment_method2)
     db.session.add(payment_method3)
+    db.session.add(payment_method4)
     
     # Create 2 payments
     # payment1 = models.Payment(booking=booking1, created_date=datetime(2024, 5, 10), amount=booking1.room.room_type.price_per_night * 2, payment_method=payment_method1, transaction_id='12345')

@@ -52,8 +52,8 @@ def checkout_handler():
         booking.email = request.form['email']
         booking.phone = request.form['phone']
         booking.created_date = datetime.now()
-        # booking.checkin_date = datetime.now()
-        # booking.checkout_date = datetime.now() + timedelta(days=2)
+        booking.check_in_date = datetime.strptime(c['check_in_date'], '%Y-%m-%d')
+        booking.check_out_date = datetime.strptime(c['check_out_date'], '%Y-%m-%d')
 
         cart = session.get('cart')
 

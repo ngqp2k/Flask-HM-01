@@ -141,53 +141,54 @@
             <div class="container-fluid booking pb-5 wow fadeIn" data-wow-delay="0.1s">
                 <div class="container">
                     <div class="bg-white shadow" style="padding: 35px;">
-                        <div class="row g-2">
-                            <div class="col-md-10">
-                                <div class="row g-2">
-                                    <div class="col-md-3">
-                                        <label for="date1">Nhận phòng</label>
-                                        <input type="date" onchange="calculateReturnDate()" id="startDate"
-                                            class="form-control" name="checkin_date" value="{{ current_time }}" format="dd/MM/yyy" />
-                                    </div>
-                                    <div class="col-md-3">
-                                        <label for="date2">Số đêm</label>
-                                        <input type="number" onchange="calculateReturnDate()" id="numOfNights"
-                                            class="form-control" placeholder="Số đêm" name="num1" value="1" min="1" />
-                                    </div>
-                                    <div class="col-md-3">
-                                        <label for="date2">Check out</label>
-                                        <input type="date" id="returnDate" class="form-control" placeholder="Check out"
-                                            name="checkout_date" value="{{ tomorrow }}" disabled />
-                                    </div>
-                                    <div class="col-md-3">
-                                        <label for="date2">Số khách</label>
-                                        <input type="number" onchange="calculateReturnDate()" id="numOfGuests"
-                                            class="form-control" placeholder="Số khách" name="num2" value="2" min="1" max="3"/>
-                                    </div>
-                                    <script>
-                                        function calculateReturnDate() {
-                                            var startDate = document.getElementById("startDate").value;
-                                            var numOfNights = parseInt(document.getElementById("numOfNights").value);
+                        <form action="{{ url_for('index') }}" method="post">
+                            <div class="row g-2">
+                                <div class="col-md-10">
+                                    <div class="row g-2">
+                                        <div class="col-md-3">
+                                            <label for="date1">Nhận phòng</label>
+                                            <input type="date" onchange="calculateReturnDate()" id="startDate"
+                                                class="form-control" name="checkin_date" value="{{ current_time }}" format="dd/MM/yyy" />
+                                        </div>
+                                        <div class="col-md-3">
+                                            <label for="date2">Số đêm</label>
+                                            <input type="number" onchange="calculateReturnDate()" id="numOfNights"
+                                                class="form-control" placeholder="Số đêm" name="num_of_nights" value="{{ num_of_nights }}" min="1" />
+                                        </div>
+                                        <div class="col-md-3">
+                                            <label for="date2">Check out</label>
+                                            <input type="date" id="returnDate" class="form-control" placeholder="Check out"
+                                                name="checkout_date" value="{{ tomorrow }}" disabled />
+                                        </div>
+                                        <div class="col-md-3">
+                                            <label for="date2">Số khách</label>
+                                            <input type="number" onchange="calculateReturnDate()" id="numOfGuests"
+                                                class="form-control" placeholder="Số khách" name="num_of_guests" value="{{ num_of_guests }}" min="1" />
+                                        </div>
+                                        <script>
+                                            function calculateReturnDate() {
+                                                var startDate = document.getElementById("startDate").value;
+                                                var numOfNights = parseInt(document.getElementById("numOfNights").value);
 
-                                            if (startDate && numOfNights) {
-                                                var date = new Date(startDate);
-                                                date.setDate(date.getDate() + numOfNights);
-                                                var returnDate = date.toISOString().split('T')[0];
-                                                document.getElementById("returnDate").value = returnDate;
-                                            } else {
-                                                alert("Vui lòng nhập đầy đủ thông tin.");
+                                                if (startDate && numOfNights) {
+                                                    var date = new Date(startDate);
+                                                    date.setDate(date.getDate() + numOfNights);
+                                                    var returnDate = date.toISOString().split('T')[0];
+                                                    document.getElementById("returnDate").value = returnDate;
+                                                } else {
+                                                    alert("Vui lòng nhập đầy đủ thông tin.");
+                                                }
                                             }
-                                        }
-                                    </script>
-                                    
+                                        </script>
+                                        
+                                    </div>
+                                </div>
+                                <div class="col-md-2">
+                                    <label for=""></label>
+                                    <button class="btn btn-primary w-100">Search</button>
                                 </div>
                             </div>
-                            <div class="col-md-2">
-                                <label for=""></label>
-                                <!-- <button class="btn btn-primary w-100">Search</button> -->
-                                <a type="button" class="btn btn-primary w-100" href="{{ url_for('index') }}">Search</a>
-                            </div>
-                        </div>
+                        </form>
                     </div>
                 </div>
             </div>
