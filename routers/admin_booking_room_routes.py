@@ -70,6 +70,19 @@ def edit_booking_room(booking_room_id):
                            , rooms=rooms
                            , statuses=statuses)
 
+
+@app.route('/checkin-booking-room/<int:booking_room_id>', methods=['GET', 'POST'])
+@login_required
+def check_in_booking_room(booking_room_id):
+    booking_room = models.BookingRoom.query.get(booking_room_id)
+    
+    booking_room.status = models.BookingStatus.CHECKED_IN
+
+    db.session.commit()
+        
+    return redirect(url_for('booking_room_page'))
+
+
 @app.route('/delete-booking-room/<int:booking_room_id>', methods=['GET', 'POST'])
 @login_required
 def delete_booking_room(booking_room_id):

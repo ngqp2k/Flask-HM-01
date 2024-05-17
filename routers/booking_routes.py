@@ -8,24 +8,14 @@ import utils as utils
 
 @app.route('/checkout/', methods=['GET', 'POST'])
 def checkout_page():
-    # r = Receipt(user=current_user)
-    #     db.session.add(r)
-
-    #     for c in cart.values():
-    #         d = ReceiptDetails(quantity=c['quantity'], unit_price=c['price'],
-    #                            receipt=r, product_id=c['id'])
-    #         db.session.add(d)
-
-    #     db.session.commit()
 
     cart = session.get('cart')
 
-    room = models.Room.query.get(1)
-    print(f'Room ID: {request.method}')
+    if not cart:
+        return redirect(url_for('index'))
 
-    # my_list = [elem[0] for elem in your_dict.values()]
-    print()
-        
+    room = models.Room.query.get(1)
+
     checkin_date = cart[next(iter(cart))]['check_in_date']
     checkout_date = cart[next(iter(cart))]['check_out_date']
     
@@ -37,8 +27,6 @@ def checkout_page():
                             , checkout_date=checkout_date
                             , num_of_nights=cart[next(iter(cart))]['num_of_nights'])
         
-    return redirect(url_for('index'))
-
 
 @app.route('/checkout-handler', methods=['POST'])
 def checkout_handler():
@@ -77,12 +65,6 @@ def checkout_handler():
 
         booking.number_of_rooms = len(cart) if cart else 0
 
-
-        # room = models.Room.query.get(room_id)
-        # room.status = models.RoomStatus['BOOKED']
-        # booking.room = room
-        # booking.status = models.BookingStatus['CONFIRMED']
-        
         # create payment
         payment = models.Payment()
         payment.booking = booking
