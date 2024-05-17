@@ -61,7 +61,8 @@ def invoice_detail_page(booking_room_id):
     if payment is None:
         reminder = total_amount
     else:
-        reminder = total_amount - payment.amount
+
+        reminder = total_amount - booking_room.room.room_type.price_per_night * cnt_date
         
     is_read_only = booking_room.status == models.BookingStatus.CHECKED_OUT
         
@@ -102,6 +103,7 @@ def invoice_detail_page(booking_room_id):
                            , invoice_details=invoice_details
                            , total_amount=total_amount
                            , payment=payment
+                           , payment_amout=booking_room.room.room_type.price_per_night * cnt_date
                            , reminder=reminder
                            , is_read_only=is_read_only
                            , current_time=datetime.now().strftime('%d-%m-%Y'))

@@ -81,7 +81,7 @@
                                                             <td colspan="3"></td>
                                                             <td colspan="">Đã thanh toán</td>
                                                             {% if payment != None %}
-                                                            <td>{{ "{:,.0f}".format(payment.amount) }} VNĐ</td>
+                                                            <td>{{ "{:,.0f}".format(payment_amout) }} VNĐ</td>
                                                             {% else %}
                                                             <td>{{ "{:,.0f}".format(0) }} VNĐ</td>
                                                             {% endif %}

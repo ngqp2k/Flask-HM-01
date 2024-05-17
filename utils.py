@@ -1,6 +1,7 @@
 from datetime import datetime
 from app import db
 import models
+import random
 
 def build_sample_db():
     pass
@@ -49,6 +50,15 @@ def build_sample_db():
     db.session.add(room4)
     db.session.add(room5)
     db.session.add(room6)
+
+    payment_method1 = models.PaymentMethod(name='Debit Card')
+    payment_method2 = models.PaymentMethod(name='Credit Card')
+    payment_method3 = models.PaymentMethod(name='Paypal')
+    payment_method4 = models.PaymentMethod(name='Cash')
+    db.session.add(payment_method1)
+    db.session.add(payment_method2)
+    db.session.add(payment_method3)
+    db.session.add(payment_method4)
     
     
     # Create 3 bookings in April 2024
@@ -93,6 +103,10 @@ def build_sample_db():
     db.session.add(booking5)
     db.session.add(booking6)
 
+
+    
+
+
     booking_room_1 = models.BookingRoom(booking=booking1, room=room1
                                         , check_in_date=booking1.check_in_date, check_out_date=booking1.check_out_date
                                         , status=models.BookingStatus.CONFIRMED)
@@ -133,6 +147,18 @@ def build_sample_db():
                                          , check_in_date=booking6.check_in_date, check_out_date=booking6.check_out_date
                                          , status=models.BookingStatus.CONFIRMED)
     
+    for booking in [booking1, booking2, booking3, booking4, booking5, booking6]:
+        booking_rooms = [booking_room_1, booking_room_2, booking_room_3, booking_room_4, booking_room_5, booking_room_7, booking_room_8, booking_room_9, booking_room_10, booking_room_11]
+        total_price = 0
+        for booking_room in booking_rooms:
+            if booking_room.booking == booking:
+                total_price += booking_room.room.room_type.price_per_night * (booking_room.check_out_date - booking_room.check_in_date).days
+                print(f'ngqp2k debug (booking_id: {booking.id} - {booking_room.booking.id}): {booking_room.room.room_type.price_per_night} * {(booking_room.check_out_date - booking_room.check_in_date).days} = {total_price}')
+        
+        payment = models.Payment(booking=booking, created_date=booking.created_date, amount=total_price, payment_method=payment_method1, transaction_id=random.randint(100000, 999999))
+        db.session.add(payment)
+
+    
     db.session.add(booking_room_1)
     db.session.add(booking_room_2)
     db.session.add(booking_room_3)
@@ -144,29 +170,6 @@ def build_sample_db():
     db.session.add(booking_room_10)
     db.session.add(booking_room_11)
     
-    
-    
-    # Create 2 invoice
-    # invoice1 = models.Invoice(booking=booking1, created_date=datetime(2000, 3, 25), total_price=1000)
-    # invoice2 = models.Invoice(booking=booking2, created_date=datetime(2000, 3, 25), total_price=2000)
-    # db.session.add(invoice1)
-    # db.session.add(invoice2)
-    
-    # Create 2 payment methods
-    payment_method1 = models.PaymentMethod(name='Debit Card')
-    payment_method2 = models.PaymentMethod(name='Credit Card')
-    payment_method3 = models.PaymentMethod(name='Paypal')
-    payment_method4 = models.PaymentMethod(name='Cash')
-    db.session.add(payment_method1)
-    db.session.add(payment_method2)
-    db.session.add(payment_method3)
-    db.session.add(payment_method4)
-    
-    # Create 2 payments
-    # payment1 = models.Payment(booking=booking1, created_date=datetime(2024, 5, 10), amount=booking1.room.room_type.price_per_night * 2, payment_method=payment_method1, transaction_id='12345')
-    # payment2 = models.Payment(booking=booking2, created_date=datetime(2024, 5, 10), amount=booking2.room.room_type.price_per_night * 2, payment_method=payment_method2, transaction_id='54321')
-    # db.session.add(payment1)
-    # db.session.add(payment2)
     
     # Create 2 services
     service1 = models.Service(name='Bữa sáng 1', description='Bữa sáng 1', price=150000)
