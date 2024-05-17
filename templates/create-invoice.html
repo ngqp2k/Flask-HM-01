@@ -62,7 +62,7 @@
                                                     <tbody>
                                                         {% for invoice_detail in invoice_details %}
                                                         <tr>
-                                                            <td>{{ invoice_detail.no }}</td>
+                                                            <td>{{ loop.index }}</td>
                                                             <td>{{ invoice_detail.description }}</td>
                                                             <td style="text-align: right">{{
                                                                 "{:,.0f}".format(invoice_detail.unit_price) }} VNĐ</td>

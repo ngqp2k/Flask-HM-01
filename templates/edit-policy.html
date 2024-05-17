@@ -1,0 +1,56 @@
+{% extends 'admin.html' %}
+
+{% block title %}Edit policy{% endblock %}
+
+{% block content %}
+
+<div class="container">
+    <form class="" method="post" action="#" role="form">
+        <div class="form-row">
+            <div class="col-md-6">
+                <div class="form-group">
+                    <label for="" class="col-form-label">Tên</label>
+                    <input type="text" id="first-name" class="form-control" placeholder="Name" name="name"
+                        value="{{ policy.name }}" >
+                </div>
+            </div>
+            <div class="col-md-6">
+                <div class="form-group">
+                    <label for="" class="col-form-label">Mô tả</label>
+                    <input type="text" class="form-control" placeholder="Description"
+                        name="description" value="{{ policy.description }}" >
+                </div>
+            </div>
+            <div class="col-md-6">
+                <div class="form-group">
+                    <label for="" class="col-form-label">Giá trị</label>
+                    <input type="text" class="form-control" placeholder="Role name" name="value"
+                        value="{{ policy.value }}" >
+                </div>
+            </div>
+            <div class="col-md-6">
+                <div class="form-group">
+                    <label for="" class="col-form-label">Loại giá trị</label>
+                    <select class="form-select" name="value_type">
+                        {% for value_type in value_types %}
+                        {% if value_type == policy.value_type.name %}
+                        <option selected>{{ value_type }}</option>
+                        {% else %}
+                        <option>{{ value_type }}</option>
+                        {% endif %}
+                        {% endfor %}
+                    </select>
+                </div>
+            </div>
+            <div class="row pt-2">
+                <div class="col-auto">
+                    <a href="javascript:history.back()" class="btn btn-secondary btn-block">Close</a>
+                </div>
+                <div class="col-auto">
+                    <input class="btn btn-primary btn-block" type="submit" value="Save" style="width: 200%;">
+                </div>
+            </div>
+    </form>
+</div>
+
+{% endblock %}

@@ -153,7 +153,6 @@ def build_sample_db():
         for booking_room in booking_rooms:
             if booking_room.booking == booking:
                 total_price += booking_room.room.room_type.price_per_night * (booking_room.check_out_date - booking_room.check_in_date).days
-                print(f'ngqp2k debug (booking_id: {booking.id} - {booking_room.booking.id}): {booking_room.room.room_type.price_per_night} * {(booking_room.check_out_date - booking_room.check_in_date).days} = {total_price}')
         
         payment = models.Payment(booking=booking, created_date=booking.created_date, amount=total_price, payment_method=payment_method1, transaction_id=random.randint(100000, 999999))
         db.session.add(payment)
@@ -263,18 +262,19 @@ def build_sample_db():
     db.session.add(guest_type1)
     db.session.add(guest_type2)
 
+    import names
      
-    guest1 = models.Guest(first_name='John', last_name='Conner', sex=models.Sex.Men, identification_number='123456789', guest_type=guest_type1, booking_room=booking_room_1)
-    guest2 = models.Guest(first_name='Craig', last_name='Haley', sex=models.Sex.Men, identification_number='123456789', guest_type=guest_type1, booking_room=booking_room_1)
-    guest3 = models.Guest(first_name='Simone', last_name='Wolf', sex=models.Sex.Women, identification_number='987654321', guest_type=guest_type1, booking_room=booking_room_1)
-    guest4 = models.Guest(first_name='Christina', last_name='Shea', sex=models.Sex.Women, identification_number='456789123', guest_type=guest_type1, booking_room=booking_room_2)
-    guest5 = models.Guest(first_name='Aileen', last_name='Gomez', sex=models.Sex.Women, identification_number='321654987', guest_type=guest_type1, booking_room=booking_room_2)
+    booking_rooms = [booking_room_1, booking_room_2, booking_room_3, booking_room_4, booking_room_5, booking_room_7, booking_room_8, booking_room_9, booking_room_10, booking_room_11]
+    for booking_room in booking_rooms:
+        for i in range(random.randint(1, 3)):
+            guest = models.Guest(first_name=names.get_first_name(), last_name=names.get_last_name(), sex=models.Sex.Men, identification_number=str(random.randint(10000000, 99999999)), guest_type=guest_type1, booking_room=booking_room)
+            db.session.add(guest)
+   
+    policy1 = models.Policy(name='Phụ thu khách thứ 3', description='Phụ thu khách thứ 3', value=25, value_type=models.PolicyValueType.PER)
+    policy2 = models.Policy(name='Phụ thu khách nước ngoài', description='Phụ thu khách nước ngoài', value=1.5, value_type=models.PolicyValueType.NUM)
 
-    db.session.add(guest1)
-    db.session.add(guest2)
-    db.session.add(guest3)
-    db.session.add(guest4)
-    db.session.add(guest5)
+    db.session.add(policy1)
+    db.session.add(policy2)
 
     db.session.commit()
 

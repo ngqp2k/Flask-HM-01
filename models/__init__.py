@@ -15,4 +15,5 @@ from models.mdUser import *
 from models.mdBookingRoom import *
 from models.mdGuest import *
 from models.mdGuestType import *
+from models.mdPolicy import *
 from models.myEnum import *

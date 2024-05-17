@@ -3,14 +3,14 @@ from app import app, db
 from flask import render_template, request, redirect, url_for
 from datetime import datetime
 from flask_login import login_required
+from decimal import Decimal
 
 
 import models as models
 
 
 class InvoiceDetail():
-    def __init__(self, no, description, unit_price, qty, amount):
-        self.no = no
+    def __init__(self, description, unit_price, qty, amount):
         self.description = description
         self.unit_price = unit_price
         self.qty = qty
@@ -36,27 +36,52 @@ def invoice_detail_page(booking_room_id):
     
     
     # create invoice details
-    row_count = 1
     total_amount = 0
     
     invoice_details = []
     
     cnt_date = (booking_room.check_out_date - booking_room.check_in_date).days
-    invoice_detail = InvoiceDetail(row_count, 'Tiền phòng', booking_room.room.room_type.price_per_night, cnt_date, booking_room.room.room_type.price_per_night * cnt_date)
+    invoice_detail = InvoiceDetail('Tiền phòng', booking_room.room.room_type.price_per_night, cnt_date, booking_room.room.room_type.price_per_night * cnt_date)
     total_amount += decimal.Decimal(invoice_detail.amount)
     invoice_details.append(invoice_detail)
         
     for additional_charge in additional_charges:
-        row_count += 1
-        invoice_detail = InvoiceDetail(row_count, additional_charge.description, additional_charge.amount, 1, additional_charge.amount)
+        invoice_detail = InvoiceDetail(additional_charge.description, additional_charge.amount, 1, additional_charge.amount)
         total_amount += invoice_detail.amount
         invoice_details.append(invoice_detail)
         
     for booking_service in booking_services:
-        row_count += 1
-        invoice_detail = InvoiceDetail(row_count, booking_service.service.name, booking_service.service.price, booking_service.qty, booking_service.service.price * booking_service.qty)
+        invoice_detail = InvoiceDetail(booking_service.service.name, booking_service.service.price, booking_service.qty, booking_service.service.price * booking_service.qty)
         total_amount += decimal.Decimal(invoice_detail.amount)
         invoice_details.append(invoice_detail)
+
+    num_of_guests = models.Guest.query.filter_by(booking_room_id=booking_room_id).count()
+
+    if num_of_guests >= 3:
+        policy = models.Policy.query.get(1)
+        amount = booking_room.room.room_type.price_per_night * cnt_date * Decimal(policy.value) / 100
+        invoice_detail = InvoiceDetail(f'Phí có thêm người thứ 3 (x  {policy.value}%)'
+                                       , booking_room.room.room_type.price_per_night * cnt_date, 1
+                                       , amount) 
+        total_amount += decimal.Decimal(invoice_detail.amount)
+        invoice_details.append(invoice_detail)
+
+    guests = models.Guest.query.filter_by(booking_room_id=booking_room_id).all()
+    is_regioners = False
+    for guest in guests:
+        if guest.guest_type.name == models.GuestType.query.get(2).name:
+            is_regioners = True
+            break
+
+    if is_regioners:
+        policy = models.Policy.query.get(2)
+        amount = booking_room.room.room_type.price_per_night * cnt_date * Decimal(policy.value - 1.0)
+        invoice_detail = InvoiceDetail(f'Phí người nước ngoài (x  {policy.value})'
+                                       , booking_room.room.room_type.price_per_night * cnt_date, 1
+                                       , amount) 
+        total_amount += decimal.Decimal(invoice_detail.amount)
+        invoice_details.append(invoice_detail)
+
         
     if payment is None:
         reminder = total_amount
@@ -83,6 +108,8 @@ def invoice_detail_page(booking_room_id):
         room.status = models.RoomStatus.AVAILABLE
         db.session.add(room)
 
+
+
         for invoice_detail in invoice_details:
             invoiceDetail = models.InvoiceDetail()
             invoiceDetail.invoice = invoice
@@ -92,6 +119,9 @@ def invoice_detail_page(booking_room_id):
             invoiceDetail.amount = invoice_detail.amount
             invoiceDetail.created_date = datetime.now()
             db.session.add(invoiceDetail)
+
+
+        
 
         
         db.session.commit()

@@ -15,4 +15,5 @@ from routers.admin_stats import *
 from routers.admin_booking_room_routes import *
 from routers.admin_guest_routes import *
 from routers.admin_guest_type_routes import *
+from routers.admin_policy_routes import *
 from routers.index_routes import *

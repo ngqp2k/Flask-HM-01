@@ -23,4 +23,9 @@ class BookingStatus(enum.Enum):
     OVERDUE = "Overdue"
     ON_HOLD = "On-hold"
     ERROR = "Error"
-    
+
+
+class PolicyValueType(enum.Enum):
+    NUM = "Number"
+    PER = "Percent"
+
