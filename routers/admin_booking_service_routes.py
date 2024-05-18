@@ -31,7 +31,7 @@ def add_booking_service():
     booking_rooms = models.BookingRoom.query.all()
     services = models.Service.query.all()
     
-    return render_template('edit-booking-service.html'
+    return render_template('add-booking-service.html'
                            , booking_service=booking_service
                            , booking_rooms=booking_rooms
                            , services=services)

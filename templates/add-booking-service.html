@@ -11,12 +11,12 @@
                 <div class="col-md-5">
                     <div class="form-group">
                         <label for="" class="col-form-label">Phòng đặt</label>
-                        <select class="form-select" name="booking">
+                        <select class="form-select" name="booking_room">
                             {% for booking_room in booking_rooms %}
                             {% if booking_room.id == booking_service.booking_room.id %}
-                            <option value="{{ booking_room.id }}" selected>{{ booking_room }}</option>
+                            <option value="{{ booking_room.id }}" selected>RoomNo: {{ booking_room }} - BookingID {{ booking_room.booking.id }}</option>
                             {% else %}
-                            <option value="{{ booking_room.id }}">{{ booking_room }}</option>
+                            <option value="{{ booking_room.id }}">RoomNo: {{ booking_room }} - BookingID {{ booking_room.booking.id }}</option>
                             {% endif %}
                             {% endfor %}
                         </select>

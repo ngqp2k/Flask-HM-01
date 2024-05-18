@@ -13,7 +13,7 @@
                         <label for="" class="col-form-label">Booking</label>
                         <select class="form-select" name="booking_room">
                             {% for booking_room in booking_rooms %}
-                            <option value="{{ booking_room.id }}">{{ booking_room }}</option>
+                            <option value="{{ booking_room.id }}">RoomNo: {{ booking_room }} - BookingID {{ booking_room.booking.id }}</option>
                             {% endfor %}
                         </select>
                     </div>
